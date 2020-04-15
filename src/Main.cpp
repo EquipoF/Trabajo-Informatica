@@ -3,6 +3,7 @@
 
 //hola mundo 3
 //hola mundo 1 
+//hola mundo 2 
 Mundo mundo;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
