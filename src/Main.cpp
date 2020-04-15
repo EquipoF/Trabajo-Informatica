@@ -1,6 +1,7 @@
 #include "Mundo.h"
 #include "glut.h"
 
+//hola mundo 1 
 Mundo mundo;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
