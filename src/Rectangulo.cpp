@@ -3,10 +3,10 @@
 
 Rectangulo::Rectangulo()
 {
-	arribaD = Vector2D(5.0f, 5.0f);
-	arribaI = Vector2D(-5.0f, 5.0f);
-	abajoD = Vector2D(5.0f, -5.0f);
-	abajoI = Vector2D(-5.0f, -5.0f);
+	arribaDcha = Vector2D(5.0f, 5.0f);
+	arribaIzq = Vector2D(-5.0f, 5.0f);
+	abajoDcha = Vector2D(5.0f, -5.0f);
+	abajoIzq = Vector2D(-5.0f, -5.0f);
 }
 
 Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
@@ -14,12 +14,12 @@ Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
 
 }
 
-Rectangulo::Rectangulo( Vector2D arribaIIn, Vector2D arribaDIn, Vector2D abajoDIn, Vector2D abajoIIn)
+Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D abajoDchaIn, Vector2D abajoIzqIn)
 {
-	arribaD = arribaDIn;
-	arribaI = arribaIIn;
-	abajoI = abajoIIn;
-	abajoD = abajoDIn;
+	arribaDcha = arribaDchaIn;
+	arribaIzq = arribaIzqIn;
+	abajoIzq = abajoIzqIn;
+	abajoDcha = abajoDchaIn;
 }
 
 Rectangulo::~Rectangulo()
@@ -31,10 +31,10 @@ void Rectangulo::Dibuja()
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3ub(255, 0, 0);
-	glVertex2d(abajoI.x, abajoI.y);
-	glVertex2d(arribaI.x, arribaI.y);
-	glVertex2d(arribaD.x, arribaD.y);
-	glVertex2d(abajoD.x, abajoD.y);
+	glVertex2d(abajoIzq.x, abajoIzq.y);
+	glVertex2d(arribaIzq.x, arribaIzq.y);
+	glVertex2d(arribaDcha.x, arribaDcha.y);
+	glVertex2d(abajoDcha.x, abajoDcha.y);
 	glEnd();
 	glEnable(GL_LIGHTING);
 }
