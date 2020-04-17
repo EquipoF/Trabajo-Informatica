@@ -1,8 +1,11 @@
 # Trabajo-Informatica
 
   ## Lista de estilos
+  - Variables: todas las leteras en minúscula. Si hay varias palabras, se escriben todas juntas y se delimitan poniendo su primera letra en mayúsculas (excluyendo la primera palabra).
   - Clases: La primera letra en mayúscula, el resto minúscula. Si hay varias palabras se separan con "_" y todas sus letras van en minúscula.
-  - Obejtos:Todas las leteras en minúscula. Si hay varias palabras, se escriben todas juntas y se delimitan poniendo su primera letra en mayúsculas.
+  - Obejtos:
+   -Si hay uno solo: se escribe igual que el nombre de la clase pero con todas las letras en minúscula.
+   - Si hay varios: se escriben como variables.
   - Defines: Todas sus letras en mayúsculas. si hay varias palabras, se separan mediante "_"
   - Métodos set: las variables propias del set se llaman igual que los atributos que setean pero añadiendo la palabra "In" al final.
   - Abreviaturas:
