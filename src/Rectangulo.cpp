@@ -11,6 +11,10 @@ Rectangulo::Rectangulo()
 
 Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
 {
+	ancho = anchoIn;
+	alto = altoIn;
+	centro = centroIn;
+	CentroVertice();
 
 }
 
@@ -20,6 +24,7 @@ Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D ab
 	arribaIzq = arribaIzqIn;
 	abajoIzq = abajoIzqIn;
 	abajoDcha = abajoDchaIn;
+	VerticeCentro();
 }
 
 Rectangulo::~Rectangulo()
@@ -37,4 +42,36 @@ void Rectangulo::Dibuja()
 	glVertex2d(abajoDcha.x, abajoDcha.y);
 	glEnd();
 	glEnable(GL_LIGHTING);
+}
+
+void Rectangulo::setCentro(Vector2D centroIn)
+{
+	centro = centroIn;
+}
+
+void Rectangulo::setCentro(float x, float y)
+{
+	centro.x = x;
+	centro.y = y;
+}
+
+
+void Rectangulo::CentroVertice()
+{
+	arribaDcha.x = centro.x + (ancho / 2);
+	arribaDcha.y = centro.y + (alto / 2);
+	arribaIzq.x = centro.x - (ancho / 2);
+	arribaIzq.y = centro.y + (alto / 2);
+	abajoIzq.x = centro.x - (ancho / 2);
+	abajoIzq.y = centro.y - (alto / 2);
+	abajoDcha.x = centro.x + (ancho / 2);
+	abajoDcha.y = centro.y - (alto / 2);
+}
+
+void Rectangulo::VerticeCentro()
+{
+	ancho = arribaIzq.x - arribaDcha.x;
+	alto = arribaIzq.y - abajoIzq.y;
+	centro.x = abajoIzq.x + (ancho / 2);
+	centro.y = abajoIzq.y + (alto / 2);
 }
