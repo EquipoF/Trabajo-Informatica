@@ -15,6 +15,10 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Pang</RootNamespace>
     <ProjectName>Trabajo informatica</ProjectName>
+<<<<<<< Updated upstream
+=======
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+>>>>>>> Stashed changes
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
