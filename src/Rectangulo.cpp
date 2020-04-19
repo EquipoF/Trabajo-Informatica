@@ -31,13 +31,6 @@ Rectangulo::~Rectangulo()
 {
 }
 
-void Rectangulo::setCentro(Vector2D centroIn) {
-
-}
-
-void Rectangulo::setCentro(float xIn, float yIn) {
-
-}
 
 void Rectangulo::Dibuja()
 {
