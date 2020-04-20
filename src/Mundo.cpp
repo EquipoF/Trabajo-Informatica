@@ -1,6 +1,7 @@
 #include "Mundo.h"
-#include "Interaccion.h"
 #include "glut.h"
+
+#define DIFF_TIEMPO 0.025 //tiempo n segundos que transcurre cada instante del juego. Diferencial de tiempo
 
 void Mundo::Dibuja()
 {
@@ -26,7 +27,8 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	personaje.mueve(0.03f);
+	personaje.setVel(-1.0, 1.0); //Velocidad de prueba
+	personaje.mueve(DIFF_TIEMPO);
 }
 
 void Mundo::Inicializa()
@@ -38,16 +40,5 @@ void Mundo::Inicializa()
 
 void Mundo::Tecla(unsigned char key)
 {
-	switch (key)
-	{
-		case 'a'://mover izq
-				personaje.setVel(Vector2D(-20.0f, 0.0f));
-			break;
-		case 'd'://mover dcha
-				personaje.setVel(Vector2D(20.0f, 0.0f));
-			break;
-		case 'p'://parar
-				personaje.setVel(Vector2D(0.0f, 0.0f));
-			break;
-	}
+
 }

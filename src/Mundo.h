@@ -15,6 +15,7 @@ public:
 
 private:
 	Caja caja;
+	Personaje personaje;
 	Rectangulo rectangulo1, suelo;
 	Personaje personaje;
 
