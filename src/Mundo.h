@@ -1,6 +1,7 @@
 #include "Rectangulo.h"
 #include "Caja.h"
 #include "Personaje.h"
+#include "Interaccion.h"
 
 class Mundo
 {

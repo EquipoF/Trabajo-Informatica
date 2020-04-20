@@ -4,6 +4,8 @@
 class Caja
 {
 public:
+	friend class Interaccion;
+	friend class Mundo;
 	Caja();
 	virtual ~Caja();
 	void Dibuja();
