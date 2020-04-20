@@ -1,6 +1,9 @@
 #include "Mundo.h"
 #include "glut.h"
 
+#define STOP 'S'
+#define ESPACIO_SOLTADO 1
+
 Mundo mundo;
 
 float aspect = 1.0f;
@@ -41,6 +44,7 @@ int main(int argc,char* argv[])
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25,OnTimer,0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
+	glutKeyboardUpFunc(OnKeyboardUp);
 	glutReshapeFunc(onSize);
 
 	mundo.Inicializa();
@@ -85,8 +89,11 @@ void OnKeyboardUp(unsigned char key, int x_t, int y_t)
 {
 	if ((key == 'a') || (key == 'd'))
 	{
-		key = 'p';// cuando a mundo le llega 'p' pone velocidad personaje a 0
-		mundo.Tecla(key);
+		mundo.Tecla(STOP); // cuando a mundo le llega 'S' pone velocidad personaje a 0
+	}
+	else if (key == ' ') 
+	{
+		mundo.Tecla(ESPACIO_SOLTADO); 
 	}
 
 	glutPostRedisplay();

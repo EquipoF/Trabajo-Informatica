@@ -4,6 +4,7 @@
 
 #define ALTO 2.0
 #define ANCHO 1.0
+#define GRAVEDAD -2.0
 
 class Personaje : public ObjetoMovil
 {
@@ -15,5 +16,6 @@ public:
 
 private:
 	Rectangulo cuerpo;
+	int saltosRestantes;
 };
 
