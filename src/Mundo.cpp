@@ -1,6 +1,8 @@
 #include "Mundo.h"
 #include "glut.h"
 
+#define DIFF_TIEMPO 0.025 //tiempo n segundos que transcurre cada instante del juego. Diferencial de tiempo
+
 void Mundo::Dibuja()
 {
 	gluLookAt(x_ojo, y_ojo, z_ojo,  // posicion del ojo
@@ -10,6 +12,7 @@ void Mundo::Dibuja()
 	//aqui es donde hay que poner el codigo de dibujo
 	//dibujo del suelo
 	caja.Dibuja();
+	personaje.Dibuja();
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -24,7 +27,8 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-
+	personaje.setVel(-1.0, 1.0); //Velocidad de prueba
+	personaje.mueve(DIFF_TIEMPO);
 }
 
 void Mundo::Inicializa()
