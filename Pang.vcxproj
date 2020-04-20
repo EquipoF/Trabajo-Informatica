@@ -88,8 +88,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Lista_rectangulos.cpp" />
     <ClCompile Include="src\Caja.cpp" />
+    <ClCompile Include="src\Lista_rectangulos.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
@@ -98,8 +98,8 @@
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lista_rectangulos.h" />
     <ClInclude Include="src\Caja.h" />
+    <ClInclude Include="src\Lista_rectangulos.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\ObjetoMovil.h" />
     <ClInclude Include="src\Personaje.h" />
