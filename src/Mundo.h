@@ -2,6 +2,7 @@
 #include "Rectangulo.h"
 #include "Caja.h"
 #include "Personaje.h"
+//#include "Lista_rectangulos"
 
 class Mundo
 {
@@ -17,7 +18,7 @@ private:
 	Caja caja;
 	Personaje personaje;
 	Rectangulo rectangulo1, suelo;
-	Personaje personaje;
+	//Lista_rectangulos l_rectangulos;
 
 	float x_ojo;
 	float y_ojo;

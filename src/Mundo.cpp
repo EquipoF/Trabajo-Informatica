@@ -36,6 +36,10 @@ void Mundo::Inicializa()
 	x_ojo=0;
 	y_ojo=0;
 	z_ojo=20;
+
+	//Plataformas
+	//Rectangulo* rec = new Rectangulo(0.5f, 4.0f, Vector2D(1.0f, 3.0f));
+
 }
 
 void Mundo::Tecla(unsigned char key)
