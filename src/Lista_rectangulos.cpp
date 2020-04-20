@@ -1,4 +1,3 @@
-
 #include "Lista_rectangulos.h"
 
 Lista_rectangulos::Lista_rectangulos()

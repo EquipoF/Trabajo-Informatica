@@ -13,6 +13,8 @@ void Mundo::Dibuja()
 	//dibujo del suelo
 	caja.Dibuja();
 	personaje.Dibuja();
+
+	l_rectangulos.dibuja();
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -38,8 +40,10 @@ void Mundo::Inicializa()
 	z_ojo=20;
 
 	//Plataformas
-	//Rectangulo* rec = new Rectangulo(0.5f, 4.0f, Vector2D(1.0f, 3.0f));
-
+	Rectangulo* rec1 = new Rectangulo(4.0f, 0.5f, Vector2D(1.0f, 2.0f));
+	l_rectangulos.agregar(rec1);
+	Rectangulo* rec2 = new Rectangulo(4.0f, 0.5f, Vector2D(-3.0f, 0.0f));
+	l_rectangulos.agregar(rec2);
 }
 
 void Mundo::Tecla(unsigned char key)

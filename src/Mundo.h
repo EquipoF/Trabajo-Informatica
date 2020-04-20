@@ -2,7 +2,7 @@
 #include "Rectangulo.h"
 #include "Caja.h"
 #include "Personaje.h"
-#include "Lista_rectangulos"
+#include "Lista_rectangulos.h"
 
 class Mundo
 {
