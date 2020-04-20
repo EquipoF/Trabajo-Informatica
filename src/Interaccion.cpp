@@ -23,6 +23,15 @@ void Interaccion::colision(Personaje& h, Caja c)
 	{
 		h.velocidad.x = 0.0f;
 		return true;
-	}
+	}		
 	return false;
+}
+
+void Interaccion::colision_suelo(Personaje& h, Caja c)
+{
+	if (h.posicion.y - ALTO <= c.suelo.arribaDcha.y)
+	{
+		h.aceleracion.y = 0.0f;
+		return true
+	}
 }

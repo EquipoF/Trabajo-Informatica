@@ -1,5 +1,8 @@
+#pragma once
 #include "Rectangulo.h"
 #include "Caja.h"
+#include "Personaje.h"
+
 class Mundo
 {
 public: 
@@ -13,9 +16,9 @@ public:
 private:
 	Caja caja;
 	Rectangulo rectangulo1, suelo;
+	Personaje personaje;
+
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
 };
-
-//esto es una prueba

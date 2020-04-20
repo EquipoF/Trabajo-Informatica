@@ -1,4 +1,5 @@
 #include "Mundo.h"
+#include "Interaccion.h"
 #include "glut.h"
 
 void Mundo::Dibuja()
@@ -10,6 +11,7 @@ void Mundo::Dibuja()
 	//aqui es donde hay que poner el codigo de dibujo
 	//dibujo del suelo
 	caja.Dibuja();
+	personaje.Dibuja();
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -24,7 +26,7 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-
+	personaje.mueve(0.03f);
 }
 
 void Mundo::Inicializa()
@@ -36,5 +38,16 @@ void Mundo::Inicializa()
 
 void Mundo::Tecla(unsigned char key)
 {
-
+	switch (key)
+	{
+		case 'a'://mover izq
+				personaje.setVel(Vector2D(-20.0f, 0.0f));
+			break;
+		case 'd'://mover dcha
+				personaje.setVel(Vector2D(20.0f, 0.0f));
+			break;
+		case 'p'://parar
+				personaje.setVel(Vector2D(0.0f, 0.0f));
+			break;
+	}
 }

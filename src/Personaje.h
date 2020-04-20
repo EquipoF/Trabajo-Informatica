@@ -2,8 +2,8 @@
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
 
-#define ALTO 14.0
-#define ANCHO 10.0
+#define ALTO 2.0f
+#define ANCHO 1.0f
 
 class Personaje : public ObjetoMovil
 {
