@@ -1,5 +1,7 @@
 #include "Rectangulo.h"
 #include "Caja.h"
+#include "Personaje.h"
+
 class Mundo
 {
 public: 
@@ -12,6 +14,7 @@ public:
 
 private:
 	Caja caja;
+	Personaje personaje;
 	Rectangulo rectangulo1, suelo;
 	float x_ojo;
 	float y_ojo;
