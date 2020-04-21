@@ -42,5 +42,5 @@ void Mundo::Inicializa()
 
 void Mundo::Tecla(unsigned char key)
 {
-	personaje.mueve(key);
+	personaje.Tecla(key);
 }

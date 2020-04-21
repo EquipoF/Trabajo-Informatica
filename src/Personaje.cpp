@@ -42,7 +42,9 @@ void Personaje::mueve(float t) {
 	ObjetoMovil::mueve(t);
 	cuerpo.setCentro(posicion);
 }
-void Personaje::mueve(unsigned char dir) {
+void Personaje::Tecla(unsigned char dir) {
+	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de la barra espaciadora
+
 	switch (dir)
 	{
 	//Movimiento en el eje x
@@ -61,48 +63,42 @@ void Personaje::mueve(unsigned char dir) {
 	
 	//Se presiona la barra espaciadora => se solicita un salto
 	case ESPACIO:
-		Personaje::Salta(PRESS, 0);
+		if (!espacioPresionado) //Compruebo que no estaba presionada ya
+		{
+			Personaje::Salta(0);
+		}
+		espacioPresionado = true; //Marco la barra espaciadora como pulsada.
 		break;
 	//Se suelta la barra espaciadora
 	case ESPACIO_SOLTADO:
-		Personaje::Salta(RELEASE, 0);
+		espacioPresionado = false; //la marco como no pulsada.
 		break;
 	}
 }
-void Personaje::Salta(bool solicitado, unsigned int tipo) {
-	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de la barra espaciadora
-
+void Personaje::Salta(unsigned int tipo) {
 	//Comprobaciones para saltar
 	if (saltosRestantes > 0) //Si hay saltos restantes
-	if (solicitado) //Si he presionado la barra espaciadora
 	{
-  		if (!espacioPresionado) //Compruebo que no estaba presionada ya
-		{
-			switch (tipo) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
-			{	
-				case (NORMAL):
-					velocidad.y = vSalto; //Si no lo estaba, es decir, la acabo de pulsar, genera un salto
-					break;
+		switch (tipo) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
+		{	
+			case (NORMAL):
+				velocidad.y = vSalto; //Si no lo estaba, es decir, la acabo de pulsar, genera un salto
+				break;
 
 				case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
-					velocidad.x = sqrt(-vMov);
-					velocidad.y = sqrt(vSalto);
-					break;
+				velocidad.x = sqrt(-vMov);
+				velocidad.y = sqrt(vSalto);
+				break;
 
 				case (PARED_IZQ): 
-					velocidad.x = sqrt(vMov);
-					velocidad.y = sqrt(vSalto); 
-					break;
+				velocidad.x = sqrt(vMov);
+				velocidad.y = sqrt(vSalto); 
+				break;
 
 				case (ABAJO):
-					velocidad.y = sqrt(-vSalto);
-					break;
-			}			
- 			saltosRestantes--; //resto 1 al número de saltos
-		}
-		espacioPresionado = true; //Marco la barra espaciadora como pulsada.
-	}
-	else if (!solicitado) { //Si no estoy pulsando la barra espaciadora
-		espacioPresionado = false; //la marco como no pulsada.
+				velocidad.y = sqrt(-vSalto);
+				break;
+		}			
+		saltosRestantes--; //resto 1 al número de saltos
 	}
 }
