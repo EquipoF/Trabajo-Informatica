@@ -10,11 +10,11 @@ public:
 
 	void Dibuja();
 
-	void mueve(float t);	//poner la m en mayúscula.
+	void Mueve(float t);	//poner la m en mayúscula.
 
-	void Tecla(unsigned char dir);
+	void Tecla(unsigned char key);
 
-	void Salta( unsigned int tipo);
+	void Salta( unsigned int tipoSalto);
 
 	void setSaltosRes(int saltosIn);
 	int getSaltosRes(void);

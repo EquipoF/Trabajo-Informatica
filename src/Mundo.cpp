@@ -30,7 +30,7 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	personaje.mueve(DIFF_TIEMPO);
+	personaje.Mueve(DIFF_TIEMPO);
 }
 
 void Mundo::Inicializa()
