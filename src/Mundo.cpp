@@ -1,9 +1,7 @@
 #include "Mundo.h"
 #include "glut.h"
 
-#define DIFF_TIEMPO 0.025 //tiempo n segundos que transcurre cada instante del juego. Diferencial de tiempo
-#define velPersonaje 5.0	//Velocidad a la que se mueve el personaje horizontalmente
-#define velSalto 5.0
+#define DIFF_TIEMPO 0.025f //tiempo n segundos que transcurre cada instante del juego. Diferencial de tiempo
 #define ESPACIO_SOLTADO 1
 
 void Mundo::Dibuja()
@@ -42,38 +40,5 @@ void Mundo::Inicializa()
 
 void Mundo::Tecla(unsigned char key)
 {
-	Vector2D velActual = personaje.getVel();
-	static bool espacioPresionado = 0;
-
-	switch (key) 
-	{
-	//Movimiento horizontal
-	case 'a':
-	case 'A':
-		personaje.setVel(-5.0, velActual.y);	//Sobrecargar Personaje::mueve para que vaya hacia un lado u otro
-	break;
-
-	case 'd':
-	case 'D':
-		personaje.setVel(5.0, velActual.y);
-	break;
-
-	//Movimiento vertical (salto)
-	case ' ':
-		if (espacioPresionado == 0)
-		{
-			personaje.setVel(velActual.x, 5.0);
-		}
-		espacioPresionado = 1;
-	break;
-
-	//Soltar teclas A y D
-	case 'S':
-		personaje.setVel(0.0, velActual.y);	//Crear funcion Personaje::Salta();
-	break;
-
-	case ESPACIO_SOLTADO:
-		espacioPresionado = 0;
-	break;
-	}
+	personaje.mueve(key);
 }

@@ -2,20 +2,23 @@
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
 
-#define ALTO 2.0
-#define ANCHO 1.0
-#define GRAVEDAD -2.0
-
 class Personaje : public ObjetoMovil
 {
 public:
 	Personaje();
 	virtual ~Personaje();
+
 	void Dibuja();
-	void mueve(float t);
+
+	void mueve(float t);	//poner la m en mayúscula.
+	void mueve(unsigned char dir);
+
+	void Salta(bool solicitado);
 
 private:
 	Rectangulo cuerpo;
 	int saltosRestantes;
+	float vMov; //Velocidad de movimiento lateral
+	float vSalto; //Veocidad inicial en el eje y que genera el salto
 };
 

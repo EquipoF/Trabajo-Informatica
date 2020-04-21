@@ -1,8 +1,8 @@
 #include "Mundo.h"
 #include "glut.h"
 
-#define STOP 'S'
-#define ESPACIO_SOLTADO 1
+#define STOP_EJE_X 'S'
+#define ESPACIO_SOLTADO 0
 
 Mundo mundo;
 
@@ -89,7 +89,7 @@ void OnKeyboardUp(unsigned char key, int x_t, int y_t)
 {
 	if ((key == 'a') || (key == 'd'))
 	{
-		mundo.Tecla(STOP); // cuando a mundo le llega 'S' pone velocidad personaje a 0
+		mundo.Tecla(STOP_EJE_X); // cuando a mundo le llega 'S' pone velocidad personaje a 0
 	}
 	else if (key == ' ') 
 	{
