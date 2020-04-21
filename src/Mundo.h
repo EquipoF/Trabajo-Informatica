@@ -6,6 +6,7 @@ class Mundo
 {
 public: 
 	void Tecla(unsigned char key);
+	void SetVelMundo(float velocidad);
 	void Inicializa();
 	void Mueve();
 	void Dibuja();
