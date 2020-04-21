@@ -2,7 +2,7 @@
 #include "glut.h"
 
 #define STOP 'S'
-#define ESPACIO_SOLTADO 1
+#define ESPACIO_SOLTADO 0
 
 Mundo mundo;
 

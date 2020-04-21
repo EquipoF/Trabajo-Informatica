@@ -42,41 +42,5 @@ void Mundo::Inicializa()
 
 void Mundo::Tecla(unsigned char key)
 {
-	Vector2D velActual = personaje.getVel();
-	static bool espacioPresionado = 0;
-	static bool dchaPresionada = false;
-	static bool izqPresionada = false;
-
-	switch (key) 
-	{
-	//Movimiento horizontal
-	case 'a':
-	case 'A':
-		personaje.setVel(-5.0, velActual.y);	//Sobrecargar Personaje::mueve para que vaya hacia un lado u otro
-
-	break;
-
-	case 'd':
-	case 'D':
-		personaje.setVel(5.0, velActual.y);
-	break;
-
-	//Movimiento vertical (salto)
-	case ' ':
-		if (espacioPresionado == 0)
-		{
-			personaje.setVel(velActual.x, 5.0);
-		}
-		espacioPresionado = 1;
-	break;
-
-	//Soltar teclas A y D
-	case 'S':
-		personaje.setVel(0.0, velActual.y);	//Crear funcion Personaje::Salta();
-	break;
-
-	case ESPACIO_SOLTADO:
-		espacioPresionado = 0;
-	break;
-	}
+	personaje.mueve(key);
 }

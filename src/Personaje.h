@@ -13,7 +13,10 @@ public:
 	void mueve(float t);	//poner la m en mayúscula.
 	void mueve(unsigned char dir);
 
-	void Salta(bool solicitado);
+	void Salta(bool solicitado, unsigned int tipo);
+
+	void setSaltosRes(int saltosIn);
+	int getSaltosRes(void);
 
 private:
 	Rectangulo cuerpo;
