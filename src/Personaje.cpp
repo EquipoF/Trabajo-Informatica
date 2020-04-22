@@ -25,8 +25,8 @@ Personaje::Personaje()
 	multiplicadorCargado = 3.0f;
 	saltosRestantes = 4; //nº de saltos para probar
 	//variables de contacto para probar los saltos de pared
-	contactoParedDcha = true;
-	contactoParedIzq = true;
+	contactoParedDcha = false;
+	contactoParedIzq = false;
 }
 Personaje::~Personaje()
 {

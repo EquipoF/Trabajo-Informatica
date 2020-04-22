@@ -10,14 +10,22 @@ Interaccion::~Interaccion()
 
 bool Interaccion::choque(Caja &pared, Personaje &personaje)
 {
-	if (Interaccion::choque(pared.techo, personaje.cuerpo) || Interaccion::choque(pared.suelo, personaje.cuerpo) 
-		|| Interaccion::choque(pared.paredD, personaje.cuerpo) || Interaccion::choque(pared.paredI, personaje.cuerpo))
+	if ( Interaccion::choque(pared.suelo, personaje.cuerpo) )
+		
 	{
+		personaje.setAcc(0.0, 0.0);
 		personaje.setVel(0.0, 0.0);
 		return true;
 	}	
+	else if (Interaccion::choque(pared.techo, personaje.cuerpo) || Interaccion::choque(pared.paredD, personaje.cuerpo) || Interaccion::choque(pared.paredI, personaje.cuerpo))
+	{
+		return true;
+	}
 	else
+	{
+		personaje.setAcc(0.0, -4.0);
 		return false;
+	}
 
 }
 
@@ -38,7 +46,6 @@ bool Interaccion::choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	if (Interaccion::choque(rectangulo, personaje.cuerpo))
 	{
-		personaje.setAcc(0.0, -1.0);
 		personaje.setVel(0.0, 0.0);
 		return true;
 	}
