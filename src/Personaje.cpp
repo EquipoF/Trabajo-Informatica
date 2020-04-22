@@ -3,7 +3,7 @@
 //Parámetros del cuerpo
 #define ALTO 2.0f
 #define ANCHO 1.0f
-#define GRAVEDAD -4.0f
+#define GRAVEDAD -0.0f
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
@@ -22,7 +22,7 @@ Personaje::Personaje()
 	aceleracion.y = GRAVEDAD;
 	vMov = 5.0;
 	vSalto = 5.0;
-	multiplicadorCargado = 1.5f;
+	multiplicadorCargado = 3.0f;
 	saltosRestantes = 4; //nº de saltos para probar
 	//variables de contacto para probar los saltos de pared
 	contactoParedDcha = true;
@@ -130,8 +130,8 @@ void Personaje::Tecla(unsigned char key)
 
 void Personaje::Salta(unsigned int tipoSalto) {
 	//Comprobaciones para saltar
-	//if (saltosRestantes > 0) //Si hay saltos restantes
-	//{
+	if (saltosRestantes > 0) //Si hay saltos restantes
+	{
 		switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
 		{	
 			case (NORMAL):
@@ -149,11 +149,11 @@ void Personaje::Salta(unsigned int tipoSalto) {
 				break;
 
 			case (CARGADO):
-				velocidad.y = multiplicadorCargado*-vSalto;
+				velocidad.y = multiplicadorCargado*vSalto;
 				break;
 		}			
 		saltosRestantes--; //resto 1 al número de saltos
-	//}
+	}
 }
 void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D
 	/*case (DASH_ABAJO):
