@@ -16,7 +16,7 @@ public:
 private:
 	Caja caja;
 	Personaje personaje;
-	Rectangulo rectangulo1, suelo;
+	Rectangulo rectangulo1;
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;

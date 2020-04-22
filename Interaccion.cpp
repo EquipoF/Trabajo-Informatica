@@ -8,18 +8,17 @@ Interaccion::~Interaccion()
 {
 }
 
-bool Interaccion::choque(Rectangulo &pared, Rectangulo &personaje)
+bool Interaccion::choque(Caja &pared, Personaje &personaje)
 {
 	bool interseccion;
 	Vector2D distancia;
 
-	distancia.x = abs(pared.centro.x - personaje.centro.x);
-	distancia.y = abs(pared.centro.y - personaje.centro.y);
+	distancia.x = abs(pared.techo.centro.x - personaje.cuerpo.centro.x);
+	distancia.y = abs(pared.techo.centro.y - personaje.cuerpo.centro.y);
 
-	if (distancia.x < ((pared.ancho / 2) + (personaje.ancho / 2)) && distancia.y < ((pared.alto / 2) + (personaje.alto / 2)))
+	if (distancia.x < ((pared.techo.ancho / 2) + (personaje.cuerpo.ancho / 2)) && distancia.y < ((pared.techo.alto / 2) + (personaje.cuerpo.alto / 2)))
 	{
-		personaje.centro.x = 0;
-		personaje.centro.y = 0;
+		personaje.setPos(0.0, 0.0);
 		interseccion = 1;
 	}
 	else
