@@ -2,11 +2,11 @@
 #include "Rectangulo.h"
 #include <vector>
 
-class Lista_rectangulos
+class ListaRectangulos
 {
 public:
-	Lista_rectangulos();
-	virtual ~Lista_rectangulos();
+	ListaRectangulos();
+	virtual ~ListaRectangulos();
 
 	bool agregar(Rectangulo* rec);
 	void dibuja();
