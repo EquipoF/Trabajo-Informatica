@@ -21,8 +21,6 @@ void Mundo::Dibuja()
 void Mundo::SetOjo(float x, float y, float z)
 {
 }
-
-
 float Mundo::GetOjo()
 {
 	return 0.0f;

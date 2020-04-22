@@ -1,8 +1,9 @@
 #include "Mundo.h"
 #include "glut.h"
 
-#define STOP 'S'
 #define ESPACIO_SOLTADO 0
+#define DCHA_SOLTADO 1
+#define IZQ_SOLTADO 2
 
 Mundo mundo;
 
@@ -86,16 +87,19 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 }
 
 void OnKeyboardUp(unsigned char key, int x_t, int y_t)
-{
-	if ((key == 'a') || (key == 'd'))
+{	
+	if (key == 'd')
 	{
-		mundo.Tecla(STOP); // cuando a mundo le llega 'S' pone velocidad personaje a 0
+		mundo.Tecla(DCHA_SOLTADO);
+	}
+	else if (key == 'a')
+	{
+		mundo.Tecla(IZQ_SOLTADO);
 	}
 	else if (key == ' ') 
 	{
 		mundo.Tecla(ESPACIO_SOLTADO); 
 	}
-
 	glutPostRedisplay();
 }
 

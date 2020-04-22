@@ -4,9 +4,11 @@
 #define ALTO 2.0f
 #define ANCHO 1.0f
 #define GRAVEDAD -4.0f
+#define COS_45 1/1.414f
+#define SEN_45 1/1.414f
 
 //Nombres de las teclas
-enum { DCHA = 'd', IZQ = 'a', STOP_EJE_X = 'S', ESPACIO = ' ', ESPACIO_SOLTADO=0};
+enum { DCHA = 'd', IZQ = 'a', STOP_EJE_X = 'S', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2 };
 
 //Tipos de salto
 enum {NORMAL=0, PARED_DCHA=1, PARED_IZQ=2, ABAJO=3};
@@ -42,27 +44,37 @@ void Personaje::Mueve(float t) {
 	cuerpo.setCentro(posicion);
 }
 
-void Personaje::Tecla(unsigned char key) {
-	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de la barra espaciadora
+void Personaje::Tecla(unsigned char key) 
+{   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
+	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
+	static bool dchaPresionado = false;
+	static bool izqPresionado = false;
 
 	switch (key)
 	{
 	//Movimiento en el eje x
 	case DCHA:
 		velocidad.x = vMov;
+		dchaPresionado = true;
 		break;
 
 	case IZQ:
 		velocidad.x = -vMov;
+		izqPresionado = true;
 		break;
 	
 	//Detener eje x
-	case STOP_EJE_X:
-		velocidad.x = 0.0f;
+	case DCHA_SOLTADO:
+		dchaPresionado = false;
+		break;
+
+	case IZQ_SOLTADO:
+		izqPresionado = false;
 		break;
 	
 	//Se presiona la barra espaciadora => se solicita un salto
 	case ESPACIO:
+		//Meter -aquí los distintos tipos de salto.
 		if (!espacioPresionado) //Compruebo que no estaba presionada ya
 		{
 			Personaje::Salta(0); //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
@@ -73,6 +85,10 @@ void Personaje::Tecla(unsigned char key) {
 	case ESPACIO_SOLTADO:
 		espacioPresionado = false; //la marco como no pulsada.
 		break;
+	}
+	if (!dchaPresionado && !izqPresionado) //Arreglo del BUG#1
+	{
+		velocidad.x = 0.0f;
 	}
 }
 
@@ -86,17 +102,17 @@ void Personaje::Salta(unsigned int tipoSalto) {
 				velocidad.y = vSalto; //Velocidad en Y para hacer un salto normal (hacia arriba)
 				break;
 
-				case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
-				velocidad.x = -vMov / 1.414;
-				velocidad.y = vSalto / 1.414;
+			case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
+				velocidad.x = -vMov * COS_45;
+				velocidad.y = vSalto * SEN_45;
 				break;
 
-				case (PARED_IZQ): 
-				velocidad.x = vMov / 1.414;
-				velocidad.y = vSalto / 1.414;
+			case (PARED_IZQ): 
+				velocidad.x = vMov * COS_45;
+				velocidad.y = vSalto * SEN_45;
 				break;
 
-				case (ABAJO):
+			case (ABAJO):
 				velocidad.y = -vSalto;
 				break;
 		}			
