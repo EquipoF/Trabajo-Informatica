@@ -32,8 +32,8 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	personaje.setVel(-1.0, 1.0); //Velocidad de prueba
-	personaje.mueve(DIFF_TIEMPO);
+	//personaje.setVel(-1.0, 1.0);
+	personaje.Mueve(DIFF_TIEMPO);
 
 	SetVelMundo(0); //Aqui se cambia la velocidad de subida del mundo
 	
@@ -61,5 +61,4 @@ void Mundo::Tecla(unsigned char key)
 void Mundo::SetVelMundo(float velocidad)
 {
 	y_ojo = y_ojo + velocidad;
-	velocidad++;
 }
