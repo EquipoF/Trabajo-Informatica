@@ -19,12 +19,23 @@ Personaje::Personaje()
 	aceleracion.y = GRAVEDAD;
 	vMov = 5.0;
 	vSalto = 5.0;
-	saltosRestantes = 2; //Doble salto
+	saltosRestantes = 3; //nº de saltos para probar
+	//variables de contacto para probar los saltos de pared
+	contactoParedDcha = true;
+	contactoParedIzq = true;
 }
 Personaje::~Personaje()
 {
 }
 
+void Personaje::setvMov(float vIn) 
+{
+	vMov = vIn;
+}
+void Personaje::setvSalto(float vIn) 
+{
+	vSalto = vIn;
+}
 void Personaje::setSaltosRes(int saltosIn)
 {
 	saltosRestantes = saltosIn;
@@ -46,6 +57,7 @@ void Personaje::Mueve(float t) {
 
 void Personaje::Tecla(unsigned char key) 
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
+	//Flags para la detección de teclas.
 	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
 	static bool dchaPresionado = false;
 	static bool izqPresionado = false;
@@ -74,10 +86,18 @@ void Personaje::Tecla(unsigned char key)
 	
 	//Se presiona la barra espaciadora => se solicita un salto
 	case ESPACIO:
-		//Meter -aquí los distintos tipos de salto.
-		if (!espacioPresionado) //Compruebo que no estaba presionada ya
+		//Meter aquí los distintos tipos de salto.
+		if (!espacioPresionado) //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
 		{
-			Personaje::Salta(0); //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
+			if (contactoParedDcha && dchaPresionado) {	//Salto de pared
+				Personaje::Salta(1);
+			}
+			else if (contactoParedIzq && izqPresionado) {	//Salto de pared
+				Personaje::Salta(2);
+			}
+			else {	//Salto normal
+				Personaje::Salta(0);
+			}
 		}
 		espacioPresionado = true; //Marco la barra espaciadora como pulsada.
 		break;
@@ -86,7 +106,7 @@ void Personaje::Tecla(unsigned char key)
 		espacioPresionado = false; //la marco como no pulsada.
 		break;
 	}
-	if (!dchaPresionado && !izqPresionado) //Arreglo del BUG#1
+	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
 	{
 		velocidad.x = 0.0f;
 	}
