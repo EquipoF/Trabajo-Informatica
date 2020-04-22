@@ -13,6 +13,7 @@ void Mundo::Dibuja()
 			0.0, y_ojo, 0.0,      // hacia que punto mira  (0,0,0) 
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
+	
 	//aqui es donde hay que poner el codigo de dibujo
 	//dibujo del suelo
 	caja.Dibuja();
@@ -31,7 +32,11 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
+	//personaje.setVel(-1.0, 1.0);
 	personaje.Mueve(DIFF_TIEMPO);
+
+	SetVelMundo(0); //Aqui se cambia la velocidad de subida del mundo
+	
 	Interaccion::choque(caja, personaje);
 }
 
@@ -51,4 +56,9 @@ void Mundo::Inicializa()
 void Mundo::Tecla(unsigned char key)
 {
 	personaje.Tecla(key);
+}
+
+void Mundo::SetVelMundo(float velocidad)
+{
+	y_ojo = y_ojo + velocidad;
 }
