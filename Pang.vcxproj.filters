@@ -36,7 +36,7 @@
     <ClCompile Include="src\ObjetoMovil.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Interaccion.cpp">
+    <ClCompile Include="src\ListaRectangulos.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="src\Personaje.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\Interaccion.h">
+    <ClInclude Include="src\ListaRectangulos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
