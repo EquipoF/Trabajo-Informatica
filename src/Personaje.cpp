@@ -3,7 +3,7 @@
 //Parámetros del cuerpo
 #define ALTO 2.0f
 #define ANCHO 1.0f
-#define GRAVEDAD -0.0f
+#define GRAVEDAD -4.0f
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
