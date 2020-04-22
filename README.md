@@ -67,16 +67,16 @@
    - Si la cámara avanza constante: salirte fuera de la pantalla.
    - Si la cámara avanza por cachos: perder vida por caída.
    ### Controles:
-   [X] movimiento básico *tipo* WASD (Izquierda, derecha, salto, agacharse) 
-   [ ] Caer más despacio si estás pegado a la pared.
+   - [X] movimiento básico *tipo* WASD (Izquierda, derecha, salto, agacharse) 
+   - [ ] Caer más despacio si estás pegado a la pared.
    ### Poderes/habilidades/bonus
-   [X] Doble salto _(pulsar tecla de salto 2 veces)_
-   [X] Salto cargado _(agacharse + salto tipo [Jump King](https://www.youtube.com/watch?v=ktVhJ41AExU))_
-   [X] salto de pared _(Interacción::choque(personaje,caja) == true && botón de salto)_
-   [ ] Dash _(pulsar tecla de mvto. dos veces o tecla + shift)_
-   [ ] El nivel sube mas lento 
-   [ ] Escudo contra cosas que dañan
-   [ ] etc...
+   - [X] Doble salto _(pulsar tecla de salto 2 veces)_
+   - [X] Salto cargado _(agacharse + salto tipo [Jump King](https://www.youtube.com/watch?v=ktVhJ41AExU))_
+   - [X] salto de pared _(Interacción::choque(personaje,caja) == true && botón de salto)_
+   - [ ] Dash _(pulsar tecla de mvto. dos veces o tecla + shift)_
+   - [ ] El nivel sube mas lento 
+   - [ ] Escudo contra cosas que dañan
+   - [ ] etc...
     
 ## Objetivos (corto plazo)
 - [X] Crear nuevo proyecto
