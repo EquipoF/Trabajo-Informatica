@@ -7,7 +7,7 @@ public:
 	ObjetoMovil();
 	~ObjetoMovil();
 
-	virtual void mueve(float t);
+	virtual void Mueve(float t);
 
 	void setPos(float ix, float iy);	void setPos(Vector2D pos);
 	void setVel(float vx, float vy);	void setVel(Vector2D vel);
@@ -21,6 +21,5 @@ protected:
 	Vector2D posicion;
 	Vector2D velocidad;
 	Vector2D aceleracion;
-
 };
 

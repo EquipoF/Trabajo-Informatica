@@ -1,6 +1,9 @@
 #include "Mundo.h"
 #include "glut.h"
 
+//Misma enum que en Personaje.cpp 
+enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO = 3 };
+
 Mundo mundo;
 
 float aspect = 1.0f;
@@ -41,6 +44,7 @@ int main(int argc,char* argv[])
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25,OnTimer,0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
+	glutKeyboardUpFunc(OnKeyboardUp);
 	glutReshapeFunc(onSize);
 
 	mundo.Inicializa();
@@ -73,22 +77,30 @@ void OnDraw(void)
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
+
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	//poner aqui el código de teclado
 	mundo.Tecla(key);
-
 	glutPostRedisplay();
 }
 
 void OnKeyboardUp(unsigned char key, int x_t, int y_t)
-{
-	if ((key == 'a') || (key == 'd'))
+{//Se puede cambiar por un switch
+	switch (key)
 	{
-		key = 'p';// cuando a mundo le llega 'p' pone velocidad personaje a 0
-		mundo.Tecla(key);
+	case DCHA:
+		mundo.Tecla(DCHA_SOLTADO);
+		break;
+	case IZQ:
+		mundo.Tecla(IZQ_SOLTADO);
+		break;
+	case ABAJO:
+		mundo.Tecla(ABAJO_SOLTADO);
+		break;
+	case ESPACIO:
+		mundo.Tecla(ESPACIO_SOLTADO);
+		break;
 	}
-
 	glutPostRedisplay();
 }
 
