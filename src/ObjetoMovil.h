@@ -21,6 +21,5 @@ protected:
 	Vector2D posicion;
 	Vector2D velocidad;
 	Vector2D aceleracion;
-
 };
 

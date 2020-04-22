@@ -14,6 +14,7 @@ public:
 
 	void Tecla(unsigned char key);
 
+	void Dash(unsigned char direccion);
 	void Salta( unsigned int tipoSalto);
 
 	void setvSalto(float vIn);
@@ -28,5 +29,6 @@ private:
 	float vSalto; //Veocidad inicial en el eje y que genera el salto
 	bool contactoParedDcha;
 	bool contactoParedIzq;
+	float multiplicadorCargado;
 };
 

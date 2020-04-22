@@ -1,9 +1,8 @@
 #include "Mundo.h"
 #include "glut.h"
 
-#define ESPACIO_SOLTADO 0
-#define DCHA_SOLTADO 1
-#define IZQ_SOLTADO 2
+//Misma enum que en Personaje.cpp 
+enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO = 3 };
 
 Mundo mundo;
 
@@ -78,27 +77,29 @@ void OnDraw(void)
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
+
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	//poner aqui el código de teclado
 	mundo.Tecla(key);
-
 	glutPostRedisplay();
 }
 
 void OnKeyboardUp(unsigned char key, int x_t, int y_t)
-{	
-	if (key == 'd')
+{//Se puede cambiar por un switch
+	switch (key)
 	{
+	case DCHA:
 		mundo.Tecla(DCHA_SOLTADO);
-	}
-	else if (key == 'a')
-	{
+		break;
+	case IZQ:
 		mundo.Tecla(IZQ_SOLTADO);
-	}
-	else if (key == ' ') 
-	{
-		mundo.Tecla(ESPACIO_SOLTADO); 
+		break;
+	case ABAJO:
+		mundo.Tecla(ABAJO_SOLTADO);
+		break;
+	case ESPACIO:
+		mundo.Tecla(ESPACIO_SOLTADO);
+		break;
 	}
 	glutPostRedisplay();
 }
