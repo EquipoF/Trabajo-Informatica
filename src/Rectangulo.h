@@ -3,6 +3,7 @@
 class Rectangulo
 {
 public:
+	friend class Interaccion;
 	Rectangulo();//Temporalmente cuadrado rojo estandar
 	Rectangulo(float anchoIn, float altoIn, Vector2D centroIn);
 	Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D abajoDchaIn, Vector2D abajoIzqIn);

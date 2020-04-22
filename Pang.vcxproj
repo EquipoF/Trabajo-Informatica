@@ -88,6 +88,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Interaccion.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
+    <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\ObjetoMovil.h" />
     <ClInclude Include="src\Personaje.h" />

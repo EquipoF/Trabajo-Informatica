@@ -1,6 +1,7 @@
 #include "Rectangulo.h"
 #include "Caja.h"
 #include "Personaje.h"
+#include "Interaccion.h"
 
 class Mundo
 {
@@ -15,7 +16,7 @@ public:
 private:
 	Caja caja;
 	Personaje personaje;
-	Rectangulo rectangulo1, suelo;
+	Rectangulo rectangulo1;
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;

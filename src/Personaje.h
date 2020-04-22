@@ -5,6 +5,7 @@
 class Personaje : public ObjetoMovil
 {
 public:
+	friend class Interaccion;
 	Personaje();
 	virtual ~Personaje();
 
