@@ -2,36 +2,55 @@
 
 Interaccion::Interaccion()
 {
-
 }
 
 Interaccion::~Interaccion()
 {
-
 }
 
-void Interaccion::colision(Personaje& h, Caja c)
+bool Interaccion::choque(Caja &pared, Personaje &personaje)
 {
-	float xmax = c.suelo.arribaDcha.x;
-	float xmin = c.suelo.arribaIzq.x;
-	if (h.posicion.x > xmax)
+	if ( Interaccion::choque(pared.suelo, personaje.cuerpo) )
+		
 	{
-		h.velocidad.x = 0.0f;
+		personaje.setAcc(0.0, 0.0);
+		personaje.setVel(0.0, 0.0);
+		return true;
+	}	
+	else if (Interaccion::choque(pared.techo, personaje.cuerpo) || Interaccion::choque(pared.paredD, personaje.cuerpo) || Interaccion::choque(pared.paredI, personaje.cuerpo))
+	{
 		return true;
 	}
-	if (h.posicion.x < xmin)
+	else
 	{
-		h.velocidad.x = 0.0f;
-		return true;
-	}		
-	return false;
+		personaje.setAcc(0.0, -4.0);
+		return false;
+	}
+
 }
 
-void Interaccion::colision_suelo(Personaje& h, Caja c)
+bool Interaccion::choque(Rectangulo& r1, Rectangulo& r2)
 {
-	if (h.posicion.y - ALTO <= c.suelo.arribaDcha.y)
+	Vector2D distancia;
+
+	distancia.x = abs(r1.centro.x - r2.centro.x);
+	distancia.y = abs(r1.centro.y - r2.centro.y);
+
+	if (distancia.x < ((r1.ancho / 2) + (r2.ancho / 2)) && distancia.y < ((r1.alto / 2) + (r2.alto / 2)))
+		return true;
+	else
+		return false;
+}
+
+bool Interaccion::choque(Rectangulo& rectangulo, Personaje& personaje)
+{
+	if (Interaccion::choque(rectangulo, personaje.cuerpo))
 	{
-		h.aceleracion.y = 0.0f;
-		return true
+		personaje.setVel(0.0, 0.0);
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
