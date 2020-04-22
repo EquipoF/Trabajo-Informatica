@@ -3,6 +3,7 @@
 Personaje::Personaje()
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
+	Personaje::setVel(0.0, 1.0);
 }
 
 Personaje::~Personaje()

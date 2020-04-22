@@ -11,6 +11,8 @@ public:
 	virtual ~Interaccion();
 
 	static bool choque(Caja& pared, Personaje& personaje);
+	static bool choque(Rectangulo& r1, Rectangulo& r2);
+	static bool choque(Rectangulo& rectangulo, Personaje& personaje);
 
 };
 

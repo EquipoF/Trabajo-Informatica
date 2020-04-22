@@ -31,13 +31,12 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	personaje.setVel(-1.0, 1.0); //Velocidad de prueba
+	//Velocidad de prueba
 	personaje.mueve(DIFF_TIEMPO);
-	//Interaccion::choque(caja.suelo, personaje.cuerpo);
+	
 	Interaccion::choque(caja, personaje);
-	//Interaccion::choque(caja.paredD, personaje.cuerpo);
-	//Interaccion::choque(caja.paredI, personaje.cuerpo);
-
+	Interaccion::choque(rectangulo1, personaje);
+	
 }
 
 void Mundo::Inicializa()

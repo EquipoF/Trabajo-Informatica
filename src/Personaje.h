@@ -8,7 +8,6 @@
 class Personaje : public ObjetoMovil
 {
 public:
-	friend class Mundo;
 	friend class Interaccion;
 	Personaje();
 	virtual ~Personaje();
