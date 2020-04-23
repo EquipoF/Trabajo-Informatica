@@ -1,5 +1,7 @@
 #include "Interaccion.h"
 
+enum { ARRIBA = 1, ABAJO = 3, PARED_DCHA = 4, PARED_IZQ = 2 };
+
 Interaccion::Interaccion()
 {
 }
@@ -8,63 +10,49 @@ Interaccion::~Interaccion()
 {
 }
 
-bool Interaccion::Choque(Caja &pared, Personaje &personaje)
+bool Interaccion::Choque(Caja & caja, Personaje& personaje)
 {
-	if ( Interaccion::Choque(pared.suelo, personaje.cuerpo) )
-		
-	{
-		switch (Interaccion::Choque(pared.suelo, personaje.cuerpo))
-		{
-		case 1:
-			personaje.setSaltosRes(4);
-			personaje.SetAcc(0.0, 0.0);
-			personaje.SetVel(0.0, 0.0);
-			return true;
-		case 2:
-			return true;
-		case 3:
-			return true;
-		case 4:
-			return true;
-		}
-	}	
-	else if (Interaccion::Choque(pared.techo, personaje.cuerpo) || Interaccion::Choque(pared.paredD, personaje.cuerpo) || Interaccion::Choque(pared.paredI, personaje.cuerpo))
+	if (Interaccion::Choque(caja.ladosCaja, personaje))
 	{
 		return true;
 	}
 	else
 	{
-		personaje.SetAcc(0.0, -4.0);
 		return false;
-	}
-
+	}		
 }
 
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	Vector2D posAnterior = personaje.GetPosAnt();
+	Vector2D velActual = personaje.GetVel();
+
 	if (Interaccion::Choque(rectangulo, personaje.cuerpo))
 	{
+		personaje.SetPos(posAnterior);
 		switch (Interaccion::Choque(rectangulo, personaje.cuerpo))
 		{
-		case 1:
-			personaje.setSaltosRes(4);
-			personaje.SetAcc(0.0, 0.0);
-			personaje.SetVel(0.0, 0.0);
+		case ARRIBA:
+			personaje.setSaltosRes(2);
+			personaje.SetVel(velActual.x, 0.0);
 			return true;
-		case 2:
-			personaje.SetVel(0.0, 0.0);
+		case PARED_DCHA:
+			personaje.SetVel(0.0, velActual.y);
+			personaje.contactoParedDcha = true;
 			return true;
-		case 3:
-			personaje.SetVel(0.0, 0.0);
+		case PARED_IZQ:
+			personaje.SetVel(0.0, velActual.y);
+			personaje.contactoParedIzq = true;
 			return true;
-		case 4:
-			personaje.SetVel(0.0, 0.0);
+		case ABAJO:
+			personaje.SetVel(velActual.x, 0.0);
 			return true;
 		}
 	}
 	else
 	{
+		//personaje.contactoParedDcha = false; //Para que no se quede la opción de salto de pared activa par siempre si tocas una pared
+		//personaje.contactoParedIzq = false;
 		return false;
 	}
 }
@@ -86,9 +74,9 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 	else
 		choque = false;
 
-	if (choque == false)
+	if (choque == false)	//si no hay choque
 		return 0;
-	else if (choque == true && r2.centro.y > r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x))
+	else if (choque == true && r2.centro.y > r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x)) //bruh
 		return 1;
 	else if (choque == true && r2.centro.x > r1.centro.x && (distanciaMax.y - distancia.y) > (distanciaMax.x - distancia.x))
 		return 2;
@@ -100,10 +88,16 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 		return 4;
 }
 
-void Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
+bool Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
 {
+	bool choqueDetectado = false;
+
 	for (int i = 0; i < listaRectangulos.GetNum(); i++)
 	{
-		Interaccion::Choque(*listaRectangulos.lista[i], personaje);
+		if (Interaccion::Choque(*listaRectangulos.lista[i], personaje))
+		{
+			choqueDetectado = true;
+		}
 	}
+	return choqueDetectado;
 }
