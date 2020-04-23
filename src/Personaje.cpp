@@ -23,7 +23,7 @@ Personaje::Personaje()
 	vMov = 5.0;
 	vSalto = 5.0;
 	multiplicadorCargado = 3.0f;
-	saltosRestantes = 4; //nº de saltos para probar
+	saltosRestantes = 2; //nº de saltos para probar
 	//variables de contacto para probar los saltos de pared
 	contactoParedDcha = false;
 	contactoParedIzq = false;
@@ -130,8 +130,8 @@ void Personaje::Tecla(unsigned char key)
 
 void Personaje::Salta(unsigned int tipoSalto) {
 	//Comprobaciones para saltar
-	//if (saltosRestantes > 0) //Si hay saltos restantes
-	//{
+	if (saltosRestantes > 0) //Si hay saltos restantes
+	{
 		switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
 		{	
 			case (NORMAL):
@@ -153,7 +153,7 @@ void Personaje::Salta(unsigned int tipoSalto) {
 				break;
 		}			
 		saltosRestantes--; //resto 1 al número de saltos
-	//}
+	}
 }
 void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D
 	/*case (DASH_ABAJO):

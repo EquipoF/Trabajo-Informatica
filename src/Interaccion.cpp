@@ -13,12 +13,12 @@ bool Interaccion::Choque(Caja &pared, Personaje &personaje)
 	if ( Interaccion::Choque(pared.suelo, personaje.cuerpo) )
 		
 	{
-		switch (Interaccion::choque(pared.suelo, personaje.cuerpo))
+		switch (Interaccion::Choque(pared.suelo, personaje.cuerpo))
 		{
 		case 1:
 			personaje.setSaltosRes(4);
-			personaje.setAcc(0.0, 0.0);
-			personaje.setVel(0.0, 0.0);
+			personaje.SetAcc(0.0, 0.0);
+			personaje.SetVel(0.0, 0.0);
 			return true;
 		case 2:
 			return true;
@@ -26,9 +26,9 @@ bool Interaccion::Choque(Caja &pared, Personaje &personaje)
 			return true;
 		case 4:
 			return true;
-		}	
+		}
 	}	
-	else if (Interaccion::choque(pared.techo, personaje.cuerpo) || Interaccion::choque(pared.paredD, personaje.cuerpo) || Interaccion::choque(pared.paredI, personaje.cuerpo))
+	else if (Interaccion::Choque(pared.techo, personaje.cuerpo) || Interaccion::Choque(pared.paredD, personaje.cuerpo) || Interaccion::Choque(pared.paredI, personaje.cuerpo))
 	{
 		return true;
 	}
@@ -45,9 +45,23 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 	Vector2D posAnterior = personaje.GetPosAnt();
 	if (Interaccion::Choque(rectangulo, personaje.cuerpo))
 	{
-		personaje.SetPos(posAnterior);
-		personaje.SetVel(0.0, 0.0);
-		return true;
+		switch (Interaccion::Choque(rectangulo, personaje.cuerpo))
+		{
+		case 1:
+			personaje.setSaltosRes(4);
+			personaje.SetAcc(0.0, 0.0);
+			personaje.SetVel(0.0, 0.0);
+			return true;
+		case 2:
+			personaje.SetVel(0.0, 0.0);
+			return true;
+		case 3:
+			personaje.SetVel(0.0, 0.0);
+			return true;
+		case 4:
+			personaje.SetVel(0.0, 0.0);
+			return true;
+		}
 	}
 	else
 	{
@@ -55,7 +69,7 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 	}
 }
 
-int Interaccion::choque(Rectangulo& r1, Rectangulo& r2)
+int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 {
 	bool choque;
 	Vector2D distancia;
@@ -86,21 +100,10 @@ int Interaccion::choque(Rectangulo& r1, Rectangulo& r2)
 		return 4;
 }
 
-int Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
+void Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
 {
-	int i = 0;
-
-	while (i < listaRectangulos.GetNum())
+	for (int i = 0; i < listaRectangulos.GetNum(); i++)
 	{
 		Interaccion::Choque(*listaRectangulos.lista[i], personaje);
-		i++;
-	}
-	if (i <= 0)
-	{
-		return i;
-	}
-	else
-	{
-		return -1;
 	}
 }

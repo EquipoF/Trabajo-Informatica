@@ -14,7 +14,7 @@ public:
 	static bool Choque(Caja& pared, Personaje& personaje);
 	static int Choque(Rectangulo& r1, Rectangulo& r2);
 	static bool Choque(Rectangulo& rectangulo, Personaje& personaje);
-	static int Choque(ListaRectangulos& listaRectangulo, Personaje& personaje);
+	static void Choque(ListaRectangulos& listaRectangulo, Personaje& personaje);
 
 };
 
