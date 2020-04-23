@@ -18,8 +18,7 @@ void Mundo::Dibuja()
 	//dibujo del suelo
 	caja.Dibuja();
 	personaje.Dibuja();
-
-	l_rectangulos.dibuja();
+	plataformas.Dibuja();
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -32,12 +31,11 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	//personaje.setVel(-1.0, 1.0);
-	personaje.Mueve(DIFF_TIEMPO);
-
 	SetVelMundo(0); //Aqui se cambia la velocidad de subida del mundo
-	
-	Interaccion::choque(caja, personaje);
+
+	personaje.Mueve(DIFF_TIEMPO);	
+		Interaccion::Choque(caja, personaje);
+		Interaccion::Choque(plataformas, personaje);
 }
 
 void Mundo::Inicializa()
@@ -48,9 +46,9 @@ void Mundo::Inicializa()
 
 	//Plataformas
 	Rectangulo* rec1 = new Rectangulo(4.0f, 0.5f, Vector2D(1.0f, 2.0f));
-	l_rectangulos.agregar(rec1);
+	plataformas.Agregar(rec1);
 	Rectangulo* rec2 = new Rectangulo(4.0f, 0.5f, Vector2D(-3.0f, 0.0f));
-	l_rectangulos.agregar(rec2);
+	plataformas.Agregar(rec2);
 }
 
 void Mundo::Tecla(unsigned char key)

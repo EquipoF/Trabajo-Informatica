@@ -8,9 +8,10 @@ Interaccion::~Interaccion()
 {
 }
 
-bool Interaccion::choque(Caja &pared, Personaje &personaje)
+bool Interaccion::Choque(Caja &pared, Personaje &personaje)
 {
-	if ( Interaccion::choque(pared.suelo, personaje.cuerpo) )	
+	if ( Interaccion::Choque(pared.suelo, personaje.cuerpo) )
+		
 	{
 		switch (Interaccion::choque(pared.suelo, personaje.cuerpo))
 		{
@@ -33,17 +34,19 @@ bool Interaccion::choque(Caja &pared, Personaje &personaje)
 	}
 	else
 	{
-		personaje.setAcc(0.0, -4.0);
+		personaje.SetAcc(0.0, -4.0);
 		return false;
 	}
 
 }
 
-bool Interaccion::choque(Rectangulo& rectangulo, Personaje& personaje)
+bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
-	if (Interaccion::choque(rectangulo, personaje.cuerpo))
+	Vector2D posAnterior = personaje.GetPosAnt();
+	if (Interaccion::Choque(rectangulo, personaje.cuerpo))
 	{
-		personaje.setVel(0.0, 0.0);
+		personaje.SetPos(posAnterior);
+		personaje.SetVel(0.0, 0.0);
 		return true;
 	}
 	else
@@ -81,4 +84,23 @@ int Interaccion::choque(Rectangulo& r1, Rectangulo& r2)
 		return 4;
 	else
 		return 4;
+}
+
+int Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
+{
+	int i = 0;
+
+	while (i < listaRectangulos.GetNum())
+	{
+		Interaccion::Choque(*listaRectangulos.lista[i], personaje);
+		i++;
+	}
+	if (i <= 0)
+	{
+		return i;
+	}
+	else
+	{
+		return -1;
+	}
 }
