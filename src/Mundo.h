@@ -20,7 +20,7 @@ private:
 	Caja caja;
 	Personaje personaje;
 	Rectangulo rectangulo1;
-	ListaRectangulos l_rectangulos;
+	ListaRectangulos plataformas;
 
 	float x_ojo;
 	float y_ojo;
