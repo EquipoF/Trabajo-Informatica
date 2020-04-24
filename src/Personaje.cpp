@@ -16,7 +16,7 @@ enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 }
 //Tipos de dash
 enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
-Personaje::Personaje()
+Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
@@ -27,7 +27,12 @@ Personaje::Personaje()
 	//variables de contacto para probar los saltos de pared
 	contactoParedDcha = false;
 	contactoParedIzq = false;
+
+	sprite.setCenter(1, 0);
+	sprite.setSize(2, 2);
+	//altura = 1.8f;
 }
+
 Personaje::~Personaje()
 {
 }
@@ -51,7 +56,25 @@ int Personaje::getSaltosRes(void)
 
 void Personaje::Dibuja()
 {
-	cuerpo.Dibuja();
+	//cuerpo.Dibuja();
+
+	glPushMatrix();
+	glTranslatef(posicion.x, posicion.y-1.0f, 1);
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	//gestion de direccion y animacion
+
+	if (velocidad.x > 0.01)sprite.flip(false, false);
+	if (velocidad.x < -0.01)sprite.flip(true, false);
+	if ((velocidad.x < 0.01) && (velocidad.x > -0.01))
+		sprite.setState(0);
+	else if (sprite.getState() == 0)
+		sprite.setState(1, false);
+	sprite.draw();
+
+
+
+	glPopMatrix();
 }
 
 void Personaje::Mueve(float t) {

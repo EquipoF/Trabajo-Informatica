@@ -1,6 +1,8 @@
 #pragma once
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
+#include "ETSIDI.h"
+using ETSIDI::SpriteSequence;
 
 class Personaje : public ObjetoMovil
 {
@@ -31,5 +33,7 @@ private:
 	bool contactoParedDcha;
 	bool contactoParedIzq;
 	float multiplicadorCargado;
+
+	SpriteSequence sprite;
 };
 

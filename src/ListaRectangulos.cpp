@@ -30,3 +30,14 @@ void ListaRectangulos::eliminarRectangulo(int ind)
 	delete lista[ind];
 	lista.erase(lista.begin() + ind);
 }
+
+int ListaRectangulos::getNum()
+{
+	return lista.size();
+}
+
+void ListaRectangulos::choque(Personaje &person)
+{
+	for (int i = 0; i < lista.size(); i++)
+		Interaccion::choque(*(lista[i]), person);
+}
