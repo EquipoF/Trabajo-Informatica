@@ -1,4 +1,5 @@
 #include "Personaje.h"
+#include "Interaccion.h"
 
 //Parámetros del cuerpo
 #define ALTO 2.0f
@@ -55,9 +56,15 @@ void Personaje::Dibuja()
 	cuerpo.Dibuja();
 }
 
-void Personaje::Mueve(float t) {
+void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) {
+	//bool misMuertos = false;
 	ObjetoMovil::Mueve(t);
-	cuerpo.setCentro(posicion);
+	if (Interaccion::Choque(plataformas, *this)||Interaccion::Choque(caja, *this))
+	{
+		posicion = posicionAnterior;
+		// misMuertos = true;
+	}	
+	cuerpo.setCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
@@ -101,7 +108,7 @@ void Personaje::Tecla(unsigned char key)
 	//Se presiona la barra espaciadora => se solicita un salto
 	case ESPACIO:
 		//Meter aquí los distintos tipos de salto.
-		if (!espacioPresionado) //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
+ 		if (!espacioPresionado) //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
 		{
 			if (contactoParedDcha && dchaPresionado) { //Salto de pared
 				Personaje::Salta(PARED_DCHA);

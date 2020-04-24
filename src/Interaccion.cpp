@@ -24,16 +24,17 @@ bool Interaccion::Choque(Caja & caja, Personaje& personaje)
 
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
-	Vector2D posAnterior = personaje.GetPosAnt();
+	//Vector2D posAnterior = personaje.GetPosAnt();
 	Vector2D velActual = personaje.GetVel();
-
-	if (Interaccion::Choque(rectangulo, personaje.cuerpo))
+	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
+	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
 	{
-		personaje.SetPos(posAnterior);
-		switch (Interaccion::Choque(rectangulo, personaje.cuerpo))
+		//personaje.SetPos(posAnterior);
+		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
 		{
 		case ARRIBA:
 			personaje.setSaltosRes(2);
+			//personaje.SetAcc(0.0, 0.0);
 			personaje.SetVel(velActual.x, 0.0);
 			return true;
 		case PARED_DCHA:
@@ -90,14 +91,14 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 
 bool Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
 {
-	bool choqueDetectado = false;
+	bool rectanguloChocado = false;
 
 	for (int i = 0; i < listaRectangulos.GetNum(); i++)
 	{
 		if (Interaccion::Choque(*listaRectangulos.lista[i], personaje))
 		{
-			choqueDetectado = true;
+			rectanguloChocado = true;
 		}
 	}
-	return choqueDetectado;
+	return rectanguloChocado;
 }
