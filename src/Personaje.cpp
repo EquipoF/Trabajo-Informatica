@@ -23,7 +23,7 @@ Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
 	vMov = 5.0;
 	vSalto = 5.0;
 	multiplicadorCargado = 3.0f;
-	saltosRestantes = 4; //nº de saltos para probar
+	saltosRestantes = 2; //nº de saltos para probar
 	//variables de contacto para probar los saltos de pared
 	contactoParedDcha = false;
 	contactoParedIzq = false;

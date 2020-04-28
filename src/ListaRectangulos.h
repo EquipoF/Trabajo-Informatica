@@ -1,21 +1,20 @@
 #pragma once
 #include "Rectangulo.h"
-#include "Interaccion.h"
 #include <vector>
 
 class ListaRectangulos
 {
 public:
+	friend Interaccion;
 	ListaRectangulos();
 	virtual ~ListaRectangulos();
 
-	bool agregar(Rectangulo* rec);
-	void dibuja();
-	void eliminarRectangulo(int ind);
-	int getNum();
-	void choque(Personaje &person);
+	bool Agregar(Rectangulo* rec);
+	void Dibuja();
+	void EliminarRectangulo(int ind);
+
+	int GetNum();
 
 private:
 	std::vector<Rectangulo*> lista;
-	friend class Interaccion;
 };

@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "Caja.h"
 #include "Personaje.h"
+#include "ListaRectangulos.h"
 
 class Interaccion
 {
@@ -10,9 +11,10 @@ public:
 	Interaccion();
 	virtual ~Interaccion();
 
-	static bool choque(Caja& pared, Personaje& personaje);
-	static bool choque(Rectangulo& r1, Rectangulo& r2);
-	static bool choque(Rectangulo& rectangulo, Personaje& personaje);
+	static bool Choque(Caja& pared, Personaje& personaje);
+	static int Choque(Rectangulo& r1, Rectangulo& r2);
+	static bool Choque(Rectangulo& rectangulo, Personaje& personaje);
+	static void Choque(ListaRectangulos& listaRectangulo, Personaje& personaje);
 
 };
 
