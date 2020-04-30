@@ -1,5 +1,6 @@
 #pragma once
 #include "Rectangulo.h"
+#include "ListaRectangulos.h"
 
 class Caja
 {
@@ -11,6 +12,7 @@ public:
 
 private:
 	float alto, ancho;
-	Rectangulo suelo, techo, paredI, paredD;
+	Rectangulo suelo, techo, paredDcha, paredIzq;
+	ListaRectangulos ladosCaja;
 };
 

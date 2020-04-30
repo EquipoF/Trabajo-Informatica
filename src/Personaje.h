@@ -1,6 +1,9 @@
 #pragma once
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
+//#include "Interaccion.h"
+#include "ListaRectangulos.h"
+#include "Caja.h"
 #include "ETSIDI.h"
 using ETSIDI::SpriteSequence;
 
@@ -13,7 +16,7 @@ public:
 
 	void Dibuja();
 
-	void Mueve(float t);	//poner la m en mayúscula.
+	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);	//poner la m en mayúscula.
 
 	void Tecla(unsigned char key);
 
