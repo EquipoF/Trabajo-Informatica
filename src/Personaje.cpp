@@ -61,7 +61,7 @@ void Personaje::Dibuja()
 	//cuerpo.Dibuja();
 
 	glPushMatrix();
-	glTranslatef(posicion.x, posicion.y-1.0f, 1);
+	glTranslatef(posicion.x, posicion.y, 1);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
 	//gestion de direccion y animacion
