@@ -39,8 +39,8 @@ void Mundo::Mueve()
 void Mundo::Inicializa()
 {
 	x_ojo = 0;
-	y_ojo = 0;	//0 para real, 20 para pruebas
-	z_ojo = 20; //20 para real, 80 para pruebas
+	y_ojo = 20;	//0 para real, 20 para pruebas
+	z_ojo = 80; //20 para real, 80 para pruebas
 
 	//Plataformas
 	Rectangulo* rec1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));

@@ -2,7 +2,7 @@
 #include "Interaccion.h"
 
 //Parámetros del cuerpo
-#define ALTO 2.0f
+#define ALTO 1.0f
 #define ANCHO 1.0f
 #define GRAVEDAD -10.0f
 #define COS_45 1/1.414f
