@@ -2,7 +2,7 @@
 #include "glut.h"
 #include "Interaccion.h"
 
-#define DIFF_TIEMPO 0.025f //tiempo n segundos que transcurre cada instante del juego. Diferencial de tiempo
+#define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
 #define velPersonaje 5.0	//Velocidad a la que se mueve el personaje horizontalmente
 #define velSalto 5.0
 #define ESPACIO_SOLTADO 1
@@ -33,9 +33,7 @@ void Mundo::Mueve()
 {
 	SetVelMundo(0); //Aqui se cambia la velocidad de subida del mundo
 
-	personaje.Mueve(DIFF_TIEMPO);	
-		Interaccion::Choque(caja, personaje);
-		Interaccion::Choque(plataformas, personaje);
+	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 }
 
 void Mundo::Inicializa()
