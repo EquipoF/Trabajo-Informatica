@@ -1,5 +1,6 @@
 #include "Mundo.h"
 #include "Interaccion.h"
+#include <stdlib.h> 
 #include "ETSIDI.h"
 #include "glut.h"
 
@@ -20,7 +21,7 @@ void Mundo::Dibuja()
 	caja.Dibuja();
 	personaje.Dibuja();
 
-	l_rectangulos.dibuja();
+	plataformas.Dibuja();
 
 
 	//dibujo del fondo
@@ -47,7 +48,7 @@ void Mundo::Dibuja()
 	ETSIDI::setTextColor(0, 0, 0);
 	ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 20);
 	ETSIDI::printxy("PLATAFORMAS", 3, 4);
-	plataformas.Dibuja();
+	
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -71,14 +72,11 @@ void Mundo::Mueve()
 void Mundo::Inicializa()
 {
 	x_ojo=0;
-	y_ojo=0;
-	z_ojo=20;
+	y_ojo=20;
+	z_ojo=80;
 
 	//Plataformas
-	Rectangulo* rec1 = new Rectangulo(4.0f, 0.5f, Vector2D(1.0f, 2.0f));
-	plataformas.Agregar(rec1);
-	Rectangulo* rec2 = new Rectangulo(4.0f, 0.5f, Vector2D(-3.0f, 0.0f));
-	plataformas.Agregar(rec2);
+
 }
 
 void Mundo::Tecla(unsigned char key)
