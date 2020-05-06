@@ -106,6 +106,11 @@ void OnKeyboardUp(unsigned char key, int x_t, int y_t)
 	glutPostRedisplay();
 }
 
+void keyManagement(unsigned char key)
+{
+
+}
+
 void OnTimer(int value)
 {
 //poner aqui el código de animacion

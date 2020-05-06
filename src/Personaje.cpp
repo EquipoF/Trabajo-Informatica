@@ -10,7 +10,7 @@
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
-#define accx 6.0f //Aceleración para el eje X
+#define accx 10.0f //6//Aceleración para el eje X
 #define velxLim 5.0f //Velocidad límite del eje x
 
 //Nombres de las teclas
@@ -26,7 +26,7 @@ Personaje::Personaje()//: sprite("imagenes/pangPlayer.png", 5)
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
-	vMov = 5.0;//1.0;
+	vMov = 3.0;//1.0;
 	vSalto = 7.0;
 	multiplicadorCargado = 2.0f;
 	saltosRestantes = 2; //nº de saltos para probar
@@ -100,6 +100,15 @@ void Personaje::Dibuja()
 void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
 {
 	ObjetoMovil::Mueve(t);
+	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
+	if (dchaPresionado) {
+		velocidad.x = vMov;
+		aceleracion.x = accx;
+	}
+	if (izqPresionado) {
+		velocidad.x = -vMov;
+		aceleracion.x = -accx;
+	}
 
 	//Corrección de velocidad
 	if(velocidad.x >0 && velocidad.x > velxLim)
@@ -121,16 +130,14 @@ void Personaje::Tecla(unsigned char key)
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
 	//Flags para la detección de teclas.
 	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
-	static bool dchaPresionado = false;
-	static bool izqPresionado = false;
 	static bool abajoPresionado = false;
 
-	switch (key)
+	switch (key) //Llevar el tratamiento de las teclas (flags y eso) al main
 	{
 	//Movimiento derecha
 	case DCHA:
-		velocidad.x = vMov;
-		aceleracion.x = accx;
+		//velocidad.x = vMov;
+		//aceleracion.x = accx;
 		dchaPresionado = true;
 		break;
 
@@ -140,8 +147,6 @@ void Personaje::Tecla(unsigned char key)
 
 	//Movimiento izquierda
 	case IZQ:
-		velocidad.x = -vMov;
-		aceleracion.x = -accx;
 		izqPresionado = true;
 		break;
 
