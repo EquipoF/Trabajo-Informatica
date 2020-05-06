@@ -1,6 +1,8 @@
 #pragma once
 #include "Rectangulo.h"
 #include <vector>
+#include "ETSIDI.h"
+#include "glut.h"
 
 class ListaRectangulos
 {

@@ -2,7 +2,7 @@
 #include "Interaccion.h"
 
 //Parámetros del cuerpo
-#define ALTO 1.0f
+#define ALTO 2.0f
 #define ANCHO 1.0f
 #define GRAVEDAD -10.0f
 #define COS_45 1/1.414f
@@ -58,10 +58,11 @@ int Personaje::getSaltosRes(void)
 
 void Personaje::Dibuja()
 {
-	//cuerpo.Dibuja();
+	cuerpo.Dibuja();
 
 	glPushMatrix();
-	glTranslatef(posicion.x, posicion.y, 1);
+	glTranslatef(posicion.x, posicion.y-1.2, 0);
+	glScalef(1.0f, 1.2f, 1.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
 	//gestion de direccion y animacion
@@ -73,9 +74,6 @@ void Personaje::Dibuja()
 	else if (sprite.getState() == 0)
 		sprite.setState(1, false);
 	sprite.draw();
-
-
-
 	glPopMatrix();
 }
 

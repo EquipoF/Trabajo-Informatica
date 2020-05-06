@@ -28,21 +28,23 @@ void Mundo::Dibuja()
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/fondo.png").id);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/montañas.png").id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
 
-	glTexCoord2d(0, 1);		glVertex2f(-10, -15);
-	glTexCoord2d(1, 1);		glVertex2f(10, -15);
-	glTexCoord2d(1, 0);		glVertex2f(10, 15);
-	glTexCoord2d(0, 0);		glVertex2f(-10, 15);
+	glTexCoord2d(0, 1);		glVertex2f(-15, -7);
+	glTexCoord2d(1, 1);		glVertex2f(15, -7);
+	glTexCoord2d(1, 0);		glVertex2f(15, 43);
+	glTexCoord2d(0, 0);		glVertex2f(-15, 43);
 	glEnd();
 
-	glPopMatrix();
+	
 
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+
 
 	//textos
 	ETSIDI::setTextColor(0, 0, 0);
@@ -62,7 +64,15 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	SetVelMundo(0.025); //Aqui se cambia la velocidad de subida del mundo
+	if (y_ojo < 36)
+	{
+		SetVelMundo(0.03);
+	}
+	else if (y_ojo >= 36)
+	{
+		SetVelMundo(0); //Aqui se cambia la velocidad de subida del mundo
+	}
+	
 
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 }

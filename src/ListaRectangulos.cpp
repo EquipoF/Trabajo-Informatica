@@ -19,7 +19,30 @@ bool ListaRectangulos::Agregar(Rectangulo* rec)
 void ListaRectangulos::Dibuja()
 {
 	for (int i = 0; i < lista.size(); i++)
-		lista[i]->Dibuja();
+	{
+		//lista[i]->Dibuja();
+
+		Vector2D centro = lista[i]->GetCentro();
+		Vector2D anchoAlto = lista[i]->GetAnchoAlto();
+
+		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/plataforma.png").id);
+		glDisable(GL_LIGHTING);
+		glBegin(GL_POLYGON);
+		glColor3f(1, 1, 1);
+
+		glTexCoord2d(0, 1);		glVertex2f(centro.x - (anchoAlto.x / 2), centro.y - (anchoAlto.y / 2));
+		glTexCoord2d(1, 1);		glVertex2f(centro.x + (anchoAlto.x / 2), centro.y - (anchoAlto.y / 2));
+		glTexCoord2d(1, 0);		glVertex2f(centro.x + (anchoAlto.x / 2), centro.y + (anchoAlto.y / 2));
+		glTexCoord2d(0, 0);		glVertex2f(centro.x - (anchoAlto.x / 2), centro.y + (anchoAlto.y / 2));
+		glEnd();
+
+		glEnable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+	}		
 }
 
 void ListaRectangulos::EliminarRectangulo(int ind)

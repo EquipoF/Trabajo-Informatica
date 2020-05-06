@@ -79,3 +79,13 @@ void Rectangulo::VerticeCentro()
 	centro.x = abajoIzq.x + (ancho / 2);
 	centro.y = abajoIzq.y + (alto / 2);
 }
+
+Vector2D Rectangulo::GetCentro()
+{
+	return centro;
+}
+
+Vector2D Rectangulo::GetAnchoAlto()
+{
+	return Vector2D(ancho,alto);
+}
