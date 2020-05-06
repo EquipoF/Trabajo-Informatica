@@ -4,9 +4,14 @@
 //Parámetros del cuerpo
 #define ALTO 1.0f
 #define ANCHO 1.0f
+
 #define GRAVEDAD -10.0f
+
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
+
+#define accx 6.0f //Aceleración para el eje X
+#define velxLim 5.0f //Velocidad límite del eje x
 
 //Nombres de las teclas
 enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO=3 };
@@ -17,12 +22,12 @@ enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 }
 //Tipos de dash
 enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
-Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
+Personaje::Personaje()//: sprite("imagenes/pangPlayer.png", 5)
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
-	vMov = 5.0;
-	vSalto = 10.0;
+	vMov = 5.0;//1.0;
+	vSalto = 7.0;
 	multiplicadorCargado = 2.0f;
 	saltosRestantes = 2; //nº de saltos para probar
 
@@ -30,15 +35,27 @@ Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
 	contactoParedDcha = false;
 	contactoParedIzq = false;
 
-	sprite.setCenter(1, 0);
-	sprite.setSize(2, 2);
+	//sprite.setCenter(1, 0);
+	//sprite.setSize(2, 2);
 	//altura = 1.8f;
 }
-
 Personaje::~Personaje()
 {
 }
+/*
+void Personaje::SetAcc(Vector2D acclIn) 
+{
+	//Código aqúi
+	Vector2D velAux;
 
+	//
+	ObjetoMovil::SetVel(velAux);
+}
+void Personaje::SetAcc(float accxIn, float accyIn) 
+{
+	Personaje::SetVel(Vector2D(accxIn, accyIn));
+}
+*/
 void Personaje::setvMov(float vIn) 
 {
 	vMov = vIn;
@@ -58,8 +75,8 @@ int Personaje::getSaltosRes(void)
 
 void Personaje::Dibuja()
 {
-	//cuerpo.Dibuja();
-
+	cuerpo.Dibuja();
+	/*
 	glPushMatrix();
 	glTranslatef(posicion.x, posicion.y, 1);
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -77,15 +94,26 @@ void Personaje::Dibuja()
 
 
 	glPopMatrix();
+	*/
 }
 
-void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) {
-	//bool misMuertos = false;
+void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
+{
 	ObjetoMovil::Mueve(t);
+
+	//Corrección de velocidad
+	if(velocidad.x >0 && velocidad.x > velxLim)
+	{
+		velocidad.x = velxLim;
+	} 
+	else if (velocidad.x < 0 && velocidad.x < -velxLim)	{
+		velocidad.x = -velxLim;
+	}
+
+	//Corrección de posición
 	if (Interaccion::Choque(plataformas, *this)||Interaccion::Choque(caja, *this))
 	{
 		posicion = posicionAnterior;
-		// misMuertos = true;
 	}	
 	cuerpo.setCentro(posicion);	
 }
@@ -102,6 +130,7 @@ void Personaje::Tecla(unsigned char key)
 	//Movimiento derecha
 	case DCHA:
 		velocidad.x = vMov;
+		aceleracion.x = accx;
 		dchaPresionado = true;
 		break;
 
@@ -112,6 +141,7 @@ void Personaje::Tecla(unsigned char key)
 	//Movimiento izquierda
 	case IZQ:
 		velocidad.x = -vMov;
+		aceleracion.x = -accx;
 		izqPresionado = true;
 		break;
 
@@ -155,7 +185,9 @@ void Personaje::Tecla(unsigned char key)
 	}
 	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
 	{
-		velocidad.x = 0.0f;
+		//si estás en el suelo para, sino no
+		velocidad.x *= 0.5;
+		aceleracion.x = 0.0f;
 	}
 }
 

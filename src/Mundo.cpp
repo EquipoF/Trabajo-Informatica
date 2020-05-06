@@ -1,7 +1,7 @@
 #include "Mundo.h"
 #include "Interaccion.h"
 #include <stdlib.h> 
-#include "ETSIDI.h"
+//#include "ETSIDI.h"
 #include "glut.h"
 
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
@@ -23,7 +23,7 @@ void Mundo::Dibuja()
 
 	plataformas.Dibuja();
 
-
+	/*
 	//dibujo del fondo
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
@@ -48,7 +48,7 @@ void Mundo::Dibuja()
 	ETSIDI::setTextColor(0, 0, 0);
 	ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 20);
 	ETSIDI::printxy("PLATAFORMAS", 3, 4);
-	
+	*/
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -62,7 +62,7 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
-	SetVelMundo(0.025); //Aqui se cambia la velocidad de subida del mundo
+	//SetVelMundo(0.025); //Aqui se cambia la velocidad de subida del mundo
 
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 }

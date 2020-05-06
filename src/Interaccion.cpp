@@ -26,6 +26,7 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	//Vector2D posAnterior = personaje.GetPosAnt();
 	Vector2D velActual = personaje.GetVel();
+	Vector2D accActual = personaje.GetAcc();
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
 	{
@@ -35,14 +36,17 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 		case ARRIBA:
 			personaje.setSaltosRes(2);
 			//personaje.SetAcc(0.0, 0.0);
-			personaje.SetVel(velActual.x, 0.0);
+			//personaje.SetVel(velActual.x, 0.0);
+			personaje.SetVel(0.0, 0.0);
 			return true;
 		case PARED_DCHA:
 			personaje.SetVel(0.0, velActual.y);
+			personaje.SetAcc(0.0, accActual.y);
 			personaje.contactoParedDcha = true;
 			return true;
 		case PARED_IZQ:
 			personaje.SetVel(0.0, velActual.y);
+			personaje.SetAcc(0.0, accActual.y);
 			personaje.contactoParedIzq = true;
 			return true;
 		case ABAJO:
@@ -52,8 +56,8 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 	}
 	else
 	{
-		//personaje.contactoParedDcha = false; //Para que no se quede la opción de salto de pared activa par siempre si tocas una pared
-		//personaje.contactoParedIzq = false;
+		personaje.contactoParedDcha = false; //Para que no se quede la opción de salto de pared activa par siempre si tocas una pared
+		personaje.contactoParedIzq = false;
 		return false;
 	}
 }
@@ -78,15 +82,15 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 	if (choque == false)	//si no hay choque
 		return 0;
 	else if (choque == true && r2.centro.y > r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x)) //bruh
-		return 1;
+		return ARRIBA;
 	else if (choque == true && r2.centro.x > r1.centro.x && (distanciaMax.y - distancia.y) > (distanciaMax.x - distancia.x))
-		return 2;
+		return PARED_IZQ;
 	else if (choque == true && r2.centro.y < r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x))
-		return 3;
+		return ABAJO;
 	else if (choque == true && r2.centro.x < r1.centro.x && (distanciaMax.y - distancia.y) >(distanciaMax.x - distancia.x))
-		return 4;
+		return PARED_DCHA;
 	else
-		return 4;
+		return PARED_DCHA;
 }
 
 bool Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)

@@ -4,8 +4,8 @@
 //#include "Interaccion.h"
 #include "ListaRectangulos.h"
 #include "Caja.h"
-#include "ETSIDI.h"
-using ETSIDI::SpriteSequence;
+//#include "ETSIDI.h"
+//using ETSIDI::SpriteSequence;
 
 class Personaje : public ObjetoMovil
 {
@@ -23,6 +23,8 @@ public:
 	void Dash(unsigned char direccion);
 	void Salta( unsigned int tipoSalto);
 
+	//void SetAcc(Vector2D accIn);
+	//void SetAcc(float accxIn, float accyIn);
 	void setvSalto(float vIn);
 	void setvMov(float vIn);
 	void setSaltosRes(int saltosIn);
@@ -37,6 +39,6 @@ private:
 	bool contactoParedIzq;
 	float multiplicadorCargado;
 
-	SpriteSequence sprite;
+	//SpriteSequence sprite;
 };
 
