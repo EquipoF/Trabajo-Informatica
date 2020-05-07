@@ -1,9 +1,10 @@
 #include "Personaje.h"
+#include "Interaccion.h"
 
 //Parámetros del cuerpo
-#define ALTO 2.0f
+#define ALTO 1.0f
 #define ANCHO 1.0f
-#define GRAVEDAD -4.0f
+#define GRAVEDAD -10.0f
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
@@ -16,18 +17,24 @@ enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 }
 //Tipos de dash
 enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
-Personaje::Personaje()
+Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
 	vMov = 5.0;
-	vSalto = 5.0;
-	multiplicadorCargado = 3.0f;
-	saltosRestantes = 4; //nº de saltos para probar
+	vSalto = 10.0;
+	multiplicadorCargado = 2.0f;
+	saltosRestantes = 2; //nº de saltos para probar
+
 	//variables de contacto para probar los saltos de pared
 	contactoParedDcha = false;
 	contactoParedIzq = false;
+
+	sprite.setCenter(1, 0);
+	sprite.setSize(2, 2);
+	//altura = 1.8f;
 }
+
 Personaje::~Personaje()
 {
 }
@@ -51,12 +58,36 @@ int Personaje::getSaltosRes(void)
 
 void Personaje::Dibuja()
 {
-	cuerpo.Dibuja();
+	//cuerpo.Dibuja();
+
+	glPushMatrix();
+	glTranslatef(posicion.x, posicion.y, 1);
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	//gestion de direccion y animacion
+
+	if (velocidad.x > 0.01)sprite.flip(false, false);
+	if (velocidad.x < -0.01)sprite.flip(true, false);
+	if ((velocidad.x < 0.01) && (velocidad.x > -0.01))
+		sprite.setState(0);
+	else if (sprite.getState() == 0)
+		sprite.setState(1, false);
+	sprite.draw();
+
+
+
+	glPopMatrix();
 }
 
-void Personaje::Mueve(float t) {
+void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) {
+	//bool misMuertos = false;
 	ObjetoMovil::Mueve(t);
-	cuerpo.setCentro(posicion);
+	if (Interaccion::Choque(plataformas, *this)||Interaccion::Choque(caja, *this))
+	{
+		posicion = posicionAnterior;
+		// misMuertos = true;
+	}	
+	cuerpo.setCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
@@ -100,7 +131,7 @@ void Personaje::Tecla(unsigned char key)
 	//Se presiona la barra espaciadora => se solicita un salto
 	case ESPACIO:
 		//Meter aquí los distintos tipos de salto.
-		if (!espacioPresionado) //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
+ 		if (!espacioPresionado) //Si no estaba pulsada antes, es decir, la acabo de pulsar, genero un salto
 		{
 			if (contactoParedDcha && dchaPresionado) { //Salto de pared
 				Personaje::Salta(PARED_DCHA);
@@ -130,29 +161,32 @@ void Personaje::Tecla(unsigned char key)
 
 void Personaje::Salta(unsigned int tipoSalto) {
 	//Comprobaciones para saltar
-	if (saltosRestantes > 0) //Si hay saltos restantes
-	{
 		switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
-		{	
-			case (NORMAL):
+	{	
+		case (NORMAL):
+			if (saltosRestantes > 0) //Si hay saltos restantes
+			{
 				velocidad.y = vSalto; //Velocidad en Y para hacer un salto normal (hacia arriba)
-				break;
+				saltosRestantes--; //resto 1 al número de saltos
+			}
+			break;
 
 			case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
-				velocidad.x = -vMov * COS_45;
-				velocidad.y = vSalto * SEN_45;
-				break;
+			velocidad.x = -vMov * COS_45;
+			velocidad.y = vSalto * SEN_45;
+			contactoParedDcha = false;
+			break;
 
 			case (PARED_IZQ): 
-				velocidad.x = vMov * COS_45;
-				velocidad.y = vSalto * SEN_45;
-				break;
+			velocidad.x = vMov * COS_45;
+			velocidad.y = vSalto * SEN_45;
+			contactoParedIzq = false;
+			break;
 
 			case (CARGADO):
-				velocidad.y = multiplicadorCargado*vSalto;
-				break;
-		}			
-		saltosRestantes--; //resto 1 al número de saltos
+			velocidad.y = multiplicadorCargado*vSalto;
+			saltosRestantes--;
+			break;	
 	}
 }
 void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D

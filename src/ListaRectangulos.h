@@ -5,12 +5,15 @@
 class ListaRectangulos
 {
 public:
+	friend Interaccion;
 	ListaRectangulos();
 	virtual ~ListaRectangulos();
 
-	bool agregar(Rectangulo* rec);
-	void dibuja();
-	void eliminarRectangulo(int ind);
+	bool Agregar(Rectangulo* rec);
+	void Dibuja();
+	void EliminarRectangulo(int ind);
+
+	int GetNum();
 
 private:
 	std::vector<Rectangulo*> lista;

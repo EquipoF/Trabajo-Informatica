@@ -1,6 +1,8 @@
 #include "Mundo.h"
 #include "glut.h"
 
+#define DIFF_TIEMPO_MAIN 15
+
 //Misma enum que en Personaje.cpp 
 enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO = 3 };
 
@@ -42,7 +44,7 @@ int main(int argc,char* argv[])
 
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
-	glutTimerFunc(25,OnTimer,0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
+	glutTimerFunc(DIFF_TIEMPO_MAIN,OnTimer,0);//le decimos que dentro de 5ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
 	glutKeyboardUpFunc(OnKeyboardUp);
 	glutReshapeFunc(onSize);
@@ -110,6 +112,6 @@ void OnTimer(int value)
 	mundo.Mueve();
 
 	//no borrar estas lineas
-	glutTimerFunc(25,OnTimer,0);
+	glutTimerFunc(DIFF_TIEMPO_MAIN,OnTimer,0);
 	glutPostRedisplay();
 }
