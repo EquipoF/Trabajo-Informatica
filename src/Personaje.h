@@ -23,8 +23,6 @@ public:
 	void Dash(unsigned char direccion);
 	void Salta( unsigned int tipoSalto);
 
-	//void SetAcc(Vector2D accIn);
-	//void SetAcc(float accxIn, float accyIn);
 	void setvSalto(float vIn);
 	void setvMov(float vIn);
 	void setSaltosRes(int saltosIn);
