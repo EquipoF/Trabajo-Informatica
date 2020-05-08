@@ -25,9 +25,13 @@ bool Interaccion::Choque(Caja & caja, Personaje& personaje)
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	//Vector2D posAnterior = personaje.GetPosAnt();
+	Vector2D posActual = personaje.GetPos();
 	Vector2D velActual = personaje.GetVel();
 	Vector2D accActual = personaje.GetAcc();
+
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
+
+	personaje.SetAcc(accActual.x,-10.0f);
 	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
 	{
 		//personaje.SetPos(posAnterior);
@@ -35,8 +39,8 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 		{
 		case ARRIBA:
 			personaje.setSaltosRes(2);
-			//personaje.SetAcc(0.0, 0.0);
-			//personaje.SetVel(velActual.x, 0.0);
+			personaje.SetAcc(accActual.x, 0.0);
+			personaje.SetPos(posActual.x, ( rectangulo.centro.y + (personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01 )); //Ponemos el pesonaje justo encima de la plataforma
 			personaje.SetVel(0.0, 0.0);
 			return true;
 		case PARED_DCHA:

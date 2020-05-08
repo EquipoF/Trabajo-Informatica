@@ -120,10 +120,8 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	}
 
 	//Corrección de posición
-	if (Interaccion::Choque(plataformas, *this)||Interaccion::Choque(caja, *this))
-	{
-		posicion = posicionAnterior;
-	}	
+	Interaccion::Choque(plataformas, *this);
+	Interaccion::Choque(caja, *this);
 	cuerpo.setCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
