@@ -39,21 +39,24 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 		{
 		case ARRIBA:
 			personaje.setSaltosRes(2);
+			personaje.SetPos(posActual.x, rectangulo.centro.y + ( (personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01) ); //Ponemos el pesonaje justo encima de la plataforma
 			personaje.SetAcc(accActual.x, 0.0);
-			personaje.SetPos(posActual.x, ( rectangulo.centro.y + (personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01 )); //Ponemos el pesonaje justo encima de la plataforma
 			personaje.SetVel(0.0, 0.0);
 			return true;
 		case PARED_DCHA:
+			personaje.SetPos( rectangulo.centro.x - ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01), posActual.y); //Ponemos el pesonaje justo a la derecha de la plataforma
 			personaje.SetVel(0.0, velActual.y);
 			personaje.SetAcc(0.0, accActual.y);
 			personaje.contactoParedDcha = true;
 			return true;
 		case PARED_IZQ:
+			personaje.SetPos(rectangulo.centro.x + ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01) , posActual.y); //Ponemos el pesonaje justo a la iquierda de la plataforma
 			personaje.SetVel(0.0, velActual.y);
 			personaje.SetAcc(0.0, accActual.y);
 			personaje.contactoParedIzq = true;
 			return true;
 		case ABAJO:
+			personaje.SetPos(posActual.x, rectangulo.centro.y - ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01)); //Ponemos el pesonaje justo encima de la plataforma
 			personaje.SetVel(velActual.x, 0.0);
 			return true;
 		}
