@@ -1,4 +1,5 @@
-#include "Mundo.h"
+//#include "Mundo.h"
+#include "Coordinador.h"
 #include "glut.h"
 
 #define DIFF_TIEMPO_MAIN 15
@@ -6,7 +7,9 @@
 //Misma enum que en Personaje.cpp 
 enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO = 3 };
 
-Mundo mundo;
+//Mundo mundo;
+
+Coordinador juego;
 
 float aspect = 1.0f;
 
@@ -49,7 +52,7 @@ int main(int argc,char* argv[])
 	glutKeyboardUpFunc(OnKeyboardUp);
 	glutReshapeFunc(onSize);
 
-	mundo.Inicializa();
+	//mundo.Inicializa();
 		
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();	
@@ -74,7 +77,8 @@ void OnDraw(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	mundo.Dibuja();
+	//mundo.Dibuja();
+	juego.Dibuja();
 
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
@@ -82,7 +86,8 @@ void OnDraw(void)
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	mundo.Tecla(key);
+	//mundo.Tecla(key);
+	juego.Tecla(key);
 	glutPostRedisplay();
 }
 
@@ -91,16 +96,20 @@ void OnKeyboardUp(unsigned char key, int x_t, int y_t)
 	switch (key)
 	{
 	case DCHA:
-		mundo.Tecla(DCHA_SOLTADO);
+		juego.Tecla(DCHA_SOLTADO);
+		//mundo.Tecla(DCHA_SOLTADO);
 		break;
 	case IZQ:
-		mundo.Tecla(IZQ_SOLTADO);
+		juego.Tecla(IZQ_SOLTADO);
+		//mundo.Tecla(IZQ_SOLTADO);
 		break;
 	case ABAJO:
-		mundo.Tecla(ABAJO_SOLTADO);
+		juego.Tecla(ABAJO_SOLTADO);
+		//mundo.Tecla(ABAJO_SOLTADO);
 		break;
 	case ESPACIO:
-		mundo.Tecla(ESPACIO_SOLTADO);
+		juego.Tecla(ESPACIO_SOLTADO);
+		//mundo.Tecla(ESPACIO_SOLTADO);
 		break;
 	}
 	glutPostRedisplay();
@@ -109,7 +118,8 @@ void OnKeyboardUp(unsigned char key, int x_t, int y_t)
 void OnTimer(int value)
 {
 //poner aqui el código de animacion
-	mundo.Mueve();
+	juego.Mueve();
+	//mundo.Mueve();
 
 	//no borrar estas lineas
 	glutTimerFunc(DIFF_TIEMPO_MAIN,OnTimer,0);

@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Caja.cpp" />
+    <ClCompile Include="src\Coordinador.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
     <ClCompile Include="src\ListaRectangulos.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
+    <ClInclude Include="src\Coordinador.h" />
     <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaRectangulos.h" />
     <ClInclude Include="src\Mundo.h" />
