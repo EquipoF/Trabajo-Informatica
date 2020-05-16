@@ -45,7 +45,7 @@ void Coordinador::Dibuja()
 
 void Coordinador::Tecla(unsigned char key)
 {
-    if (estado == INICIO)
+    if (estado == INICIO) // en inicio con cualquier tecla te lleva a "JUEGO"
     {
         mundo.Inicializa();
         estado = JUEGO;

@@ -5,8 +5,8 @@ Caja::Caja()// La caja tiene, con las dimensiones de ventana 800*600, un ancho d
 	//Usar atributos ancho y alto para generar la caja plsssss	
 
 	//Creamos los lados de la caja
-	suelo = Rectangulo(20.0, 2.0, Vector2D(0, -7));
-	techo = Rectangulo(20.0, 1.0, Vector2D(0, 43));
+	suelo = Rectangulo(22.0, 2.0, Vector2D(0, -7));
+	techo = Rectangulo(22.0, 1.0, Vector2D(0, 43));
 	paredDcha = Rectangulo(2.0, 50.0, Vector2D(10, 18));
 	paredIzq = Rectangulo(2.0, 50.0, Vector2D(-10, 18));
 

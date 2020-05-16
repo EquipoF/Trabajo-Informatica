@@ -20,15 +20,16 @@ void ListaRectangulos::Dibuja()
 {
 	for (int i = 0; i < lista.size(); i++)
 	{
-		//lista[i]->Dibuja();
+		lista[i]->Dibuja();
 
+		/* intento de poner imagen a las plataformas
 		Vector2D centro = lista[i]->GetCentro();
 		Vector2D anchoAlto = lista[i]->GetAnchoAlto();
 
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
 
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/plataforma.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/plataforma2.png").id);
 		glDisable(GL_LIGHTING);
 		glBegin(GL_POLYGON);
 		glColor3f(1, 1, 1);
@@ -42,6 +43,7 @@ void ListaRectangulos::Dibuja()
 		glEnable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
+		*/
 	}		
 }
 

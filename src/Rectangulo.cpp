@@ -37,10 +37,12 @@ void Rectangulo::Dibuja()
 {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 0, 0);
+	glColor3ub(55, 0, 0);
 	glVertex2d(abajoIzq.x, abajoIzq.y);
-	glVertex2d(arribaIzq.x, arribaIzq.y);
+	glColor3ub(55, 155, 0);
+	glVertex2d(arribaIzq.x, arribaIzq.y);	
 	glVertex2d(arribaDcha.x, arribaDcha.y);
+	glColor3ub(55, 0, 0);
 	glVertex2d(abajoDcha.x, abajoDcha.y);
 	glEnd();
 	glEnable(GL_LIGHTING);

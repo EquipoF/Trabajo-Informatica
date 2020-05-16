@@ -6,6 +6,7 @@
 #include "Caja.h"
 #include "ETSIDI.h"
 using ETSIDI::SpriteSequence;
+using ETSIDI::Sprite;
 
 class Personaje : public ObjetoMovil
 {
@@ -38,5 +39,7 @@ private:
 	float multiplicadorCargado;
 
 	SpriteSequence sprite;
+	Sprite sprite_salto;
+	Sprite sprite_caida;
 };
 

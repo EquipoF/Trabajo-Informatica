@@ -2,8 +2,8 @@
 #include "Interaccion.h"
 
 //Parámetros del cuerpo
-#define ALTO 2.0f
-#define ANCHO 1.0f
+#define ALTO 1.0f
+#define ANCHO 0.5f
 #define GRAVEDAD -10.0f
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
@@ -17,7 +17,7 @@ enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 }
 //Tipos de dash
 enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
-Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
+Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png")
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
@@ -30,8 +30,18 @@ Personaje::Personaje(): sprite("imagenes/pangPlayer.png", 5)
 	contactoParedDcha = false;
 	contactoParedIzq = false;
 
-	sprite.setCenter(1, 0);
-	sprite.setSize(2, 2);
+	//inicializacion posiciones y tamaños sprites
+	Vector2D centro = Vector2D(0.5, 0.5);
+	Vector2D size = Vector2D(1, 1.3);
+
+	sprite.setCenter(centro.x, centro.y);
+	sprite.setSize(size.x, size.y);
+
+	sprite_salto.setCenter(centro.x, centro.y);
+	sprite_salto.setSize(size.x, size.y);
+
+	sprite_caida.setCenter(centro.x, centro.y);
+	sprite_caida.setSize(size.x, size.y);
 	//altura = 1.8f;
 }
 
@@ -58,23 +68,37 @@ int Personaje::getSaltosRes(void)
 
 void Personaje::Dibuja()
 {
-	cuerpo.Dibuja();
-
 	glPushMatrix();
-	glTranslatef(posicion.x, posicion.y-1.2, 0);
-	glScalef(1.0f, 1.2f, 1.0f);
+	glTranslatef(posicion.x, posicion.y, 0);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
 	//gestion de direccion y animacion
 
-	if (velocidad.x > 0.01)sprite.flip(false, false);
+	if (velocidad.x > 0.01)sprite.flip(false, false);//sprite idle
 	if (velocidad.x < -0.01)sprite.flip(true, false);
-	if ((velocidad.x < 0.01) && (velocidad.x > -0.01))
-		sprite.setState(0);
-	else if (sprite.getState() == 0)
-		sprite.setState(1, false);
-	sprite.draw();
+	
+
+	if (velocidad.x > 0.01)sprite_salto.flip(false, false);//sprite salto
+	if (velocidad.x < -0.01)sprite_salto.flip(true, false);
+	
+
+	if (velocidad.x > 0.01)sprite_caida.flip(false, false);//sprite caida
+	if (velocidad.x < -0.01)sprite_caida.flip(true, false);
+	
+
+	if (velocidad.y > 0.01)
+		sprite_salto.draw();
+	else if(velocidad.y < -0.01)
+		sprite_caida.draw();
+	else if (velocidad.y < 0.01 && velocidad.y > -0.1f)
+	{
+		sprite.draw();
+		sprite.loop();
+	}
+		
 	glPopMatrix();
+	
+	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
 void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) {

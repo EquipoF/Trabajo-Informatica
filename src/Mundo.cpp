@@ -25,7 +25,7 @@ void Mundo::Dibuja()
 
 
 	//dibujo del fondo
-	glPushMatrix();
+	/*glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/montañas.png").id);
@@ -43,14 +43,7 @@ void Mundo::Dibuja()
 
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-
-
-	//textos
-	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 20);
-	ETSIDI::printxy("PLATAFORMAS", 3, 4);
-	
+	glPopMatrix();	*/
 }
 
 void Mundo::SetOjo(float x, float y, float z)
@@ -66,7 +59,7 @@ void Mundo::Mueve()
 {
 	if (y_ojo < 36)
 	{
-		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
+		SetVelMundo(0.01);//Aqui se cambia la velocidad de subida del mundo
 	}
 	else if (y_ojo >= 36)
 	{
@@ -79,9 +72,9 @@ void Mundo::Mueve()
 
 void Mundo::Inicializa()
 {
-	x_ojo = 0;
-	y_ojo = 0;	//0 para real, 20 para pruebas
-	z_ojo = 20; //20 para real, 80 para pruebas
+	x_ojo = 0.0f;
+	y_ojo = 0.0f;	//0 para real, 20 para pruebas
+	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
 	//Plataformas
 	{
