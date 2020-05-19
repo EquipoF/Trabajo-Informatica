@@ -4,6 +4,7 @@
 #include "Personaje.h"
 #include "ListaRectangulos.h"
 #include "Interaccion.h"
+#include "Sierra.h"
 
 class Mundo
 {
@@ -21,6 +22,8 @@ private:
 	Personaje personaje;
 	Rectangulo rectangulo1;
 	ListaRectangulos plataformas;
+
+	Sierra sierra;
 
 	float x_ojo;
 	float y_ojo;

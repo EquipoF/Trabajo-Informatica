@@ -23,6 +23,7 @@ void Mundo::Dibuja()
 
 	plataformas.Dibuja();
 
+	sierra.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -59,7 +60,7 @@ void Mundo::Mueve()
 {
 	if (y_ojo < 36)
 	{
-		SetVelMundo(0.01);//Aqui se cambia la velocidad de subida del mundo
+		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
 	}
 	else if (y_ojo >= 36)
 	{
@@ -68,6 +69,8 @@ void Mundo::Mueve()
 	
 
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
+
+	sierra.Mueve(0.025);
 }
 
 void Mundo::Inicializa()
