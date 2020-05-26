@@ -16,6 +16,7 @@ public:
 	void Dibuja();
 	void SetOjo(float x, float y, float z);
 	float GetOjo();
+	bool GetMuerte();
 
 private:
 	Caja caja;
@@ -28,4 +29,6 @@ private:
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
+
+	bool muerte;
 };

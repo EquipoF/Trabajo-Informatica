@@ -60,7 +60,7 @@ void Mundo::Mueve()
 {
 	if (y_ojo < 36)
 	{
-		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
+		SetVelMundo(0.02);//Aqui se cambia la velocidad de subida del mundo
 	}
 	else if (y_ojo >= 36)
 	{
@@ -71,6 +71,12 @@ void Mundo::Mueve()
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 
 	sierra.Mueve(0.025);
+
+	Vector2D perpos = personaje.GetPos();
+	if (perpos.y < y_ojo-9.0f)
+	{
+		muerte = TRUE;
+	}
 }
 
 void Mundo::Inicializa()
@@ -78,6 +84,8 @@ void Mundo::Inicializa()
 	x_ojo = 0.0f;
 	y_ojo = 0.0f;	//0 para real, 20 para pruebas
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
+
+	muerte = FALSE;
 
 	//Plataformas
 	{
@@ -158,4 +166,9 @@ void Mundo::Tecla(unsigned char key)
 void Mundo::SetVelMundo(float velocidad)
 {
 	y_ojo = y_ojo + velocidad;
+}
+
+bool Mundo::GetMuerte()
+{
+	return muerte;
 }
