@@ -60,7 +60,7 @@ void Mundo::Mueve()
 {
 	if (y_ojo < 36)
 	{
-		SetVelMundo(0.02);//Aqui se cambia la velocidad de subida del mundo
+		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
 	}
 	else if (y_ojo >= 36)
 	{
@@ -75,7 +75,12 @@ void Mundo::Mueve()
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)
 	{
-		muerte = TRUE;
+		muerte = true;
+	}
+
+	if (Interaccion::Choque(sierra, personaje))
+	{
+		muerte = true;
 	}
 }
 
@@ -85,7 +90,9 @@ void Mundo::Inicializa()
 	y_ojo = 0.0f;	//0 para real, 20 para pruebas
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
-	muerte = FALSE;
+	personaje.SetPos(0.0f, -2.0f);
+	sierra.SetPos(4.0f, 1.0f);
+	muerte = false;
 
 	//Plataformas
 	{

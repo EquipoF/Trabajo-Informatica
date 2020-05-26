@@ -13,6 +13,7 @@ public:
 	void Dibuja();
 
 private:
+	friend class Interaccion;
 	SpriteSequence sprite;
 };
 

@@ -102,3 +102,14 @@ bool Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaj
 	}
 	return rectanguloChocado;
 }
+
+bool Interaccion::Choque(Sierra& sierra, Personaje& personaje)
+{
+	bool choque = false;
+	float dif = (personaje.posicion - sierra.posicion).modulo() - ((personaje.cuerpo.ancho + 0.3f) + 0.1f);
+	if (dif <= 0.0f)
+	{
+		choque = true;
+	}
+	return choque;
+}

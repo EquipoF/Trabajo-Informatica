@@ -113,5 +113,4 @@ void Coordinador::Mueve()
             estado = GAMEOVER;
         }
     }
-   
 }
