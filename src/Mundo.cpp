@@ -24,6 +24,7 @@ void Mundo::Dibuja()
 	plataformas.Dibuja();
 
 	sierra.Dibuja();
+	sierra2.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -71,14 +72,19 @@ void Mundo::Mueve()
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 
 	sierra.Mueve(0.025);
+	sierra2.Mueve(0.025);
 
 	Vector2D perpos = personaje.GetPos();
-	if (perpos.y < y_ojo-9.0f)
+	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;
+		muerte = true;//Comentar esta línea para pruebas viendo todo el mapa
 	}
 
 	if (Interaccion::Choque(sierra, personaje))
+	{
+		muerte = true;
+	}
+	if (Interaccion::Choque(sierra2, personaje))
 	{
 		muerte = true;
 	}
@@ -87,11 +93,12 @@ void Mundo::Mueve()
 void Mundo::Inicializa()
 {
 	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas
+	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
 	personaje.SetPos(0.0f, -2.0f);
 	sierra.SetPos(4.0f, 1.0f);
+	sierra2.SetPos(-6.0f, 10.0f);
 	muerte = false;
 
 	//Plataformas

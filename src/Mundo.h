@@ -24,7 +24,7 @@ private:
 	Rectangulo rectangulo1;
 	ListaRectangulos plataformas;
 
-	Sierra sierra;
+	Sierra sierra,sierra2;
 
 	float x_ojo;
 	float y_ojo;

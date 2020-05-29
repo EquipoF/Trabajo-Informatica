@@ -31,6 +31,10 @@ void Coordinador::Dibuja()
     {
         mundo.Dibuja();
     }
+    else if (estado == PAUSA)
+    {
+        mundo.Dibuja();
+    }
     else if (estado == FIN)
     {
         gluLookAt(0, 0, 20, // posicion del ojo
@@ -40,6 +44,8 @@ void Coordinador::Dibuja()
         ETSIDI::setTextColor(1, 1, 1);
         ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 40);
         ETSIDI::printxy("FIN", -1, 0);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 30);
+        ETSIDI::printxy("VOLVER A INICIO  [ B ]", -3, -4);
     }
     else if (estado == GAMEOVER)
     {
@@ -73,32 +79,53 @@ void Coordinador::Tecla(unsigned char key)
 {
     if (estado == INICIO) 
     {
-        if (key == 'c')
+        if (key == 'c' || key == 'C')
         {
             estado = CONTROLES;
         }
-        else if(key != 'c')// en inicio con cualquier tecla te lleva a "JUEGO"
+        else if(key != 'c' && key != 'C')// en inicio con cualquier tecla te lleva a "JUEGO"
         {
             mundo.Inicializa();
             estado = JUEGO;
         }
         
     }
-    else if (estado == JUEGO && key != 'g')
+    else if (estado == JUEGO)
     {
         mundo.Tecla(key);
+        if (key == 'g' || key == 'G')
+        {
+            estado = FIN;
+        }
+        if (key == 'p' || key == 'P')
+        {
+            estado = PAUSA;
+        }
     }
-    else if (estado == JUEGO && key == 'g')
-    {
-        estado = FIN;
-    }
-    else if (estado == CONTROLES && key == 'b')
+    else if (estado == CONTROLES && (key == 'b' || key == 'B'))
     {
         estado = INICIO;
     }
-    else if (estado == GAMEOVER && key == 'b')// al tocar cualquier tecla vas a "INICIO"
+    else if (estado == GAMEOVER)
     {
-        estado = INICIO;
+        if (key == 'b' || key == 'B')
+        {
+            estado = INICIO;
+        }
+    }
+    else if (estado == FIN)
+    {
+        if (key == 'b' || key == 'B')
+        {
+            estado = INICIO;
+        }            
+    }
+    else if (estado == PAUSA)
+    {
+        if (key == 'p' || key == 'P')
+        {
+            estado = JUEGO;
+        }
     }
 }
 
