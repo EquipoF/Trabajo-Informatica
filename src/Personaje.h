@@ -38,6 +38,10 @@ private:
 	bool contactoParedIzq;
 	float multiplicadorCargado;
 
+	bool dchaPresionado = false;
+	bool izqPresionado = false;
+
+	//SpriteSequence sprite;
 	SpriteSequence sprite;
 	Sprite sprite_salto;
 	Sprite sprite_caida;

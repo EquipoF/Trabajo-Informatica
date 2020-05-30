@@ -5,8 +5,12 @@
 #define ALTO 1.0f
 #define ANCHO 0.5f
 #define GRAVEDAD -10.0f
+
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
+
+#define accx 10.0f //6//Aceleración para el eje X
+#define velxLim 5.0f //Velocidad límite del eje x
 
 //Nombres de las teclas
 enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO=3 };
@@ -21,8 +25,8 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
-	vMov = 5.0;
-	vSalto = 10.0;
+	vMov = 3.0;//1.0;
+	vSalto = 7.0;
 	multiplicadorCargado = 2.0f;
 	saltosRestantes = 2; //nº de saltos para probar
 
@@ -44,11 +48,23 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 	sprite_caida.setSize(size.x, size.y);
 	//altura = 1.8f;
 }
-
 Personaje::~Personaje()
 {
 }
+/*
+void Personaje::SetAcc(Vector2D acclIn) 
+{
+	//Código aqúi
+	Vector2D velAux;
 
+	//
+	ObjetoMovil::SetVel(velAux);
+}
+void Personaje::SetAcc(float accxIn, float accyIn) 
+{
+	Personaje::SetVel(Vector2D(accxIn, accyIn));
+}
+*/
 void Personaje::setvMov(float vIn) 
 {
 	vMov = vIn;
@@ -101,13 +117,32 @@ void Personaje::Dibuja()
 	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
-void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) {
-	//bool misMuertos = false;
+void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
+{
 	ObjetoMovil::Mueve(t);
+	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
+	if (dchaPresionado) {
+		velocidad.x = vMov;
+		aceleracion.x = accx;
+	}
+	if (izqPresionado) {
+		velocidad.x = -vMov;
+		aceleracion.x = -accx;
+	}
+
+	//Corrección de velocidad
+	if(velocidad.x >0 && velocidad.x > velxLim)
+	{
+		velocidad.x = velxLim;
+	} 
+	else if (velocidad.x < 0 && velocidad.x < -velxLim)	{
+		velocidad.x = -velxLim;
+	}
+
+	//Corrección de posición
 	if (Interaccion::Choque(plataformas, *this)||Interaccion::Choque(caja, *this))
 	{
 		posicion = posicionAnterior;
-		// misMuertos = true;
 	}	
 	cuerpo.setCentro(posicion);	
 }
@@ -115,15 +150,14 @@ void Personaje::Tecla(unsigned char key)
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
 	//Flags para la detección de teclas.
 	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
-	static bool dchaPresionado = false;
-	static bool izqPresionado = false;
 	static bool abajoPresionado = false;
 
-	switch (key)
+	switch (key) //Llevar el tratamiento de las teclas (flags y eso) al main
 	{
 	//Movimiento derecha
 	case DCHA:
-		velocidad.x = vMov;
+		//velocidad.x = vMov;
+		//aceleracion.x = accx;
 		dchaPresionado = true;
 		break;
 
@@ -133,7 +167,6 @@ void Personaje::Tecla(unsigned char key)
 
 	//Movimiento izquierda
 	case IZQ:
-		velocidad.x = -vMov;
 		izqPresionado = true;
 		break;
 
@@ -177,7 +210,9 @@ void Personaje::Tecla(unsigned char key)
 	}
 	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
 	{
-		velocidad.x = 0.0f;
+		//si estás en el suelo para, sino no
+		velocidad.x *= 0.5;
+		aceleracion.x = 0.0f;
 	}
 }
 
