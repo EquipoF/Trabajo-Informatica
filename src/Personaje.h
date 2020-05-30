@@ -4,8 +4,9 @@
 //#include "Interaccion.h"
 #include "ListaRectangulos.h"
 #include "Caja.h"
-//#include "ETSIDI.h"
-//using ETSIDI::SpriteSequence;
+#include "ETSIDI.h"
+using ETSIDI::SpriteSequence;
+using ETSIDI::Sprite;
 
 class Personaje : public ObjetoMovil
 {
@@ -41,5 +42,8 @@ private:
 	bool izqPresionado = false;
 
 	//SpriteSequence sprite;
+	SpriteSequence sprite;
+	Sprite sprite_salto;
+	Sprite sprite_caida;
 };
 

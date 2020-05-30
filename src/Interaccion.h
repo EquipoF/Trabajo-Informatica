@@ -4,6 +4,7 @@
 #include "Caja.h"
 #include "Personaje.h"
 #include "ListaRectangulos.h"
+#include "Sierra.h"
 
 class Interaccion
 {
@@ -15,6 +16,6 @@ public:
 	static int Choque(Rectangulo& r1, Rectangulo& r2);
 	static bool Choque(Rectangulo& rectangulo, Personaje & personaje);
 	static bool Choque(ListaRectangulos& listaRectangulo, Personaje & personaje);
-
+	static bool Choque(Sierra& sierra, Personaje& personaje);
 };
 

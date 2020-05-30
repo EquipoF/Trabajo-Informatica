@@ -11,6 +11,8 @@ public:
 	void Dibuja();
 	void setCentro(Vector2D centroIn);
 	void setCentro(float x, float y);
+	Vector2D GetCentro();
+	Vector2D GetAnchoAlto();
 
 private:
 	void CentroVertice();

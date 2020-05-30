@@ -4,6 +4,7 @@
 #include "Personaje.h"
 #include "ListaRectangulos.h"
 #include "Interaccion.h"
+#include "Sierra.h"
 
 class Mundo
 {
@@ -15,6 +16,7 @@ public:
 	void Dibuja();
 	void SetOjo(float x, float y, float z);
 	float GetOjo();
+	bool GetMuerte();
 
 private:
 	Caja caja;
@@ -22,7 +24,11 @@ private:
 	Rectangulo rectangulo1;
 	ListaRectangulos plataformas;
 
+	Sierra sierra,sierra2;
+
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
+
+	bool muerte;
 };
