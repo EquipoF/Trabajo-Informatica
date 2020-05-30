@@ -25,7 +25,7 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 {
 	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 	aceleracion.y = GRAVEDAD;
-	vMov = 3.0;//1.0;
+	vMov = 3.0;
 	vSalto = 7.0;
 	multiplicadorCargado = 2.0f;
 	saltosRestantes = 2; //nº de saltos para probar
@@ -51,20 +51,7 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 Personaje::~Personaje()
 {
 }
-/*
-void Personaje::SetAcc(Vector2D acclIn) 
-{
-	//Código aqúi
-	Vector2D velAux;
 
-	//
-	ObjetoMovil::SetVel(velAux);
-}
-void Personaje::SetAcc(float accxIn, float accyIn) 
-{
-	Personaje::SetVel(Vector2D(accxIn, accyIn));
-}
-*/
 void Personaje::setvMov(float vIn) 
 {
 	vMov = vIn;
@@ -145,7 +132,7 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	cuerpo.setCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
-{   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
+{   //¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
 	//Flags para la detección de teclas.
 	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
 	static bool abajoPresionado = false;
