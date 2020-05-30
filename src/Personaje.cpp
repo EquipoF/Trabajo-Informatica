@@ -117,6 +117,15 @@ void Personaje::Dibuja()
 	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
+void Personaje::Inicializa()
+{
+	Personaje::SetPos(0.0f, -2.0f);
+	Personaje::SetVel(0.0, 0.0);
+	Personaje::SetAcc(0.0, 0.0);
+	dchaPresionado = false;
+	izqPresionado = false;
+}
+
 void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
 {
 	ObjetoMovil::Mueve(t);

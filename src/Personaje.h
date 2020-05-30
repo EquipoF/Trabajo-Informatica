@@ -16,6 +16,7 @@ public:
 	virtual ~Personaje();
 
 	void Dibuja();
+	void Inicializa();
 
 	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);	//poner la m en mayúscula.
 
