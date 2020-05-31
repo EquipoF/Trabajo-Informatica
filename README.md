@@ -89,13 +89,17 @@
 
 ## Objetivos (medio plazo)
 - [ ] Terminar la generación del mundo
-- [ ] Terminar movimiento del personaje y colisiones
-- [ ] Sistema de puntuación (items, contador...)
-- [ ] Menú de inicio y final de partida (máquina de estados)
-- [ ] Guardar puntuación (ficheros)
-- [ ] Ampliar contenido: power ups 
-- [ ] Ampiar contenido: distintas plataformas (trampas)
-- [ ] Ampiar contenido: bolas de cañon
+- [ ] Añadir nuevos niveles
 - [ ] Niveles en ficheros
+- [x] Terminar movimiento del personaje y colisiones
+- [ ] Sistema de puntuación: items + contador de timepo
+- [ ] Guardar puntuación (ficheros)
+- [x] Menú de inicio y final de partida (máquina de estados)
+- [ ] Ampliar contenido: power ups (dash, salto cargado, doble salto)
+- [ ] Ampliar contenido: distintas plataformas (móviles, con pinchos, con pinchos que salen)
+- [ ] Ampliar contenido: elementos que dañan (bolas de cañon, sierras estáticas...)
 - [ ] Último: texturas y estética
-- [ ] Revisar formato del código
+- [ ] Revisar formato del código, poner comentarios
+
+## Bugs arreglados
+- [ ] Saltos infinitos mientras tocas las paredes
