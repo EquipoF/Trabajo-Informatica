@@ -1,7 +1,6 @@
 #pragma once
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
-//#include "Interaccion.h"
 #include "ListaRectangulos.h"
 #include "Caja.h"
 #include "ETSIDI.h"
@@ -38,6 +37,8 @@ private:
 	bool contactoParedDcha;
 	bool contactoParedIzq;
 	float multiplicadorCargado;
+
+	int plataformaEnContacto; //Plataforma sobre la que está posado el personaje
 
 	bool dchaPresionado = false;
 	bool izqPresionado = false;

@@ -10,31 +10,24 @@ Interaccion::~Interaccion()
 {
 }
 
-bool Interaccion::Choque(Caja & caja, Personaje& personaje)
+int Interaccion::Choque(Caja & caja, Personaje& personaje)
 {
-	if (Interaccion::Choque(caja.ladosCaja, personaje))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}		
+	return Interaccion::Choque(caja.ladosCaja, personaje);
 }
 
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
-	//Vector2D posAnterior = personaje.GetPosAnt();
+	//Vector2D posAnterior = personaje.GetPosAnt(); // Ya se hace en los casos
 	Vector2D posActual = personaje.GetPos();
 	Vector2D velActual = personaje.GetVel();
 	Vector2D accActual = personaje.GetAcc();
 
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 
-	personaje.SetAcc(accActual.x,-10.0f);
+	//personaje.SetAcc(accActual.x,-10.0f); //Arreglo jincho
 	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
 	{
-		//personaje.SetPos(posAnterior);
+		//personaje.SetPos(posAnterior); //Ya se hace en los casos
 		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
 		{
 		case ARRIBA:
@@ -100,15 +93,16 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 		return PARED_DCHA;
 }
 
-bool Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
+int Interaccion::Choque(ListaRectangulos& listaRectangulos, Personaje& personaje)
 {
-	bool rectanguloChocado = false;
+	int rectanguloChocado = -1; //Si no choca con ninguna plataforma se devuelve -1
 
 	for (int i = 0; i < listaRectangulos.GetNum(); i++)
 	{
 		if (Interaccion::Choque(*listaRectangulos.lista[i], personaje))
 		{
-			rectanguloChocado = true;
+			rectanguloChocado = i;
+			return rectanguloChocado;
 		}
 	}
 	return rectanguloChocado;
@@ -123,4 +117,22 @@ bool Interaccion::Choque(Sierra& sierra, Personaje& personaje)
 		choque = true;
 	}
 	return choque;
+}
+
+bool Interaccion::SalidaLateral(ListaRectangulos& listaRectangulos, Personaje& personaje)
+{
+	Vector2D accActual = personaje.GetAcc();
+
+	//Saco el rectángulo que necesito de la lista
+	Rectangulo rectangulo = *listaRectangulos.lista[personaje.plataformaEnContacto];
+
+	//Comprobar que los centros se encuantras a más distancia que la suma de los semi-anchos
+	//Salida por la derecha y la izquierda gracias al absoluto
+	if (abs(personaje.cuerpo.centro.x - rectangulo.centro.x) >= (personaje.cuerpo.ancho/2 + rectangulo.ancho/2))
+	{
+		personaje.SetAcc(accActual.x, -10.0f);
+		personaje.plataformaEnContacto = -1;
+		return 1;
+	}
+	return 0;
 }
