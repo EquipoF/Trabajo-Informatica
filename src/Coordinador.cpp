@@ -87,8 +87,7 @@ void Coordinador::Tecla(unsigned char key)
         {
             mundo.Inicializa();
             estado = JUEGO;
-        }
-        
+        }        
     }
     else if (estado == JUEGO)
     {

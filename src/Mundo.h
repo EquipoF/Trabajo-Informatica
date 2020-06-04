@@ -31,4 +31,6 @@ private:
 	float z_ojo;
 
 	bool muerte;
+
+	float tiempo;
 };

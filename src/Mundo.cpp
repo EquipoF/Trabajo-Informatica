@@ -4,6 +4,9 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
+#include <iostream>
+using namespace std;
+
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
 #define velPersonaje 5.0	//Velocidad a la que se mueve el personaje horizontalmente
 #define velSalto 5.0
@@ -88,6 +91,9 @@ void Mundo::Mueve()
 	{
 		muerte = true;
 	}
+
+	tiempo++;
+	cout << tiempo << endl;
 }
 
 void Mundo::Inicializa()
@@ -97,9 +103,13 @@ void Mundo::Inicializa()
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
 	personaje.SetPos(0.0f, -2.0f);
+	personaje.SetVel(0.0f, 0.0f);
+	personaje.SetAcc(0.0f, 0.0f);
 	sierra.SetPos(4.0f, 1.0f);
 	sierra2.SetPos(-6.0f, 10.0f);
 	muerte = false;
+
+	tiempo = 0.0f;
 
 	//Plataformas
 	{

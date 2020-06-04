@@ -106,7 +106,7 @@ void Personaje::Dibuja()
 		sprite_salto.draw();
 	else if(velocidad.y < -0.01)
 		sprite_caida.draw();
-	else if (velocidad.y < 0.01 && velocidad.y > -0.1f)
+	else if (velocidad.y < 0.1 && velocidad.y > -0.1f)
 	{
 		sprite.draw();
 		sprite.loop();
