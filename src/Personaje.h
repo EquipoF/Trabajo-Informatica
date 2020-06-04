@@ -1,7 +1,6 @@
 #pragma once
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
-//#include "Interaccion.h"
 #include "ListaRectangulos.h"
 #include "Caja.h"
 #include "ETSIDI.h"
@@ -16,6 +15,7 @@ public:
 	virtual ~Personaje();
 
 	void Dibuja();
+	void Inicializa();
 
 	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);	//poner la m en mayúscula.
 
@@ -37,6 +37,8 @@ private:
 	bool contactoParedDcha;
 	bool contactoParedIzq;
 	float multiplicadorCargado;
+
+	int plataformaEnContacto; //Plataforma sobre la que está posado el personaje
 
 	bool dchaPresionado = false;
 	bool izqPresionado = false;

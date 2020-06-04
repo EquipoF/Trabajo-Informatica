@@ -102,9 +102,7 @@ void Mundo::Inicializa()
 	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
-	personaje.SetPos(0.0f, -2.0f);
-	personaje.SetVel(0.0f, 0.0f);
-	personaje.SetAcc(0.0f, 0.0f);
+	personaje.Inicializa();
 	sierra.SetPos(4.0f, 1.0f);
 	sierra2.SetPos(-6.0f, 10.0f);
 	muerte = false;

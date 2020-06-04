@@ -117,6 +117,16 @@ void Personaje::Dibuja()
 	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
+void Personaje::Inicializa()
+{
+	Personaje::SetPos(0.0f, -2.0f);
+	Personaje::SetVel(0.0, 0.0);
+	Personaje::SetAcc(0.0, GRAVEDAD);
+	dchaPresionado = false;
+	izqPresionado = false;
+	plataformaEnContacto = -1; //No está en contacto con nada
+}
+
 void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
 {
 	ObjetoMovil::Mueve(t);
@@ -140,8 +150,25 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	}
 
 	//Corrección de posición
-	Interaccion::Choque(plataformas, *this);
+	int aux = Interaccion::Choque(plataformas, *this); //Evaluar si hay choque con plataforma y guarda el resultado en aux
+	if (aux != -1) // Si hay choque con alguna plataforma
+	{
+		//Guardo aux en un atributo del personaje para que no se pierda al repetir la operación pero con la posición corregida
+		plataformaEnContacto = aux;
+	}
+	if (plataformaEnContacto != -1)
+	{
+		if (Interaccion::SalidaLateral(plataformas, *this)) {
+			int asdf = 0;
+		}
+	}
+
 	Interaccion::Choque(caja, *this);
+
+	//Gravedad OFF por colisión
+	//Te sales de una plataforma
+
+	//Cambiar posición para dibujar
 	cuerpo.setCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
@@ -209,14 +236,16 @@ void Personaje::Tecla(unsigned char key)
 	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
 	{
 		//si estás en el suelo para, sino no
-		velocidad.x *= 0.5;
+		velocidad.x = 0.0;
 		aceleracion.x = 0.0f;
 	}
 }
 
 void Personaje::Salta(unsigned int tipoSalto) {
+	//Gravedad ON
+	aceleracion.y = GRAVEDAD;
 	//Comprobaciones para saltar
-		switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
+	switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
 	{	
 		case (NORMAL):
 			if (saltosRestantes > 0) //Si hay saltos restantes
@@ -226,19 +255,19 @@ void Personaje::Salta(unsigned int tipoSalto) {
 			}
 			break;
 
-			case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
+		case (PARED_DCHA): //Ángulo de 45 grados SOLO SI la vel. de mvto. y la de salto son iguales, sino se necesitan más cálculos.
 			velocidad.x = -vMov * COS_45;
 			velocidad.y = vSalto * SEN_45;
 			contactoParedDcha = false;
 			break;
 
-			case (PARED_IZQ): 
+		case (PARED_IZQ): 
 			velocidad.x = vMov * COS_45;
 			velocidad.y = vSalto * SEN_45;
 			contactoParedIzq = false;
 			break;
 
-			case (CARGADO):
+		case (CARGADO):
 			velocidad.y = multiplicadorCargado*vSalto;
 			saltosRestantes--;
 			break;	

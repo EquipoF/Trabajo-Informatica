@@ -8,6 +8,7 @@ class ListaRectangulos
 {
 public:
 	friend Interaccion;
+	//friend Personaje;
 	ListaRectangulos();
 	virtual ~ListaRectangulos();
 
