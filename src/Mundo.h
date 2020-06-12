@@ -1,8 +1,9 @@
 #pragma once
 #include "Rectangulo.h"
+#include "RectanguloMovil.h"
+#include "ListaRectangulos.h"
 #include "Caja.h"
 #include "Personaje.h"
-#include "ListaRectangulos.h"
 #include "Interaccion.h"
 #include "Sierra.h"
 

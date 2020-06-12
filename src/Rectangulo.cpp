@@ -15,7 +15,7 @@ Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
 	ancho = anchoIn;
 	alto = altoIn;
 	centro = centroIn;
-	CentroVertice();
+	CentroVertice(); //Saca las esquinas a partir de ancho/alto/centro
 
 }
 
@@ -48,13 +48,13 @@ void Rectangulo::Dibuja()
 	glEnable(GL_LIGHTING);
 }
 
-void Rectangulo::setCentro(Vector2D centroIn)
+void Rectangulo::SetCentro(Vector2D centroIn)
 {
 	centro = centroIn;
 	CentroVertice();
 }
 
-void Rectangulo::setCentro(float x, float y)
+void Rectangulo::SetCentro(float x, float y)
 {
 	centro.x = x;
 	centro.y = y;
@@ -90,4 +90,15 @@ Vector2D Rectangulo::GetCentro()
 Vector2D Rectangulo::GetAnchoAlto()
 {
 	return Vector2D(ancho,alto);
+}
+
+void Rectangulo::SetAnchoAlto(Vector2D anchoAltoIn) 
+{
+	ancho = anchoAltoIn.x;
+	alto = anchoAltoIn.y;
+}
+
+bool Rectangulo::GetMovil()
+{
+	return movil;
 }

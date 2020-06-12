@@ -4,6 +4,7 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
+
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
 #define velPersonaje 5.0	//Velocidad a la que se mueve el personaje horizontalmente
 #define velSalto 5.0
@@ -74,6 +75,14 @@ void Mundo::Mueve()
 	sierra.Mueve(0.025);
 	sierra2.Mueve(0.025);
 
+	//Plataformas móviles
+	for (int p = 0; p < plataformas.GetNum(); p++ ) {
+		if (plataformas.lista[p]->GetMovil() == true) 
+		{
+			plataformas.lista[p]->Mueve(DIFF_TIEMPO);
+		}
+	}
+
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
@@ -103,8 +112,12 @@ void Mundo::Inicializa()
 
 	//Plataformas
 	{
-		Rectangulo* rec1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
-		plataformas.Agregar(rec1);
+		//Primer rectángulo
+		Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
+		//Lo habo móvil
+		RectanguloMovil* recM1 = new RectanguloMovil(rec1, 10, -10, rec1.GetCentro().y, rec1.GetCentro().y, 2.0, 0);
+		plataformas.Agregar(recM1);
+
 		Rectangulo* rec2 = new Rectangulo(3.0f, 0.7f, Vector2D(4.0f, -1.0f));
 		plataformas.Agregar(rec2);
 		Rectangulo* rec3 = new Rectangulo(3.0f, 0.7f, Vector2D(7.0f, 2.0f));

@@ -97,6 +97,7 @@
     <ClCompile Include="src\ObjetoMovil.cpp" />
     <ClCompile Include="src\Personaje.cpp" />
     <ClCompile Include="src\Rectangulo.cpp" />
+    <ClCompile Include="src\RectanguloMovil.cpp" />
     <ClCompile Include="src\Sierra.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
@@ -109,6 +110,7 @@
     <ClInclude Include="src\ObjetoMovil.h" />
     <ClInclude Include="src\Personaje.h" />
     <ClInclude Include="src\Rectangulo.h" />
+    <ClInclude Include="src\RectanguloMovil.h" />
     <ClInclude Include="src\Sierra.h" />
     <ClInclude Include="src\Vector2D.h" />
   </ItemGroup>

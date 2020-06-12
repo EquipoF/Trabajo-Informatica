@@ -131,13 +131,34 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 {
 	ObjetoMovil::Mueve(t);
 	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
+	
 	if (dchaPresionado) {
 		velocidad.x = vMov;
 		aceleracion.x = accx;
+		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+		{
+			velocidad.x = vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
+		}
 	}
 	if (izqPresionado) {
 		velocidad.x = -vMov;
 		aceleracion.x = -accx;
+		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+		{
+			velocidad.x = -vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
+		}
+	}
+	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
+	{
+		aceleracion.x = 0.0f;
+		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+		{
+			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
+		}
+		else 
+		{
+			velocidad.x = 0.0;																//-------------------Esto es lo que causa que en el aire no mantengas la velocidad en X
+		}
 	}
 
 	//Corrección de velocidad
@@ -158,9 +179,7 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	}
 	if (plataformaEnContacto != -1)
 	{
-		if (Interaccion::SalidaLateral(plataformas, *this)) {
-			int asdf = 0;
-		}
+		Interaccion::SalidaLateral(plataformas, *this);
 	}
 
 	Interaccion::Choque(caja, *this);
@@ -169,7 +188,7 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	//Te sales de una plataforma
 
 	//Cambiar posición para dibujar
-	cuerpo.setCentro(posicion);	
+	cuerpo.SetCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
 {   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
@@ -233,17 +252,22 @@ void Personaje::Tecla(unsigned char key)
 		espacioPresionado = false; //la marco como no pulsada.
 		break;
 	}
-	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
+	/*if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
 	{
 		//si estás en el suelo para, sino no
 		velocidad.x = 0.0;
 		aceleracion.x = 0.0f;
-	}
+		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+		{
+			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
+		}
+	}*/
 }
 
 void Personaje::Salta(unsigned int tipoSalto) {
 	//Gravedad ON
 	aceleracion.y = GRAVEDAD;
+	plataformaEnContacto = -1;
 	//Comprobaciones para saltar
 	switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
 	{	

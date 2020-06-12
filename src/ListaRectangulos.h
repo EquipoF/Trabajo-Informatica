@@ -18,6 +18,6 @@ public:
 
 	int GetNum();
 
-private:
+//private:
 	std::vector<Rectangulo*> lista;
 };

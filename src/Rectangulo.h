@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2D.h"
-class Rectangulo
+#include "ObjetoMovil.h"
+class Rectangulo: public ObjetoMovil
 {
 public:
 	friend class Interaccion;
@@ -9,16 +10,19 @@ public:
 	Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D abajoDchaIn, Vector2D abajoIzqIn);
 	virtual ~Rectangulo();
 	void Dibuja();
-	void setCentro(Vector2D centroIn);
-	void setCentro(float x, float y);
+	void SetCentro(Vector2D centroIn);
+	void SetCentro(float x, float y);
 	Vector2D GetCentro();
+	void SetAnchoAlto(Vector2D anchoAltoIn);
 	Vector2D GetAnchoAlto();
+	bool GetMovil();
 
-private:
+protected:
 	void CentroVertice();
 	void VerticeCentro();
 	float alto, ancho;
-	Vector2D centro;
-	Vector2D arribaDcha, arribaIzq, abajoIzq, abajoDcha;
+	Vector2D centro;//Centro del rectángulo
+	Vector2D arribaDcha, arribaIzq, abajoIzq, abajoDcha; //Esquinas del rectángulo
+	bool movil;
 };
 

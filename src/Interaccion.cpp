@@ -24,10 +24,8 @@ bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 
-	//personaje.SetAcc(accActual.x,-10.0f); //Arreglo jincho
 	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
 	{
-		//personaje.SetPos(posAnterior); //Ya se hace en los casos
 		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
 		{
 		case ARRIBA:
