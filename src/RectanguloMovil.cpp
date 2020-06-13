@@ -1,9 +1,5 @@
 #include "RectanguloMovil.h"
 
-RectanguloMovil::RectanguloMovil() 
-{
-}
-
 RectanguloMovil::RectanguloMovil(Rectangulo rectanguloIn, float limDchaIn, float limIzqIn, float limArribaIn, float limAbajoIn,float velXIn,float velYIn)
 {
 	//Establecer límites

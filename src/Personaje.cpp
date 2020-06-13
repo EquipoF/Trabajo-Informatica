@@ -6,9 +6,11 @@
 #define ANCHO 0.5f
 #define GRAVEDAD -10.0f
 
+//Parámetros matemáticos (para saltos)
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
+//Parámetros de movimiento
 #define accx 10.0f //6//Aceleración para el eje X
 #define velxLim 5.0f //Velocidad límite del eje x
 
@@ -23,16 +25,14 @@ enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
 Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png")
 {
-	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0,0)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
-	aceleracion.y = GRAVEDAD;
-	vMov = 3.0;//1.0;
+	//Variables intrínsecas del personaje (no cambian cada vez que mueres)
+	vMov = 3.0;
 	vSalto = 7.0;
 	multiplicadorCargado = 2.0f;
-	saltosRestantes = 2; //nº de saltos para probar
+	cuerpo = Rectangulo(ANCHO, ALTO, Vector2D(0.0f, -2.0f)); //Inicializo el personaje como su ancho, alto y lo pongo en la posición inicial.
 
-	//variables de contacto para probar los saltos de pared
-	contactoParedDcha = false;
-	contactoParedIzq = false;
+	//Variables que se restablecen cada vez que el personaje muere
+	Personaje::Inicializa();
 
 	//inicializacion posiciones y tamaños sprites
 	Vector2D centro = Vector2D(0.5, 0.5);
@@ -46,42 +46,27 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 
 	sprite_caida.setCenter(centro.x, centro.y);
 	sprite_caida.setSize(size.x, size.y);
-	//altura = 1.8f;
 }
 Personaje::~Personaje()
 {
 }
-/*
-void Personaje::SetAcc(Vector2D acclIn) 
-{
-	//Código aqúi
-	Vector2D velAux;
 
-	//
-	ObjetoMovil::SetVel(velAux);
-}
-void Personaje::SetAcc(float accxIn, float accyIn) 
+void Personaje::Inicializa()
 {
-	Personaje::SetVel(Vector2D(accxIn, accyIn));
-}
-*/
-void Personaje::setvMov(float vIn) 
-{
-	vMov = vIn;
-}
-void Personaje::setvSalto(float vIn) 
-{
-	vSalto = vIn;
-}
-void Personaje::setSaltosRes(int saltosIn)
-{
-	saltosRestantes = saltosIn;
-}
-int Personaje::getSaltosRes(void)
-{
-	return saltosRestantes;
-}
+	Personaje::SetPos(0.0f, -2.0f); //Cambiar a parámetro de entrada
+	Personaje::SetVel(0.0, 0.0);
+	aceleracion.y = GRAVEDAD;
+	saltosRestantes = 2; //nº de saltos para probar
 
+	//Variables de movimietno
+	dchaPresionado = false;
+	izqPresionado = false;
+
+	//variables de contacto
+	contactoParedDcha = false; //para saltos de pared
+	contactoParedIzq = false;
+	plataformaEnContacto = -1; //No está posado sobre ninguna plataforma
+}
 void Personaje::Dibuja()
 {
 	glPushMatrix();
@@ -92,46 +77,35 @@ void Personaje::Dibuja()
 
 	if (velocidad.x > 0.01)sprite.flip(false, false);//sprite idle
 	if (velocidad.x < -0.01)sprite.flip(true, false);
-	
+
 
 	if (velocidad.x > 0.01)sprite_salto.flip(false, false);//sprite salto
 	if (velocidad.x < -0.01)sprite_salto.flip(true, false);
-	
+
 
 	if (velocidad.x > 0.01)sprite_caida.flip(false, false);//sprite caida
 	if (velocidad.x < -0.01)sprite_caida.flip(true, false);
-	
+
 
 	if (velocidad.y > 0.01)
 		sprite_salto.draw();
-	else if(velocidad.y < -0.01)
+	else if (velocidad.y < -0.01)
 		sprite_caida.draw();
 	else if (velocidad.y < 0.01 && velocidad.y > -0.1f)
 	{
 		sprite.draw();
 		sprite.loop();
 	}
-		
-	glPopMatrix();
-	
-	//cuerpo.Dibuja(); //dibujar para ver la hitbox
-}
 
-void Personaje::Inicializa()
-{
-	Personaje::SetPos(0.0f, -2.0f);
-	Personaje::SetVel(0.0, 0.0);
-	Personaje::SetAcc(0.0, GRAVEDAD);
-	dchaPresionado = false;
-	izqPresionado = false;
-	plataformaEnContacto = -1; //No está en contacto con nada
+	glPopMatrix();
+
+	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
 void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
 {
 	ObjetoMovil::Mueve(t);
 	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
-	
 	if (dchaPresionado) {
 		velocidad.x = vMov;
 		aceleracion.x = accx;
@@ -157,7 +131,7 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 		}
 		else 
 		{
-			velocidad.x = 0.0;																//-------------------Esto es lo que causa que en el aire no mantengas la velocidad en X
+			velocidad.x = 0.0;																//<------------------Esto es lo que causa que en el aire no mantengas la velocidad en X
 		}
 	}
 
@@ -170,7 +144,8 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 		velocidad.x = -velxLim;
 	}
 
-	//Corrección de posición
+	//Correcciones de posición
+	//PLataformas normales
 	int aux = Interaccion::Choque(plataformas, *this); //Evaluar si hay choque con plataforma y guarda el resultado en aux
 	if (aux != -1) // Si hay choque con alguna plataforma
 	{
@@ -181,11 +156,10 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	{
 		Interaccion::SalidaLateral(plataformas, *this);
 	}
-
+	//Caja
 	Interaccion::Choque(caja, *this);
 
 	//Gravedad OFF por colisión
-	//Te sales de una plataforma
 
 	//Cambiar posición para dibujar
 	cuerpo.SetCentro(posicion);	
@@ -200,8 +174,6 @@ void Personaje::Tecla(unsigned char key)
 	{
 	//Movimiento derecha
 	case DCHA:
-		//velocidad.x = vMov;
-		//aceleracion.x = accx;
 		dchaPresionado = true;
 		break;
 
@@ -249,27 +221,19 @@ void Personaje::Tecla(unsigned char key)
 		break;
 	//Se suelta la barra espaciadora
 	case ESPACIO_SOLTADO:
-		espacioPresionado = false; //la marco como no pulsada.
+		espacioPresionado = false; //La marco como no pulsada.
 		break;
 	}
-	/*if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
-	{
-		//si estás en el suelo para, sino no
-		velocidad.x = 0.0;
-		aceleracion.x = 0.0f;
-		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
-		{
-			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
-		}
-	}*/
 }
 
 void Personaje::Salta(unsigned int tipoSalto) {
-	//Gravedad ON
-	aceleracion.y = GRAVEDAD;
-	plataformaEnContacto = -1;
-	//Comprobaciones para saltar
-	switch (tipoSalto) //Elijo el tipo de salto (hacia dónde va el mvto. vertical)
+
+	//Cambio en variables al pulsar espacio
+	aceleracion.y = GRAVEDAD;//Gravedad ON
+	plataformaEnContacto = -1;//Deja de estar en contacto con una plataforma
+
+	//Elijo el tipo de salto (hacia dónde va el mvto. vertical)
+	switch (tipoSalto) 
 	{	
 		case (NORMAL):
 			if (saltosRestantes > 0) //Si hay saltos restantes
@@ -297,8 +261,25 @@ void Personaje::Salta(unsigned int tipoSalto) {
 			break;	
 	}
 }
-void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D
-	/*case (DASH_ABAJO):
+/*void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D
+	case (DASH_ABAJO):
 		velocidad.y = -vSalto;
-		break;*/
+		break;
+}*/
+
+void Personaje::setvMov(float vIn)
+{
+	vMov = vIn;
+}
+void Personaje::setvSalto(float vIn)
+{
+	vSalto = vIn;
+}
+void Personaje::setSaltosRes(int saltosIn)
+{
+	saltosRestantes = saltosIn;
+}
+int Personaje::getSaltosRes(void)
+{
+	return saltosRestantes;
 }

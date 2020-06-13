@@ -7,7 +7,8 @@ Rectangulo::Rectangulo()
 	arribaIzq = Vector2D(-5.0f, 5.0f);
 	abajoDcha = Vector2D(5.0f, -5.0f);
 	abajoIzq = Vector2D(-5.0f, -5.0f);
-	VerticeCentro();
+	VerticeCentro();//Saca el centro, ancho y alto a partir de las esquinas
+	atravesar = false;
 }
 
 Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
@@ -16,7 +17,7 @@ Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
 	alto = altoIn;
 	centro = centroIn;
 	CentroVertice(); //Saca las esquinas a partir de ancho/alto/centro
-
+	atravesar = false;
 }
 
 Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D abajoDchaIn, Vector2D abajoIzqIn)
@@ -26,6 +27,7 @@ Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D ab
 	abajoIzq = abajoIzqIn;
 	abajoDcha = abajoDchaIn;
 	VerticeCentro();
+	atravesar = false;
 }
 
 Rectangulo::~Rectangulo()
@@ -37,13 +39,17 @@ void Rectangulo::Dibuja()
 {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
-	glColor3ub(55, 0, 0);
-	glVertex2d(abajoIzq.x, abajoIzq.y);
-	glColor3ub(55, 155, 0);
-	glVertex2d(arribaIzq.x, arribaIzq.y);	
-	glVertex2d(arribaDcha.x, arribaDcha.y);
-	glColor3ub(55, 0, 0);
-	glVertex2d(abajoDcha.x, abajoDcha.y);
+
+		glColor3ub(55, 0, 0);
+		glVertex2d(abajoIzq.x, abajoIzq.y);
+
+		glColor3ub(55, 155, 0);
+		glVertex2d(arribaIzq.x, arribaIzq.y);	
+		glVertex2d(arribaDcha.x, arribaDcha.y);
+
+		glColor3ub(55, 0, 0);
+		glVertex2d(abajoDcha.x, abajoDcha.y);
+
 	glEnd();
 	glEnable(GL_LIGHTING);
 }
@@ -56,9 +62,7 @@ void Rectangulo::SetCentro(Vector2D centroIn)
 
 void Rectangulo::SetCentro(float x, float y)
 {
-	centro.x = x;
-	centro.y = y;
-	CentroVertice();
+	Rectangulo::SetCentro(Vector2D(x, y));
 }
 
 
@@ -101,4 +105,8 @@ void Rectangulo::SetAnchoAlto(Vector2D anchoAltoIn)
 bool Rectangulo::GetMovil()
 {
 	return movil;
+}
+
+bool Rectangulo::GetAtravesar() {
+	return atravesar;
 }

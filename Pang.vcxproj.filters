@@ -51,6 +51,9 @@
     <ClCompile Include="src\RectanguloMovil.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="src\Pinchos.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Mundo.h">
@@ -84,6 +87,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\RectanguloMovil.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pinchos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

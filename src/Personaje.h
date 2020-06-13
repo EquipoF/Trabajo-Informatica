@@ -14,15 +14,14 @@ public:
 	Personaje();
 	virtual ~Personaje();
 
-	void Dibuja();
 	void Inicializa();
+	void Dibuja();
 
-	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);	//poner la m en mayúscula.
-
+	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);
 	void Tecla(unsigned char key);
 
-	void Dash(unsigned char direccion);
 	void Salta( unsigned int tipoSalto);
+	//void Dash(unsigned char direccion);
 
 	void setvSalto(float vIn);
 	void setvMov(float vIn);
@@ -48,4 +47,3 @@ private:
 	Sprite sprite_salto;
 	Sprite sprite_caida;
 };
-

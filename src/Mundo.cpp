@@ -4,11 +4,7 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
-
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
-#define velPersonaje 5.0	//Velocidad a la que se mueve el personaje horizontalmente
-#define velSalto 5.0
-#define ESPACIO_SOLTADO 1
 
 void Mundo::Dibuja()
 {
@@ -23,6 +19,7 @@ void Mundo::Dibuja()
 	personaje.Dibuja();
 
 	plataformas.Dibuja();
+	pinchos.Dibuja();
 
 	sierra.Dibuja();
 	sierra2.Dibuja();
@@ -60,6 +57,7 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
+	//Avance de la cámara
 	if (y_ojo < 36)
 	{
 		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
@@ -69,27 +67,37 @@ void Mundo::Mueve()
 		SetVelMundo(0); 
 	}
 	
-
+	//Movimiento del personaje
 	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
 
+	//Movimiento de las trampas
 	sierra.Mueve(0.025);
 	sierra2.Mueve(0.025);
 
-	//Plataformas móviles
-	for (int p = 0; p < plataformas.GetNum(); p++ ) {
-		if (plataformas.lista[p]->GetMovil() == true) 
+	//Movimiento de las plataformas
+	for (int plat = 0; plat < plataformas.GetNum(); plat++ ) {
+		if (plataformas.lista[plat]->GetMovil() == true) 
 		{
-			plataformas.lista[p]->Mueve(DIFF_TIEMPO);
+			plataformas.lista[plat]->Mueve(DIFF_TIEMPO);
 		}
 	}
 
+	//Movimiento de los pinchos
+	for (int pin = 0; pin < pinchos.GetNum(); pin++) {
+		if (pinchos.lista[pin]->GetMovil() == true)
+		{
+			pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
+		}
+	}
+
+	//Comprobaciones de interacciones entre objetos contenidos en el mundo para cambiar ele satdo del mundo
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;//Comentar esta línea para pruebas viendo todo el mapa
+		muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
 	}
 
-	if (Interaccion::Choque(sierra, personaje))
+	if (Interaccion::Choque(sierra, personaje)) //Hacer listas de sierras
 	{
 		muerte = true;
 	}
@@ -97,33 +105,52 @@ void Mundo::Mueve()
 	{
 		muerte = true;
 	}
+	int pinchoChocado = Interaccion::Choque(pinchos, personaje);
+	if (pinchoChocado != -1)
+	{
+		if(pinchos.lista[pinchoChocado]->GetAtravesar() == false)
+		muerte = true;
+	}
 }
 
 void Mundo::Inicializa()
 {
 	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara (línea 8)
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
 	personaje.Inicializa();
-	sierra.SetPos(4.0f, 1.0f);
-	sierra2.SetPos(-6.0f, 10.0f);
+
+	//Sierras
+	{
+		sierra.SetPos(4.0f, 1.0f);
+		sierra2.SetPos(-6.0f, 10.0f);
+	}
+	
 	muerte = false;
 
 	//Plataformas
 	{
 		//Primer rectángulo
 		Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
-		//Lo habo móvil
-		RectanguloMovil* recM1 = new RectanguloMovil(rec1, 10, -10, rec1.GetCentro().y, rec1.GetCentro().y, 2.0, 0);
+		//Lo hago móvil
+		RectanguloMovil* recM1 = new RectanguloMovil(rec1, 10, -10, rec1.GetCentro().y, rec1.GetCentro().y, 2.0, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 		plataformas.Agregar(recM1);
 
+		//Plataformas 100% normales
 		Rectangulo* rec2 = new Rectangulo(3.0f, 0.7f, Vector2D(4.0f, -1.0f));
 		plataformas.Agregar(rec2);
 		Rectangulo* rec3 = new Rectangulo(3.0f, 0.7f, Vector2D(7.0f, 2.0f));
 		plataformas.Agregar(rec3);
+
+		//Poner pinchos en uno de los lasod de una platafomra
 		Rectangulo* rec4 = new Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 2.5f));
 		plataformas.Agregar(rec4);
+		Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
+		//plataformas.Agregar(recP4);
+		pinchos.Agregar(recP4);
+
+		//Plataformas 100% normales
 		Rectangulo* rec5 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 2.5f));
 		plataformas.Agregar(rec5);
 		Rectangulo* rec6 = new Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 2.5f));

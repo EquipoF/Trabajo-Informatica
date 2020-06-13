@@ -17,14 +17,13 @@ int Interaccion::Choque(Caja & caja, Personaje& personaje)
 
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
-	//Vector2D posAnterior = personaje.GetPosAnt(); // Ya se hace en los casos
 	Vector2D posActual = personaje.GetPos();
 	Vector2D velActual = personaje.GetVel();
 	Vector2D accActual = personaje.GetAcc();
 
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 
-	if (Interaccion::Choque(rectangulo, cuerpoFuturo))
+	if (Interaccion::Choque(rectangulo, cuerpoFuturo) && rectangulo.GetAtravesar()==false)
 	{
 		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
 		{
