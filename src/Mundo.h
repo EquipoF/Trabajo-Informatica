@@ -7,6 +7,7 @@
 #include "Interaccion.h"
 #include "Sierra.h"
 #include "pinchos.h"
+#include "PowerUp.h"
 
 class Mundo
 {
@@ -26,6 +27,7 @@ private:
 	Rectangulo rectangulo1;
 	ListaRectangulos plataformas;
 	ListaRectangulos pinchos;
+	ListaRectangulos powerUps;
 
 	Sierra sierra,sierra2;
 

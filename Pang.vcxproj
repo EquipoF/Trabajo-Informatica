@@ -97,6 +97,7 @@
     <ClCompile Include="src\ObjetoMovil.cpp" />
     <ClCompile Include="src\Personaje.cpp" />
     <ClCompile Include="src\Pinchos.cpp" />
+    <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\Rectangulo.cpp" />
     <ClCompile Include="src\RectanguloMovil.cpp" />
     <ClCompile Include="src\Sierra.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="src\ObjetoMovil.h" />
     <ClInclude Include="src\Personaje.h" />
     <ClInclude Include="src\Pinchos.h" />
+    <ClInclude Include="src\PowerUp.h" />
     <ClInclude Include="src\Rectangulo.h" />
     <ClInclude Include="src\RectanguloMovil.h" />
     <ClInclude Include="src\Sierra.h" />

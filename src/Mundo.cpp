@@ -14,12 +14,12 @@ void Mundo::Dibuja()
 
 	
 	//aqui es donde hay que poner el codigo de dibujo
-	//dibujo del suelo
 	caja.Dibuja();
 	personaje.Dibuja();
 
 	plataformas.Dibuja();
 	pinchos.Dibuja();
+	powerUps.Dibuja();
 
 	sierra.Dibuja();
 	sierra2.Dibuja();
@@ -90,6 +90,14 @@ void Mundo::Mueve()
 		}
 	}
 
+	//Interacción powerUps & personaje
+	int powerUpChocado = Interaccion::Choque(powerUps, personaje);
+	if (powerUpChocado != -1) //Si choca con algún bonus
+	{
+		powerUps.EliminarRectangulo(powerUpChocado);
+	}
+
+
 	//Comprobaciones de interacciones entre objetos contenidos en el mundo para cambiar ele satdo del mundo
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
@@ -156,11 +164,16 @@ void Mundo::Inicializa()
 		Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
 		pinchos.Agregar(recP4);
 
-		//Plataformas 100% normales
+		//Plataforma 100% normale
 		Rectangulo* rec5 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 2.5f));
 		plataformas.Agregar(rec5);
-		Rectangulo* rec6 = new Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 2.5f));
-		plataformas.Agregar(rec6);
+
+		//COnvertir una plataforma en power up
+		Rectangulo rec6 = Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 2.5f));
+		PowerUp* recP6 = new PowerUp(rec6);
+		powerUps.Agregar(recP6);
+
+		//Plataformas 100% normales
 		Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
 		plataformas.Agregar(rec7);
 		Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));

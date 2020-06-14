@@ -13,7 +13,7 @@ RectanguloMovil::RectanguloMovil(Rectangulo rectanguloIn, float limDchaIn, float
 	centro=rectanguloIn.GetCentro(); 
 	ancho = rectanguloIn.GetAnchoAlto().x;
 	alto = rectanguloIn.GetAnchoAlto().y;
-	CentroVertice();//Se terminan de generar las variables necesarias del rectángulo
+	CentroVertice();
 
 	//Igualar centro del rectángulo como objeto móvil al centro del rectángulo como objeto visible
 	posicion = GetCentro();

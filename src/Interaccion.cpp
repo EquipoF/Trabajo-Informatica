@@ -2,7 +2,7 @@
 
 #define GRAVEDAD -10.0f
 
-enum { ARRIBA = 1, ABAJO = 3, PARED_DCHA = 4, PARED_IZQ = 2 };
+enum { NADA = 0,ARRIBA = 1, ABAJO = 3, PARED_DCHA = 4, PARED_IZQ = 2 };
 
 Interaccion::Interaccion()
 {
@@ -20,39 +20,44 @@ Interaccion::~Interaccion()
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	//Cuerpo en el que se va a encontrar el pesonaje si se realiza el movimiento sin ninguna corrección
-	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 
-	if (Interaccion::Choque(rectangulo, cuerpoFuturo) && rectangulo.GetAtravesar()==false) //Si hay colisión, se corrige
+	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
+	int ladoChocado = Interaccion::Choque(rectangulo, cuerpoFuturo);
+
+	switch (ladoChocado)
 	{
-		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
-		{
-		case ARRIBA:
-			personaje.SetSaltosRes(2);
-			personaje.posicion.y = rectangulo.centro.y + ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo encima de la plataforma
-			personaje.aceleracion.y=0;
-			personaje.SetVel(0.0, 0.0);
-			return true;
-		case PARED_DCHA:
-			personaje.posicion.x= rectangulo.centro.x - ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la derecha de la plataforma
-			personaje.velocidad.x=0;
-			personaje.contactoParedDcha = true;
-			return true;
-		case PARED_IZQ:
-			personaje.posicion.x= rectangulo.centro.x + ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la iquierda de la plataforma
-			personaje.velocidad.x=0;
-			personaje.contactoParedIzq = true;
-			return true;
-		case ABAJO:
-			personaje.posicion.y = rectangulo.centro.y - ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo debajo de la plataforma
-			personaje.velocidad.y = 0;
-			return true;
-		}
-	}
-	else
-	{
+	case NADA:
 		personaje.contactoParedDcha = false; //Para que no se quede la opción de salto de pared activa par siempre si tocas una pared
 		personaje.contactoParedIzq = false;
 		return false;
+	case ARRIBA:
+		if (rectangulo.GetAtravesar() == false) {
+			personaje.SetSaltosRes(2);
+			personaje.posicion.y = rectangulo.centro.y + ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo encima de la plataforma
+			personaje.aceleracion.y = 0;
+			personaje.SetVel(0.0, 0.0);
+		}
+		return true;
+	case PARED_DCHA:
+		if (rectangulo.GetAtravesar() == false) {
+			personaje.posicion.x = rectangulo.centro.x - ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la derecha de la plataforma
+			personaje.velocidad.x = 0;
+			personaje.contactoParedDcha = true;
+		}
+		return true;
+	case PARED_IZQ:
+		if (rectangulo.GetAtravesar() == false) {
+			personaje.posicion.x = rectangulo.centro.x + ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la iquierda de la plataforma
+			personaje.velocidad.x = 0;
+			personaje.contactoParedIzq = true;
+		}
+		return true;
+	case ABAJO:
+		if (rectangulo.GetAtravesar() == false) {
+			personaje.posicion.y = rectangulo.centro.y - ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo debajo de la plataforma
+			personaje.velocidad.y = 0;
+		}
+		return true;
 	}
 }
 
