@@ -96,7 +96,7 @@
 - [ ] Guardar puntuación (ficheros)
 - [x] Menú de inicio y final de partida (máquina de estados)
 - [ ] Ampliar contenido: power ups (dash, salto cargado, doble salto)
-- [ ] Ampliar contenido: distintas plataformas (móviles, con pinchos, con pinchos que salen)
+- [x] Ampliar contenido: distintas plataformas (móviles, con pinchos, con pinchos que salen)
 - [ ] Ampliar contenido: elementos que dañan (bolas de cañon, sierras estáticas...)
 - [ ] Último: texturas y estética
 - [ ] Revisar formato del código, poner comentarios
