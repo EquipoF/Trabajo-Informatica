@@ -129,6 +129,13 @@ void Mundo::Inicializa()
 	
 	muerte = false;
 
+	//Caja
+	{
+		for (int lado = 0; lado < caja.ladosCaja.GetNum(); lado++) {
+			plataformas.Agregar(caja.ladosCaja.lista[lado]);
+		}
+	}
+
 	//Plataformas
 	{
 		//Primer rectángulo
@@ -143,11 +150,10 @@ void Mundo::Inicializa()
 		Rectangulo* rec3 = new Rectangulo(3.0f, 0.7f, Vector2D(7.0f, 2.0f));
 		plataformas.Agregar(rec3);
 
-		//Poner pinchos en uno de los lasod de una platafomra
+		//Poner pinchos en una platafomra
 		Rectangulo* rec4 = new Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 2.5f));
 		plataformas.Agregar(rec4);
 		Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
-		//plataformas.Agregar(recP4);
 		pinchos.Agregar(recP4);
 
 		//Plataformas 100% normales

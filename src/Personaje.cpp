@@ -11,7 +11,6 @@
 #define SEN_45 1/1.414f
 
 //Parámetros de movimiento
-#define accx 10.0f //6//Aceleración para el eje X
 #define velxLim 5.0f //Velocidad límite del eje x
 
 //Nombres de las teclas
@@ -108,7 +107,6 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
 	if (dchaPresionado) {
 		velocidad.x = vMov;
-		aceleracion.x = accx;
 		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
 		{
 			velocidad.x = vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
@@ -116,50 +114,27 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 	}
 	if (izqPresionado) {
 		velocidad.x = -vMov;
-		aceleracion.x = -accx;
 		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
 		{
 			velocidad.x = -vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
 		}
 	}
-	if (!dchaPresionado && !izqPresionado) //Parche para el BUG#1
-	{
-		aceleracion.x = 0.0f;
+	if (!dchaPresionado && !izqPresionado) { //Parche para el BUG#1
 		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
 		{
 			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
 		}
-		else 
-		{
-			velocidad.x = 0.0;																//<------------------Esto es lo que causa que en el aire no mantengas la velocidad en X
-		}
-	}
-
-	//Corrección de velocidad
-	if(velocidad.x >0 && velocidad.x > velxLim)
-	{
-		velocidad.x = velxLim;
-	} 
-	else if (velocidad.x < 0 && velocidad.x < -velxLim)	{
-		velocidad.x = -velxLim;
 	}
 
 	//Correcciones de posición
-	//PLataformas normales
 	int aux = Interaccion::Choque(plataformas, *this); //Evaluar si hay choque con plataforma y guarda el resultado en aux
-	if (aux != -1) // Si hay choque con alguna plataforma
-	{
+	if (aux != -1) { // Si hay choque con alguna plataforma
 		//Guardo aux en un atributo del personaje para que no se pierda al repetir la operación pero con la posición corregida
 		plataformaEnContacto = aux;
 	}
-	if (plataformaEnContacto != -1)
-	{
+	if (plataformaEnContacto != -1)	{
 		Interaccion::SalidaLateral(plataformas, *this);
 	}
-	//Caja
-	Interaccion::Choque(caja, *this);
-
-	//Gravedad OFF por colisión
 
 	//Cambiar posición para dibujar
 	cuerpo.SetCentro(posicion);	
