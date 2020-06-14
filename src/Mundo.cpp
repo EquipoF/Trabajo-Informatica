@@ -95,6 +95,7 @@ void Mundo::Mueve()
 	if (powerUpChocado != -1) //Si choca con algún bonus
 	{
 		powerUps.EliminarRectangulo(powerUpChocado);
+		personaje.SetPowerUpDisponible(1);
 	}
 
 

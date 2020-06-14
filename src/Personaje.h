@@ -27,9 +27,12 @@ public:
 	void SetSaltosRes(int saltosIn);
 	int GetSaltosRes(void);
 
+	void SetPowerUpDisponible(int powerUpDisponibleIn);
+
 private:
 	Rectangulo cuerpo;
 	int saltosRestantes;
+	int powerUpDisponible;
 	float vMov; //Velocidad de movimiento lateral
 	float vSalto; //Veocidad inicial en el eje y que genera el salto
 	bool contactoParedDcha;

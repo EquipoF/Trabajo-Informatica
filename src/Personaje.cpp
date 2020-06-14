@@ -53,6 +53,7 @@ void Personaje::Inicializa()
 	Personaje::SetVel(0.0, 0.0);
 	aceleracion.y = GRAVEDAD;
 	saltosRestantes = 2; //nº de saltos para probar
+	powerUpDisponible = 0;
 
 	//Variables de movimietno
 	dchaPresionado = false;
@@ -184,7 +185,7 @@ void Personaje::Tecla(unsigned char key)
 			else if (contactoParedIzq && izqPresionado) { //Salto de pared
 				Personaje::Salta(PARED_IZQ);
 			}
-			else if (velocidad.modulo() == 0 && abajoPresionado) { //Si estás quieto y presionas abajo + salto (se puede añadir una espera)
+			else if (velocidad.modulo() == 0 && abajoPresionado && powerUpDisponible > 0) { //Si estás quieto y presionas abajo + salto (se puede añadir una espera) y has recogido algún powerUp
 				Personaje::Salta(CARGADO);
 			}
 			else {	//Salto normal
@@ -248,4 +249,9 @@ void Personaje::SetSaltosRes(int saltosIn)
 int Personaje::GetSaltosRes(void)
 {
 	return saltosRestantes;
+}
+
+void Personaje::SetPowerUpDisponible(int powerUpDisponibleIn)
+{
+	powerUpDisponible = powerUpDisponibleIn;
 }
