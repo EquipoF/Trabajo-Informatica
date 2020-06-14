@@ -1,5 +1,7 @@
 #include "Interaccion.h"
 
+#define GRAVEDAD -10.0f
+
 enum { ARRIBA = 1, ABAJO = 3, PARED_DCHA = 4, PARED_IZQ = 2 };
 
 Interaccion::Interaccion()
@@ -10,44 +12,39 @@ Interaccion::~Interaccion()
 {
 }
 
-int Interaccion::Choque(Caja & caja, Personaje& personaje)
+/*int Interaccion::Choque(Caja & caja, Personaje& personaje)
 {
 	return Interaccion::Choque(caja.ladosCaja, personaje);
-}
+}*/
 
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
-	Vector2D posActual = personaje.GetPos();
-	Vector2D velActual = personaje.GetVel();
-	Vector2D accActual = personaje.GetAcc();
-
+	//Cuerpo en el que se va a encontrar el pesonaje si se realiza el movimiento sin ninguna corrección
 	Rectangulo cuerpoFuturo(personaje.cuerpo.ancho, personaje.cuerpo.alto, personaje.GetPos());
 
-	if (Interaccion::Choque(rectangulo, cuerpoFuturo) && rectangulo.GetAtravesar()==false)
+	if (Interaccion::Choque(rectangulo, cuerpoFuturo) && rectangulo.GetAtravesar()==false) //Si hay colisión, se corrige
 	{
 		switch (Interaccion::Choque(rectangulo, cuerpoFuturo))
 		{
 		case ARRIBA:
-			personaje.setSaltosRes(2);
-			personaje.SetPos(posActual.x, rectangulo.centro.y + ( (personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01) ); //Ponemos el pesonaje justo encima de la plataforma
-			personaje.SetAcc(accActual.x, 0.0);
+			personaje.SetSaltosRes(2);
+			personaje.posicion.y = rectangulo.centro.y + ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo encima de la plataforma
+			personaje.aceleracion.y=0;
 			personaje.SetVel(0.0, 0.0);
 			return true;
 		case PARED_DCHA:
-			personaje.SetPos( rectangulo.centro.x - ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01), posActual.y); //Ponemos el pesonaje justo a la derecha de la plataforma
-			personaje.SetVel(0.0, velActual.y);
-			personaje.SetAcc(0.0, accActual.y);
+			personaje.posicion.x= rectangulo.centro.x - ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la derecha de la plataforma
+			personaje.velocidad.x=0;
 			personaje.contactoParedDcha = true;
 			return true;
 		case PARED_IZQ:
-			personaje.SetPos(rectangulo.centro.x + ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01) , posActual.y); //Ponemos el pesonaje justo a la iquierda de la plataforma
-			personaje.SetVel(0.0, velActual.y);
-			personaje.SetAcc(0.0, accActual.y);
+			personaje.posicion.x= rectangulo.centro.x + ((personaje.cuerpo.ancho / 2) + (rectangulo.ancho / 2) + 0.01); //Ponemos el pesonaje justo a la iquierda de la plataforma
+			personaje.velocidad.x=0;
 			personaje.contactoParedIzq = true;
 			return true;
 		case ABAJO:
-			personaje.SetPos(posActual.x, rectangulo.centro.y - ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01)); //Ponemos el pesonaje justo encima de la plataforma
-			personaje.SetVel(velActual.x, 0.0);
+			personaje.posicion.y = rectangulo.centro.y - ((personaje.cuerpo.alto / 2) + (rectangulo.alto / 2) + 0.01); //Ponemos el pesonaje justo debajo de la plataforma
+			personaje.velocidad.y = 0;
 			return true;
 		}
 	}
@@ -116,18 +113,13 @@ bool Interaccion::Choque(Sierra& sierra, Personaje& personaje)
 	return choque;
 }
 
-bool Interaccion::SalidaLateral(ListaRectangulos& listaRectangulos, Personaje& personaje)
+bool Interaccion::SalidaLateral(Rectangulo &rectangulo, Personaje& personaje)
 {
-	Vector2D accActual = personaje.GetAcc();
-
-	//Saco el rectángulo que necesito de la lista
-	Rectangulo rectangulo = *listaRectangulos.lista[personaje.plataformaEnContacto];
-
 	//Comprobar que los centros se encuantras a más distancia que la suma de los semi-anchos
 	//Salida por la derecha y la izquierda gracias al absoluto
 	if (abs(personaje.cuerpo.centro.x - rectangulo.centro.x) >= (personaje.cuerpo.ancho/2 + rectangulo.ancho/2))
 	{
-		personaje.SetAcc(accActual.x, -10.0f);
+		personaje.aceleracion.y = GRAVEDAD;
 		personaje.plataformaEnContacto = -1;
 		return 1;
 	}

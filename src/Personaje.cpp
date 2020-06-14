@@ -10,9 +10,6 @@
 #define COS_45 1/1.414f
 #define SEN_45 1/1.414f
 
-//Parámetros de movimiento
-#define velxLim 5.0f //Velocidad límite del eje x
-
 //Nombres de las teclas
 enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, DCHA_SOLTADO = 1, IZQ_SOLTADO = 2, ABAJO_SOLTADO=3 };
 
@@ -20,7 +17,7 @@ enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, D
 enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 };
 
 //Tipos de dash
-enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
+//enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
 Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png")
 {
@@ -101,25 +98,26 @@ void Personaje::Dibuja()
 	//cuerpo.Dibuja(); //dibujar para ver la hitbox
 }
 
-void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja) 
+void Personaje::Mueve(float t, ListaRectangulos& plataformas) 
 {
 	ObjetoMovil::Mueve(t);
-	//Parche BUG#? (el de no seguir avanzando cuando te chocas con algo y subes)
+
+	//Establecer velocidad en funcion de las teclas presionadas y las plataformas en las que está
 	if (dchaPresionado) {
 		velocidad.x = vMov;
 		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
 		{
-			velocidad.x = vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
+			velocidad.x = vMov + plataformas.lista[plataformaEnContacto]->GetVel().x; //Su velocidad se suma a la tuya
 		}
 	}
 	if (izqPresionado) {
 		velocidad.x = -vMov;
-		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+		if (plataformaEnContacto != -1)
 		{
 			velocidad.x = -vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
 		}
 	}
-	if (!dchaPresionado && !izqPresionado) { //Parche para el BUG#1
+	if (!dchaPresionado && !izqPresionado) { //si estás en una plataforma 
 		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
 		{
 			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
@@ -133,15 +131,16 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas, Caja& caja)
 		plataformaEnContacto = aux;
 	}
 	if (plataformaEnContacto != -1)	{
-		Interaccion::SalidaLateral(plataformas, *this);
+		Interaccion::SalidaLateral(*plataformas.lista[plataformaEnContacto], *this);
 	}
 
 	//Cambiar posición para dibujar
 	cuerpo.SetCentro(posicion);	
 }
 void Personaje::Tecla(unsigned char key) 
-{   // ¿Separar este método de la ejecucuón de movimientos (que solo procese los flags de las teclas) => hacer Personaje::Accion para llamar a los saltos y cambiar las velocidades de X?
+{ 
 	//Flags para la detección de teclas.
+	//(esto se peude tener como variables static si se usan solo en esta funcion o como atributo si se usa en otras)
 	static bool espacioPresionado = false;	//Hago un booleano que perdura en el timepo para guardar el estado de las teclas
 	static bool abajoPresionado = false;
 
@@ -242,19 +241,11 @@ void Personaje::Salta(unsigned int tipoSalto) {
 		break;
 }*/
 
-void Personaje::setvMov(float vIn)
-{
-	vMov = vIn;
-}
-void Personaje::setvSalto(float vIn)
-{
-	vSalto = vIn;
-}
-void Personaje::setSaltosRes(int saltosIn)
+void Personaje::SetSaltosRes(int saltosIn)
 {
 	saltosRestantes = saltosIn;
 }
-int Personaje::getSaltosRes(void)
+int Personaje::GetSaltosRes(void)
 {
 	return saltosRestantes;
 }

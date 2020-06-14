@@ -1,9 +1,10 @@
 #pragma once
+
 #include "ObjetoMovil.h"
 #include "Rectangulo.h"
 #include "ListaRectangulos.h"
-#include "Caja.h"
 #include "ETSIDI.h"
+
 using ETSIDI::SpriteSequence;
 using ETSIDI::Sprite;
 
@@ -17,16 +18,14 @@ public:
 	void Inicializa();
 	void Dibuja();
 
-	void Mueve(float t, ListaRectangulos& plataformas, Caja& caja);
+	void Mueve(float t, ListaRectangulos& plataformas);
 	void Tecla(unsigned char key);
 
 	void Salta( unsigned int tipoSalto);
 	//void Dash(unsigned char direccion);
 
-	void setvSalto(float vIn);
-	void setvMov(float vIn);
-	void setSaltosRes(int saltosIn);
-	int getSaltosRes(void);
+	void SetSaltosRes(int saltosIn);
+	int GetSaltosRes(void);
 
 private:
 	Rectangulo cuerpo;
@@ -39,8 +38,8 @@ private:
 
 	int plataformaEnContacto; //Plataforma sobre la que está posado el personaje
 
-	bool dchaPresionado = false;
-	bool izqPresionado = false;
+	bool dchaPresionado;
+	bool izqPresionado;
 
 	//SpriteSequence sprite;
 	SpriteSequence sprite;

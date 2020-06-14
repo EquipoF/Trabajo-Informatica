@@ -68,7 +68,7 @@ void Mundo::Mueve()
 	}
 	
 	//Movimiento del personaje
-	personaje.Mueve(DIFF_TIEMPO, plataformas, caja);
+	personaje.Mueve(DIFF_TIEMPO, plataformas);
 
 	//Movimiento de las trampas
 	sierra.Mueve(0.025);
