@@ -131,9 +131,15 @@ void Coordinador::Tecla(unsigned char key)
 void Coordinador::Mueve()
 {
     bool gameover = mundo.GetMuerte();
+    bool terminado = mundo.GetFinal();
     if (estado == JUEGO)
     {
         mundo.Mueve();  
+
+        if (terminado)
+        {
+            estado = FIN;
+        }
         if (gameover)
         {
             estado = GAMEOVER;

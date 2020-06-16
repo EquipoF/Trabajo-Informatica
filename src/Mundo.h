@@ -5,6 +5,7 @@
 #include "ListaRectangulos.h"
 #include "Interaccion.h"
 #include "Sierra.h"
+#include "FinalNivel.h"
 
 class Mundo
 {
@@ -17,6 +18,8 @@ public:
 	void SetOjo(float x, float y, float z);
 	float GetOjo();
 	bool GetMuerte();
+	bool GetFinal();
+	void CargarNivel();
 
 private:
 	Caja caja;
@@ -25,12 +28,15 @@ private:
 	ListaRectangulos plataformas;
 
 	Sierra sierra,sierra2;
+	FinalNivel finalnivel;
 
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
 
 	bool muerte;
+	bool final;
+	int nivel;
 
 	float tiempo;
 };

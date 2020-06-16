@@ -119,7 +119,7 @@ void Personaje::Dibuja()
 
 void Personaje::Inicializa()
 {
-	Personaje::SetPos(0.0f, -2.0f);
+	Personaje::SetPos(0.0f, -6.0f);
 	Personaje::SetVel(0.0, 0.0);
 	Personaje::SetAcc(0.0, GRAVEDAD);
 	dchaPresionado = false;

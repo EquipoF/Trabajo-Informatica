@@ -5,6 +5,7 @@
 #include "Personaje.h"
 #include "ListaRectangulos.h"
 #include "Sierra.h"
+#include "FinalNivel.h"
 
 class Interaccion
 {
@@ -18,5 +19,6 @@ public:
 	static int Choque(ListaRectangulos& listaRectangulo, Personaje & personaje);
 	static bool Choque(Sierra& sierra, Personaje& personaje);
 	static bool SalidaLateral(ListaRectangulos &listaRectangulos, Personaje &personaje);
+	static bool Choque(FinalNivel& finalnivel, Personaje& personaje);
 };
 

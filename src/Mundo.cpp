@@ -28,6 +28,7 @@ void Mundo::Dibuja()
 
 	sierra.Dibuja();
 	sierra2.Dibuja();
+	finalnivel.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -92,6 +93,19 @@ void Mundo::Mueve()
 		muerte = true;
 	}
 
+
+
+	if (Interaccion::Choque(finalnivel, personaje) && nivel <= 2)// de momento cambia de nivel al llegar a una altura
+	{
+		nivel++;
+		CargarNivel();
+	}
+	if (Interaccion::Choque(finalnivel, personaje) && nivel == 3)
+	{
+		final = true;
+	}
+
+
 	tiempo++;
 	cout << tiempo << endl;
 }
@@ -102,10 +116,14 @@ void Mundo::Inicializa()
 	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
 	z_ojo = 20.0f; //20 para real, 80 para pruebas
 
+	nivel = 1;
+
 	personaje.Inicializa();
 	sierra.SetPos(4.0f, 1.0f);
 	sierra2.SetPos(-6.0f, 10.0f);
+	finalnivel.SetPos(6.0f, -5.5f);
 	muerte = false;
+	final = false;
 
 	tiempo = 0.0f;
 
@@ -193,4 +211,38 @@ void Mundo::SetVelMundo(float velocidad)
 bool Mundo::GetMuerte()
 {
 	return muerte;
+}
+
+bool Mundo::GetFinal()
+{
+	return final;
+}
+
+void Mundo::CargarNivel()
+{
+	for(int i =0; i<=10; i++)//este for es para que borre bien todas las plataformas, sin él no las borraba todas
+		plataformas.DestruirContenido();
+
+	if (nivel == 2)
+	{		
+		x_ojo = 0.0f;
+		y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+		z_ojo = 20.0f; //20 para real, 80 para pruebas
+
+		personaje.Inicializa();
+		sierra.SetPos(4.0f, 4.0f);
+		sierra2.SetPos(-6.0f, 15.0f);
+
+		//plataformas
+		Rectangulo* recn = new Rectangulo(3.0f, 0.7f, Vector2D(-5.0f, -4.0f));
+		plataformas.Agregar(recn);	
+	}
+	if (nivel == 3)
+	{
+		x_ojo = 0.0f;
+		y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+		z_ojo = 20.0f; //20 para real, 80 para pruebas
+
+		personaje.Inicializa();
+	}
 }
