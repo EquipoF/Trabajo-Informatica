@@ -15,11 +15,12 @@ public:
 	void Inicializa();
 	void Mueve();
 	void Dibuja();
-	void SetOjo(float x, float y, float z);
+	void SetOjo();
 	float GetOjo();
 	bool GetMuerte();
 	bool GetFinal();
 	void CargarNivel();
+	void RandPlatforms();
 
 private:
 	Caja caja;

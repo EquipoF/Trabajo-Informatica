@@ -52,8 +52,11 @@ void Mundo::Dibuja()
 	glPopMatrix();	*/
 }
 
-void Mundo::SetOjo(float x, float y, float z)
+void Mundo::SetOjo()
 {
+	x_ojo = 0.0f;
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 80.0f; //20 para real, 80 para pruebas
 }
 
 float Mundo::GetOjo()
@@ -81,7 +84,7 @@ void Mundo::Mueve()
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;//Comentar esta línea para pruebas viendo todo el mapa
+		//muerte = true;//Comentar esta línea para pruebas viendo todo el mapa
 	}
 
 	if (Interaccion::Choque(sierra, personaje))
@@ -112,23 +115,62 @@ void Mundo::Mueve()
 
 void Mundo::Inicializa()
 {
-	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-	z_ojo = 20.0f; //20 para real, 80 para pruebas
+	/*x_ojo = 0.0f;
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 80.0f; //20 para real, 80 para pruebas*/
 
 	nivel = 1;
 
-	personaje.Inicializa();
+	/*personaje.Inicializa();
 	sierra.SetPos(4.0f, 1.0f);
-	sierra2.SetPos(-6.0f, 10.0f);
-	finalnivel.SetPos(6.0f, -5.5f);
+	sierra2.SetPos(-6.0f, 10.0f);*/
+	finalnivel.SetPos(6.0f, 41.4f);
 	muerte = false;
 	final = false;
 
 	tiempo = 0.0f;
 
+	CargarNivel();
+
 	//Plataformas
+	
+}
+
+void Mundo::Tecla(unsigned char key)
+{
+	personaje.Tecla(key);
+}
+
+void Mundo::SetVelMundo(float velocidad)
+{
+	y_ojo = y_ojo + velocidad;
+}
+
+bool Mundo::GetMuerte()
+{
+	return muerte;
+}
+
+bool Mundo::GetFinal()
+{
+	return final;
+}
+
+void Mundo::CargarNivel()
+{
+	for(int i =0; i<=5; i++)//este for es para que borre bien todas las plataformas, sin él no las borraba todas
+		plataformas.DestruirContenido();
+
+	if (nivel == 1)
 	{
+		SetOjo();
+
+		personaje.Inicializa();
+		sierra.SetPos(4.0f, 1.0f);
+		sierra2.SetPos(-6.0f, 10.0f);
+
+		//Plataformas
+		{
 		Rectangulo* rec1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
 		plataformas.Agregar(rec1);
 		Rectangulo* rec2 = new Rectangulo(3.0f, 0.7f, Vector2D(4.0f, -1.0f));
@@ -195,54 +237,63 @@ void Mundo::Inicializa()
 		plataformas.Agregar(rec32);
 		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
 		plataformas.Agregar(rec33);
+		}
 	}
-}
-
-void Mundo::Tecla(unsigned char key)
-{
-	personaje.Tecla(key);
-}
-
-void Mundo::SetVelMundo(float velocidad)
-{
-	y_ojo = y_ojo + velocidad;
-}
-
-bool Mundo::GetMuerte()
-{
-	return muerte;
-}
-
-bool Mundo::GetFinal()
-{
-	return final;
-}
-
-void Mundo::CargarNivel()
-{
-	for(int i =0; i<=10; i++)//este for es para que borre bien todas las plataformas, sin él no las borraba todas
-		plataformas.DestruirContenido();
 
 	if (nivel == 2)
 	{		
-		x_ojo = 0.0f;
-		y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-		z_ojo = 20.0f; //20 para real, 80 para pruebas
+		/*x_ojo = 0.0f;
+		y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+		z_ojo = 80.0f; //20 para real, 80 para pruebas*/
+
+		SetOjo();
 
 		personaje.Inicializa();
 		sierra.SetPos(4.0f, 4.0f);
 		sierra2.SetPos(-6.0f, 15.0f);
 
-		//plataformas
-		Rectangulo* recn = new Rectangulo(3.0f, 0.7f, Vector2D(-5.0f, -4.0f));
-		plataformas.Agregar(recn);	
+		//Plataformas
+		RandPlatforms();
+		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
+		plataformas.Agregar(rec33);
 	}
 	if (nivel == 3)
 	{
-		x_ojo = 0.0f;
-		y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-		z_ojo = 20.0f; //20 para real, 80 para pruebas
+		/*x_ojo = 0.0f;
+		y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+		z_ojo = 80.0f; //20 para real, 80 para pruebas*/
+
+		SetOjo();
 
 		personaje.Inicializa();
+
+		//Plataformas
+		RandPlatforms();
+		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
+		plataformas.Agregar(rec33);
+	}
+}
+
+void Mundo::RandPlatforms()
+{
+	int altura, lateral, ancho;
+	for (altura = -4; altura <= 38; altura = altura ++)
+	{
+		//izquierda
+		if (altura % 2 == 0)
+		{
+			lateral = (rand() % 10) - 10;
+			ancho = rand() % 4 + 1;
+			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
+			plataformas.Agregar(rec);
+		}
+		//derecha
+		else
+		{
+			lateral = rand() % 10;
+			ancho = rand() % 4 + 1;
+			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
+			plataformas.Agregar(rec);
+		}		
 	}
 }
