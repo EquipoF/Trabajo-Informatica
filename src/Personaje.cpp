@@ -19,7 +19,7 @@ enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 }
 //Tipos de dash
 //enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
-Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png")
+Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png"), sprite_camina("imagenes/Run.png", 12)
 {
 	//Variables intrínsecas del personaje (no cambian cada vez que mueres)
 	vMov = 3.0;
@@ -42,6 +42,10 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 
 	sprite_caida.setCenter(centro.x, centro.y);
 	sprite_caida.setSize(size.x, size.y);
+
+	sprite_camina.setCenter(centro.x, centro.y);
+	sprite_camina.setSize(size.x, size.y);
+	//altura = 1.8f;
 }
 Personaje::~Personaje()
 {
@@ -83,12 +87,20 @@ void Personaje::Dibuja()
 	if (velocidad.x > 0.01)sprite_caida.flip(false, false);//sprite caida
 	if (velocidad.x < -0.01)sprite_caida.flip(true, false);
 
+	if (velocidad.x > 0.01)sprite_camina.flip(false, false);//sprite camina
+	if (velocidad.x < -0.01)sprite_camina.flip(true, false);
+	
 
 	if (velocidad.y > 0.01)
 		sprite_salto.draw();
 	else if (velocidad.y < -0.01)
 		sprite_caida.draw();
-	else if (velocidad.y < 0.01 && velocidad.y > -0.1f)
+	else if ((velocidad.y < 0.1 && velocidad.y > -0.1f) && (velocidad.x > 0.1 || velocidad.x < -0.1))
+	{
+		sprite_camina.draw();
+		sprite_camina.loop();
+	}
+	else if ((velocidad.y <= 0.1 && velocidad.y >= -0.1f) && (velocidad.x <= 0.1 && velocidad.x >= -0.1f))
 	{
 		sprite.draw();
 		sprite.loop();

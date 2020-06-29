@@ -4,6 +4,9 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
+#include <iostream>
+using namespace std;
+
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
 
 void Mundo::Dibuja()
@@ -23,6 +26,7 @@ void Mundo::Dibuja()
 
 	sierra.Dibuja();
 	sierra2.Dibuja();
+	finalnivel.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -46,8 +50,11 @@ void Mundo::Dibuja()
 	glPopMatrix();	*/
 }
 
-void Mundo::SetOjo(float x, float y, float z)
+void Mundo::SetOjo()
 {
+	x_ojo = 0.0f;
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 80.0f; //20 para real, 80 para pruebas
 }
 
 float Mundo::GetOjo()
@@ -120,23 +127,79 @@ void Mundo::Mueve()
 		if(pinchos.lista[pinchoChocado]->GetAtravesar() == false)
 		muerte = true;
 	}
+
+
+
+	if (Interaccion::Choque(finalnivel, personaje) && nivel <= 2)// de momento cambia de nivel al llegar a una altura
+	{
+		nivel++;
+		CargarNivel();
+	}
+	if (Interaccion::Choque(finalnivel, personaje) && nivel == 3)
+	{
+		final = true;
+	}
+
+
+	tiempo++;
+	cout << tiempo << endl;
 }
 
 void Mundo::Inicializa()
 {
-	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara (línea 8)
-	z_ojo = 20.0f; //20 para real, 80 para pruebas
+	/*x_ojo = 0.0f;
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 80.0f; //20 para real, 80 para pruebas*/
 
-	personaje.Inicializa();
+	nivel = 1;
 
-	//Sierras
+	/*personaje.Inicializa();
+	sierra.SetPos(4.0f, 1.0f);
+	sierra2.SetPos(-6.0f, 10.0f);*/
+	finalnivel.SetPos(6.0f, 41.4f);
+	muerte = false;
+	final = false;
+
+	tiempo = 0.0f;
+
+	CargarNivel();
+
+	//Plataformas
+	
+}
+
+void Mundo::Tecla(unsigned char key)
+{
+	personaje.Tecla(key);
+}
+
+void Mundo::SetVelMundo(float velocidad)
+{
+	y_ojo = y_ojo + velocidad;
+}
+
+bool Mundo::GetMuerte()
+{
+	return muerte;
+}
+
+bool Mundo::GetFinal()
+{
+	return final;
+}
+
+void Mundo::CargarNivel()
+{
+	for(int i =0; i<=5; i++)//este for es para que borre bien todas las plataformas, sin él no las borraba todas
+		plataformas.DestruirContenido();
+
+	if (nivel == 1)
 	{
+		SetOjo();
+
+		personaje.Inicializa();
 		sierra.SetPos(4.0f, 1.0f);
 		sierra2.SetPos(-6.0f, 10.0f);
-	}
-	
-	muerte = false;
 
 	//Caja
 	{
@@ -229,20 +292,55 @@ void Mundo::Inicializa()
 		plataformas.Agregar(rec32);
 		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
 		plataformas.Agregar(rec33);
+		}
+	}
+
+	if (nivel == 2)
+	{
+		SetOjo();
+
+		personaje.Inicializa();
+		sierra.SetPos(4.0f, 4.0f);
+		sierra2.SetPos(-6.0f, 15.0f);
+
+		//Plataformas
+		RandPlatforms();
+		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
+		plataformas.Agregar(rec33);
+	}
+	if (nivel == 3)
+	{
+		SetOjo();
+
+		personaje.Inicializa();
+
+		//Plataformas
+		RandPlatforms();
+		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
+		plataformas.Agregar(rec33);
 	}
 }
 
-void Mundo::Tecla(unsigned char key)
+void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 {
-	personaje.Tecla(key);
-}
-
-void Mundo::SetVelMundo(float velocidad)
-{
-	y_ojo = y_ojo + velocidad;
-}
-
-bool Mundo::GetMuerte()
-{
-	return muerte;
+	int altura, lateral, ancho;
+	for (altura = -4; altura <= 38; altura = altura ++)
+	{
+		//izquierda
+		if (altura % 2 == 0)
+		{
+			lateral = (rand() % 10) - 10;
+			ancho = rand() % 4 + 1;
+			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
+			plataformas.Agregar(rec);
+		}
+		//derecha
+		else
+		{
+			lateral = rand() % 10;
+			ancho = rand() % 4 + 1;
+			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
+			plataformas.Agregar(rec);
+		}		
+	}
 }

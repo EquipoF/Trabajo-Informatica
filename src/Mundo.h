@@ -8,6 +8,7 @@
 #include "Sierra.h"
 #include "pinchos.h"
 #include "PowerUp.h"
+#include "FinalNivel.h"
 
 class Mundo
 {
@@ -17,9 +18,12 @@ public:
 	void Inicializa();
 	void Mueve();
 	void Dibuja();
-	void SetOjo(float x, float y, float z);
+	void SetOjo();
 	float GetOjo();
 	bool GetMuerte();
+	bool GetFinal();
+	void CargarNivel();
+	void RandPlatforms();
 
 private:
 	Caja caja;
@@ -30,10 +34,15 @@ private:
 	ListaRectangulos powerUps;
 
 	Sierra sierra,sierra2;
+	FinalNivel finalnivel;
 
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
 
 	bool muerte;
+	bool final;
+	int nivel;
+
+	float tiempo;
 };
