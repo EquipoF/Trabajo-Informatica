@@ -134,7 +134,7 @@ bool Interaccion::SalidaLateral(Rectangulo &rectangulo, Personaje& personaje)
 bool Interaccion::Choque(FinalNivel& finalnivel, Personaje& personaje)
 {
 	bool choque = false;
-	float dif = (personaje.posicion - finalnivel.posicion).modulo() - ((personaje.cuerpo.ancho) - 0.2f);
+	float dif = (personaje.posicion - finalnivel.posicion).modulo() - ((personaje.cuerpo.ancho) - 0.15f);
 	if (dif <= 0.0f)
 	{
 		choque = true;

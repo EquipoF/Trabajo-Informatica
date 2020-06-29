@@ -61,12 +61,5 @@ int ListaRectangulos::GetNum(void) {
 
 void ListaRectangulos::DestruirContenido()
 {
-	int numero = lista.size();
-
-	for (int i = 0; i < numero; i++)
-	{
-		EliminarRectangulo(i);
-	}
-
-	numero = 0;
+	lista.clear();
 }

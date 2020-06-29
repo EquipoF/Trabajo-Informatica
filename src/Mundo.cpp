@@ -110,7 +110,7 @@ void Mundo::Mueve()
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
+		//muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
 	}
 
 	if (Interaccion::Choque(sierra, personaje)) //Hacer listas de sierras
@@ -156,7 +156,7 @@ void Mundo::Inicializa()
 	/*personaje.Inicializa();
 	sierra.SetPos(4.0f, 1.0f);
 	sierra2.SetPos(-6.0f, 10.0f);*/
-	finalnivel.SetPos(6.0f, 41.4f);
+	finalnivel.SetPos(6.0f, -2.0f);
 	muerte = false;
 	final = false;
 
@@ -164,8 +164,7 @@ void Mundo::Inicializa()
 
 	CargarNivel();
 
-	//Plataformas
-	
+	//Plataformas	
 }
 
 void Mundo::Tecla(unsigned char key)
@@ -190,8 +189,16 @@ bool Mundo::GetFinal()
 
 void Mundo::CargarNivel()
 {
-	for(int i =0; i<=5; i++)//este for es para que borre bien todas las plataformas, sin él no las borraba todas
-		plataformas.DestruirContenido();
+	plataformas.DestruirContenido();
+	pinchos.DestruirContenido();
+	powerUps.DestruirContenido();
+	
+	//Caja
+	{
+		for (int lado = 0; lado < caja.ladosCaja.GetNum(); lado++) {
+			plataformas.Agregar(caja.ladosCaja.lista[lado]);
+		}
+	}
 
 	if (nivel == 1)
 	{
@@ -199,14 +206,7 @@ void Mundo::CargarNivel()
 
 		personaje.Inicializa();
 		sierra.SetPos(4.0f, 1.0f);
-		sierra2.SetPos(-6.0f, 10.0f);
-
-	//Caja
-	{
-		for (int lado = 0; lado < caja.ladosCaja.GetNum(); lado++) {
-			plataformas.Agregar(caja.ladosCaja.lista[lado]);
-		}
-	}
+		sierra2.SetPos(-6.0f, 10.0f);	
 
 	//Plataformas
 	{
@@ -300,8 +300,8 @@ void Mundo::CargarNivel()
 		SetOjo();
 
 		personaje.Inicializa();
-		sierra.SetPos(4.0f, 4.0f);
-		sierra2.SetPos(-6.0f, 15.0f);
+		sierra.SetPos(4.0f, 14.0f);
+		sierra2.SetPos(-6.0f, 25.0f);
 
 		//Plataformas
 		RandPlatforms();
@@ -323,16 +323,26 @@ void Mundo::CargarNivel()
 
 void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 {
-	int altura, lateral, ancho;
+	int altura, lateral, ancho, tipo;
+	
 	for (altura = -4; altura <= 38; altura = altura ++)
 	{
+		tipo = rand() % 100;
 		//izquierda
 		if (altura % 2 == 0)
 		{
 			lateral = (rand() % 10) - 10;
 			ancho = rand() % 4 + 1;
 			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
-			plataformas.Agregar(rec);
+			if (tipo <= 10)
+			{
+				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				plataformas.Agregar(recM1);
+			}
+			else
+			{
+				plataformas.Agregar(rec);
+			}
 		}
 		//derecha
 		else
@@ -340,7 +350,15 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			lateral = rand() % 10;
 			ancho = rand() % 4 + 1;
 			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
-			plataformas.Agregar(rec);
+			if (tipo <= 10)
+			{
+				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				plataformas.Agregar(recM1);
+			}
+			else
+			{
+				plataformas.Agregar(rec);
+			}
 		}		
 	}
 }
