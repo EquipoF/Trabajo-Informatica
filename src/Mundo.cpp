@@ -241,11 +241,7 @@ void Mundo::CargarNivel()
 	}
 
 	if (nivel == 2)
-	{		
-		/*x_ojo = 0.0f;
-		y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-		z_ojo = 80.0f; //20 para real, 80 para pruebas*/
-
+	{
 		SetOjo();
 
 		personaje.Inicializa();
@@ -259,10 +255,6 @@ void Mundo::CargarNivel()
 	}
 	if (nivel == 3)
 	{
-		/*x_ojo = 0.0f;
-		y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-		z_ojo = 80.0f; //20 para real, 80 para pruebas*/
-
 		SetOjo();
 
 		personaje.Inicializa();
@@ -274,7 +266,7 @@ void Mundo::CargarNivel()
 	}
 }
 
-void Mundo::RandPlatforms()
+void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 {
 	int altura, lateral, ancho;
 	for (altura = -4; altura <= 38; altura = altura ++)
