@@ -68,12 +68,12 @@
    - Si la cámara avanza por cachos: perder vida por caída.
    ### Controles:
    - [X] movimiento básico *tipo* WASD (Izquierda, derecha, salto, agacharse) 
-   ~~- [ ] Caer más despacio si estás pegado a la pared.~~
+   - ~~[ ] Caer más despacio si estás pegado a la pared.~~
    ### Poderes/habilidades/bonus
    - [X] Doble salto _(pulsar tecla de salto 2 veces)_
    - [X] Salto cargado _(agacharse + salto tipo [Jump King](https://www.youtube.com/watch?v=ktVhJ41AExU))_
-   ~~- [X] salto de pared _(Interacción::choque(personaje,caja) == true && botón de salto)_~~
-   ~~- [ ] Dash _(pulsar tecla de mvto. dos veces o tecla + shift)_~~
+   - [X] ~~salto de pared _(Interacción::choque(personaje,caja) == true && botón de salto)_~~
+   - ~~[ ] Dash _(pulsar tecla de mvto. dos veces o tecla + shift)_~~
    - [ ] El nivel sube mas lento 
    - [ ] Escudo contra cosas que dañan
     
@@ -96,8 +96,8 @@
 - [x] Menú de inicio y final de partida (máquina de estados)
 - ~~[ ] Ampliar contenido: power ups (dash, salto cargado, doble salto)~~
 - [x] Ampliar contenido: distintas plataformas (móviles, con pinchos, con pinchos que salen)
-- [ ] Ampliar contenido: elementos que dañan: bolas de cañon, sierras estáticas.
-- [ ] Último: texturas y estética
+- [x] Ampliar contenido: elementos que dañan: ~~bolas de cañon~~, sierras estáticas.
+- [ ] Texturas y estética
 - [ ] Revisar formato del código, poner comentarios
 
 ## Bugs arreglados
