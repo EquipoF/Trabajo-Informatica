@@ -48,13 +48,7 @@
     <ClCompile Include="src\Sierra.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\RectanguloMovil.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pinchos.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PowerUp.cpp">
+    <ClCompile Include="src\FinalNivel.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="src\ListaSierras.cpp">
@@ -92,13 +86,7 @@
     <ClInclude Include="src\Sierra.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\RectanguloMovil.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pinchos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PowerUp.h">
+    <ClInclude Include="src\FinalNivel.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\ListaSierras.h">

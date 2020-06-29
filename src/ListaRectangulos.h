@@ -13,6 +13,7 @@ public:
 	bool Agregar(Rectangulo* rec);
 	void Dibuja();
 	void EliminarRectangulo(int ind);
+	void DestruirContenido();
 
 	int GetNum();
 

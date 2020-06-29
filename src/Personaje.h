@@ -46,6 +46,7 @@ private:
 
 	//SpriteSequence sprite;
 	SpriteSequence sprite;
+	SpriteSequence sprite_camina;
 	Sprite sprite_salto;
 	Sprite sprite_caida;
 };
