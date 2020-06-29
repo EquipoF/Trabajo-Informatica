@@ -233,6 +233,7 @@ void Personaje::Salta(unsigned int tipoSalto) {
 		case (CARGADO):
 			velocidad.y = multiplicadorCargado*vSalto;
 			saltosRestantes--;
+			powerUpDisponible--;
 			break;	
 	}
 }
