@@ -43,6 +43,6 @@ void RectanguloMovil::Mueve(float t)
 	if (posicion.y > limArriba) //Si ha llegado al límite superior
 		velocidad.y*= -1; //Cambia de dirección en y
 
-	if (posicion.x < limAbajo) //Si ha llegado al límite inf
-		velocidad.x *= -1;
+	if (posicion.y < limAbajo) //Si ha llegado al límite inf
+		velocidad.y *= -1;
 }

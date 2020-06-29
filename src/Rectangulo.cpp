@@ -1,4 +1,5 @@
 #include "Rectangulo.h"
+#include "ETSIDI.h"
 #include "glut.h"
 
 Rectangulo::Rectangulo()
@@ -37,7 +38,7 @@ Rectangulo::~Rectangulo()
 
 void Rectangulo::Dibuja()
 {
-	glDisable(GL_LIGHTING);
+	/*glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 
 		glColor3ub(55, 0, 0);
@@ -51,7 +52,25 @@ void Rectangulo::Dibuja()
 		glVertex2d(abajoDcha.x, abajoDcha.y);
 
 	glEnd();
+	glEnable(GL_LIGHTING);*/
+
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/plataforma2.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+
+	glTexCoord2d(0, 1);		glVertex2f(centro.x - (ancho / 2), centro.y - (alto / 2));
+	glTexCoord2d(1, 1);		glVertex2f(centro.x + (ancho / 2), centro.y - (alto / 2));
+	glTexCoord2d(1, 0);		glVertex2f(centro.x + (ancho / 2), centro.y + (alto / 2));
+	glTexCoord2d(0, 0);		glVertex2f(centro.x - (ancho / 2), centro.y + (alto / 2));
+	glEnd();
+
 	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 }
 
 void Rectangulo::SetCentro(Vector2D centroIn)

@@ -2,6 +2,7 @@
 #include "Rectangulo.h"
 #include "RectanguloMovil.h"
 #include "ListaRectangulos.h"
+#include "ListaSierras.h"
 #include "Caja.h"
 #include "Personaje.h"
 #include "Interaccion.h"
@@ -28,8 +29,7 @@ private:
 	ListaRectangulos plataformas;
 	ListaRectangulos pinchos;
 	ListaRectangulos powerUps;
-
-	Sierra sierra,sierra2;
+	ListaSierras sierras; 
 
 	float x_ojo;
 	float y_ojo;

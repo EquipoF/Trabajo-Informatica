@@ -20,9 +20,7 @@ void Mundo::Dibuja()
 	plataformas.Dibuja();
 	pinchos.Dibuja();
 	powerUps.Dibuja();
-
-	sierra.Dibuja();
-	sierra2.Dibuja();
+	sierras.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -70,9 +68,13 @@ void Mundo::Mueve()
 	//Movimiento del personaje
 	personaje.Mueve(DIFF_TIEMPO, plataformas);
 
-	//Movimiento de las trampas
-	sierra.Mueve(0.025);
-	sierra2.Mueve(0.025);
+	//Movimiento de las sierras
+	for (int sier = 0; sier < sierras.GetNum(); sier++) {
+		if (sierras.lista[sier]->GetMovil() == true)
+		{
+			sierras.lista[sier]->Mueve(DIFF_TIEMPO);
+		}
+	}
 
 	//Movimiento de las plataformas
 	for (int plat = 0; plat < plataformas.GetNum(); plat++ ) {
@@ -98,22 +100,20 @@ void Mundo::Mueve()
 		personaje.SetPowerUpDisponible(1);
 	}
 
-
-	//Comprobaciones de interacciones entre objetos contenidos en el mundo para cambiar ele satdo del mundo
+	//Comprobaciones de muete del personaje
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
+		//muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
 	}
 
-	if (Interaccion::Choque(sierra, personaje)) //Hacer listas de sierras
-	{
-		muerte = true;
+	for (int sier = 0; sier < sierras.GetNum(); sier++) {
+		if (Interaccion::Choque(*sierras.lista[sier], personaje) == true)
+		{
+			muerte = true;
+		}
 	}
-	if (Interaccion::Choque(sierra2, personaje))
-	{
-		muerte = true;
-	}
+
 	int pinchoChocado = Interaccion::Choque(pinchos, personaje);
 	if (pinchoChocado != -1)
 	{
@@ -125,15 +125,18 @@ void Mundo::Mueve()
 void Mundo::Inicializa()
 {
 	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara (línea 8)
-	z_ojo = 20.0f; //20 para real, 80 para pruebas
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara (línea 8)
+	z_ojo = 80.0f; //20 para real, 80 para pruebas
 
 	personaje.Inicializa();
 
 	//Sierras
 	{
-		sierra.SetPos(4.0f, 1.0f);
-		sierra2.SetPos(-6.0f, 10.0f);
+		Sierra* sierra1 = new Sierra(true, 4, 1, 8, -8, 1, 1, -2, 0);
+		sierras.Agregar(sierra1);
+
+		Sierra* sierra2 = new Sierra(true, -6, 10, -6, -6, 14, 6, 0, -2);
+		sierras.Agregar(sierra2);
 	}
 	
 	muerte = false;
