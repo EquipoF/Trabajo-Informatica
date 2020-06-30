@@ -14,7 +14,7 @@ public:
 	//Métodos virtual por que se sobreescriben en las clases heredadas;
 	//ya que esta clase está para sobreescribirla.
 	virtual void Dibuja() {};
-	virtual void Mueve(float t) { ObjetoMovil::Mueve(t); }
+	virtual void Mueve(float t);
 
 	//Funciones Get y Set INLINE
 	bool GetMovil() { return movil; }

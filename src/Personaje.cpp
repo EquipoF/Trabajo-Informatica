@@ -113,7 +113,7 @@ void Personaje::Dibuja()
 
 void Personaje::Mueve(float t, ListaRectangulos& plataformas) 
 {
-	ObjetoMovil::Mueve(t);
+	Entidad::Mueve(t);
 
 	//Establecer velocidad en funcion de las teclas presionadas y las plataformas en las que está
 	if (dchaPresionado) {

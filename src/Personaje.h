@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ObjetoMovil.h"
+#include "Entidad.h"
 #include "Rectangulo.h"
 #include "ListaRectangulos.h"
 #include "ETSIDI.h"
@@ -8,7 +8,7 @@
 using ETSIDI::SpriteSequence;
 using ETSIDI::Sprite;
 
-class Personaje : public ObjetoMovil
+class Personaje : public Entidad
 {
 public:
 	friend class Interaccion;
