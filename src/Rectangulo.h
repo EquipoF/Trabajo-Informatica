@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector2D.h"
-#include "ObjetoMovil.h"
-class Rectangulo: public ObjetoMovil
+#include "Entidad.h"
+class Rectangulo: public Entidad
 {
 public:
 	friend class Interaccion;
@@ -18,8 +18,8 @@ public:
 	Vector2D GetCentro();
 	void SetAnchoAlto(Vector2D anchoAltoIn);
 	Vector2D GetAnchoAlto();
-	bool GetMovil();
-	bool GetAtravesar();
+	//bool GetMovil();
+	//bool GetAtravesar();
 
 protected:
 	void CentroVertice();
@@ -27,7 +27,7 @@ protected:
 	float alto, ancho;
 	Vector2D centro;//Centro del rectángulo
 	Vector2D arribaDcha, arribaIzq, abajoIzq, abajoDcha; //Esquinas del rectángulo (para dibujar con la glut)
-	bool movil;
-	bool atravesar;
-};
 
+	//bool movil;
+	//bool atravesar;
+};

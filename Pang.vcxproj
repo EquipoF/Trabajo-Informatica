@@ -91,6 +91,7 @@
     <ClCompile Include="Archivo.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Coordinador.cpp" />
+    <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\FinalNivel.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
     <ClCompile Include="src\ListaRectangulos.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Archivo.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\Coordinador.h" />
+    <ClInclude Include="src\Entidad.h" />
     <ClInclude Include="src\FinalNivel.h" />
     <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaRectangulos.h" />

@@ -35,7 +35,6 @@ Rectangulo::~Rectangulo()
 {
 }
 
-
 void Rectangulo::Dibuja()
 {
 	/*glDisable(GL_LIGHTING);
@@ -84,7 +83,6 @@ void Rectangulo::SetCentro(float x, float y)
 	Rectangulo::SetCentro(Vector2D(x, y));
 }
 
-
 void Rectangulo::CentroVertice()
 {
 	arribaDcha.x = centro.x + (ancho / 2);
@@ -120,7 +118,7 @@ void Rectangulo::SetAnchoAlto(Vector2D anchoAltoIn)
 	ancho = anchoAltoIn.x;
 	alto = anchoAltoIn.y;
 }
-
+/*
 bool Rectangulo::GetMovil()
 {
 	return movil;
@@ -129,3 +127,4 @@ bool Rectangulo::GetMovil()
 bool Rectangulo::GetAtravesar() {
 	return atravesar;
 }
+*/

@@ -36,7 +36,7 @@ Sierra::~Sierra()
 void Sierra::Mueve(float t)
 {
 	//Movimiento normal y corriente
-	ObjetoMovil::Mueve(t);
+	Entidad::Mueve(t);
 
 	//Comprobaciones de límites: horizontal
 	if (posicion.x > limDcha) //Si ha llegado al límite derecho
@@ -62,7 +62,9 @@ void Sierra::Dibuja()
 	glPopMatrix();
 }
 
+/*
 bool Sierra::GetMovil()
 {
 	return movil;
 }
+*/

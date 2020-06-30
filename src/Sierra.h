@@ -1,10 +1,10 @@
 #pragma once
-#include "Vector2D.h"
-#include "ObjetoMovil.h"
+//#include "Vector2D.h"
+#include "Entidad.h"
 #include "ETSIDI.h"
 using ETSIDI::SpriteSequence;
 
-class Sierra : public ObjetoMovil
+class Sierra : public Entidad
 {
 public:
 	Sierra();
@@ -13,15 +13,15 @@ public:
 
 	void Mueve(float t);
 
-	void Dibuja();
+	virtual void Dibuja();
 
-	bool GetMovil();
+	//bool GetMovil();
 
 private:
 	friend class Interaccion;
 
 	//VAriable para definir si la sierra se mueve o es estática
-	bool movil;
+	//bool movil;
 
 	//Límites de mvto.
 	float limDcha;		 float limIzq;
