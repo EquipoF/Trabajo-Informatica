@@ -18,8 +18,6 @@ public:
 	Vector2D GetCentro();
 	void SetAnchoAlto(Vector2D anchoAltoIn);
 	Vector2D GetAnchoAlto();
-	//bool GetMovil();
-	//bool GetAtravesar();
 
 protected:
 	void CentroVertice();

@@ -15,17 +15,8 @@ public:
 
 	virtual void Dibuja();
 
-	//bool GetMovil();
-
 private:
 	friend class Interaccion;
-
-	//VAriable para definir si la sierra se mueve o es estática
-	//bool movil;
-
-	//Límites de mvto.
-	float limDcha;		 float limIzq;
-	float limArriba;	 float limAbajo;
 
 	SpriteSequence sprite;
 };

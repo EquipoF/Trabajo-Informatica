@@ -76,26 +76,17 @@ void Mundo::Mueve()
 
 	//Movimiento de las sierras
 	for (int sier = 0; sier < sierras.GetNum(); sier++) {
-		if (sierras.lista[sier]->GetMovil() == true)
-		{
-			sierras.lista[sier]->Mueve(DIFF_TIEMPO);
-		}
+		sierras.lista[sier]->Mueve(DIFF_TIEMPO);
 	}
 
 	//Movimiento de las plataformas
 	for (int plat = 0; plat < plataformas.GetNum(); plat++ ) {
-		if (plataformas.lista[plat]->GetMovil() == true) 
-		{
-			plataformas.lista[plat]->Mueve(DIFF_TIEMPO);
-		}
+		plataformas.lista[plat]->Mueve(DIFF_TIEMPO);
 	}
 
 	//Movimiento de los pinchos
 	for (int pin = 0; pin < pinchos.GetNum(); pin++) {
-		if (pinchos.lista[pin]->GetMovil() == true)
-		{
-			pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
-		}
+		pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
 	}
 
 	//Interacción powerUps & personaje
@@ -126,8 +117,6 @@ void Mundo::Mueve()
 		if(pinchos.lista[pinchoChocado]->GetAtravesar() == false)
 		muerte = true;
 	}
-
-
 
 	if (Interaccion::Choque(finalnivel, personaje) && nivel <= 2)// de momento cambia de nivel al llegar a una altura
 	{

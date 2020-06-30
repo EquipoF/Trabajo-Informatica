@@ -23,5 +23,11 @@ public:
 protected:
 	bool movil; //define si la entidad se mueve o no
 	bool atravesar; //define si se atraviesa o no
+
+	//Dado que hay muchas entidades que tienen límites de movimiento, se definen en esta clase abstracta
+
+	//Límites de mvto.
+	float limDcha;		 float limIzq;
+	float limArriba;	 float limAbajo;
 };
 

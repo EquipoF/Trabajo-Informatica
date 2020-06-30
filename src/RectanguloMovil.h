@@ -9,10 +9,5 @@ public:
 	virtual ~RectanguloMovil();
 
 	void Mueve(float t);
-
-private:
-	//Límites de mvto.
-	float limDcha;		 float limIzq;
-	float limArriba;	 float limAbajo;
 };
 
