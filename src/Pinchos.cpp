@@ -25,8 +25,10 @@ Pinchos::Pinchos(Rectangulo rectanguloIn, bool movilIn, unsigned int lado, float
 	ancho = rectanguloIn.GetAnchoAlto().x;
 	alto = rectanguloIn.GetAnchoAlto().y;
 	CentroVertice();
+
 	movil = movilIn;
 	tini = tiniIn;
+
 	estado = FUERA;
 }
 Pinchos::Pinchos()

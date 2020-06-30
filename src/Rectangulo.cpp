@@ -12,13 +12,24 @@ Rectangulo::Rectangulo()
 	atravesar = false;
 }
 
-Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn)
+Rectangulo::Rectangulo(float anchoIn, float altoIn, Vector2D centroIn, bool movilIn, float limDchaIn, float limIzqIn, float limArribaIn, float limAbajoIn, float velXIn, float velYIn )
 {
 	ancho = anchoIn;
 	alto = altoIn;
 	centro = centroIn;
+	posicion = centroIn;
+
 	CentroVertice(); //Saca las esquinas a partir de ancho/alto/centro
-	atravesar = false;
+
+	//En caso de que sea movil
+	movil = movilIn;
+
+	//Establecer límites
+	limDcha = limDchaIn;		limIzq = limIzqIn;
+	limArriba = limArribaIn;	limAbajo = limAbajoIn;
+
+	//Establecer velocidad
+	velocidad = Vector2D(velXIn, velYIn);
 }
 
 Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D abajoDchaIn, Vector2D abajoIzqIn)
@@ -28,7 +39,6 @@ Rectangulo::Rectangulo( Vector2D arribaIzqIn, Vector2D arribaDchaIn, Vector2D ab
 	abajoIzq = abajoIzqIn;
 	abajoDcha = abajoDchaIn;
 	VerticeCentro();
-	atravesar = false;
 }
 
 Rectangulo::~Rectangulo()
@@ -70,6 +80,34 @@ void Rectangulo::Dibuja()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+void Rectangulo::Mueve(float t)
+{
+	if (movil == true)
+	{
+		//Movimiento normal y corriente
+		Entidad::Mueve(t);
+		SetCentro(posicion);//Actualiza el centro del rectángulo (parte visible) para que se dibuje en la nueva posicion (parte cinemática) <-----------------------PROBLEMA
+
+		//Comprobaciones de límites: horizontal
+		if (posicion.x > limDcha) //Si ha llegado al límite derecho
+		{
+			velocidad.x *= -1; //Cambia de dirección en x
+		}
+		else if (posicion.x < limIzq) //Si ha llegado al límite izq
+			velocidad.x *= -1;
+
+		//Comprobaciones de límites: vertical
+		if (posicion.y > limArriba) //Si ha llegado al límite superior
+		{
+			velocidad.y *= -1; //Cambia de dirección en y
+		}
+		else if (posicion.y < limAbajo) //Si ha llegado al límite inf
+		{
+			velocidad.y *= -1;
+		}
+	}
 }
 
 void Rectangulo::SetCentro(Vector2D centroIn)
@@ -118,13 +156,3 @@ void Rectangulo::SetAnchoAlto(Vector2D anchoAltoIn)
 	ancho = anchoAltoIn.x;
 	alto = anchoAltoIn.y;
 }
-/*
-bool Rectangulo::GetMovil()
-{
-	return movil;
-}
-
-bool Rectangulo::GetAtravesar() {
-	return atravesar;
-}
-*/

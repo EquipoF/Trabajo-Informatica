@@ -207,9 +207,9 @@ void Mundo::CargarNivel()
 		//Plataformas
 		{
 			//Primer rectángulo
-			Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
+			//Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
 			//Lo hago móvil
-			RectanguloMovil* recM1 = new RectanguloMovil(rec1, 10, -10, rec1.GetCentro().y, rec1.GetCentro().y, 2.0, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+			Rectangulo* recM1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 			plataformas.Agregar(recM1);
 
 			//Plataformas 100% normales
@@ -224,7 +224,7 @@ void Mundo::CargarNivel()
 			Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
 			pinchos.Agregar(recP4);
 
-			//Plataforma 100% normale
+			//Plataforma 100% normales
 			Rectangulo* rec5 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 2.5f));
 			plataformas.Agregar(rec5);
 
