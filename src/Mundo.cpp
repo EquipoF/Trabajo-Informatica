@@ -341,6 +341,7 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			}
 			if (tipo <= 20 && tipo > 10)// Pinchos
 			{
+				plataformas.Agregar(rec);
 				Pinchos* recP = new Pinchos(*rec, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
 				pinchos.Agregar(recP);
 			}
