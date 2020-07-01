@@ -3,8 +3,11 @@
 #include <stdlib.h> 
 #include "ETSIDI.h"
 #include "glut.h"
-
 #include <iostream>
+#include <string>
+#include <fstream>
+#include "Archivo.h"
+
 using namespace std;
 
 #define DIFF_TIEMPO 0.015 //tiempo en segundos que transcurre cada instante del juego. Diferencial de tiempo
@@ -64,6 +67,9 @@ float Mundo::GetOjo()
 
 void Mundo::Mueve()
 {
+	Archivo archivo;
+	Nodo* cabecera = NULL;
+
 	//Avance de la cámara
 	if (y_ojo < 36)
 	{
@@ -110,7 +116,7 @@ void Mundo::Mueve()
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
+		//muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
 	}
 
 	if (Interaccion::Choque(sierra, personaje)) //Hacer listas de sierras
@@ -140,9 +146,17 @@ void Mundo::Mueve()
 		final = true;
 	}
 
-
 	tiempo++;
 	cout << tiempo << endl;
+	
+
+	if (final == true || muerte == true) //quitar variable de muerte, no tiene sentido, para pruebas ok
+	{
+		archivo.cargarLista(cabecera);
+		archivo.insertarElemento(cabecera, tiempo); //En la segunda posicion meter la variable de puntuacion
+		archivo.guardarLista(cabecera); 
+	}
+
 }
 
 void Mundo::Inicializa()

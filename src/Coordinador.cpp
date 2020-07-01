@@ -1,4 +1,9 @@
 #include "Coordinador.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include "Archivo.h"
+#include <conio.h>
 #include "ETSIDI.h"
 
 Coordinador::Coordinador()
@@ -13,6 +18,9 @@ Coordinador::~Coordinador()
 
 void Coordinador::Dibuja()
 {
+    Archivo archivo;
+    Nodo* cabecera = NULL;
+
     if (estado == INICIO)
     {
         gluLookAt(0, 0, 20, // posicion del ojo
@@ -22,10 +30,12 @@ void Coordinador::Dibuja()
         ETSIDI::setTextColor(1, 1, 1);
         ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 30);
         ETSIDI::printxy("MENU INICIO", -2, 2);
-
+      
         ETSIDI::printxy("CONTROLES  [C]", -6, -1);
 
-        ETSIDI::printxy("PULSE CUALQUIER TECLA PARA JUGAR", -6, -3);
+        ETSIDI::printxy("PUNTUACIONES [P]", -6, -3);
+
+        ETSIDI::printxy("PULSE CUALQUIER TECLA PARA JUGAR", -6, -5);
     }
     else if (estado == JUEGO)
     {
@@ -73,6 +83,22 @@ void Coordinador::Dibuja()
         ETSIDI::printxy("SALTO GRANDE    [ S SPACE ]", -8, -1);
         ETSIDI::printxy("VOLVER A INICIO  [ B ]", 0, -4);
     }
+    else if (estado == PUNTUACIONES)
+    {
+        gluLookAt(0, 0, 20, // posicion del ojo
+            0.0, 0, 0.0, // hacia que punto mira (0,7.5,0)
+            0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+        ETSIDI::setTextColor(1, 1, 1);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 50);
+        ETSIDI::printxy("PUNTUACIONES", -4, 5);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 30);
+        ETSIDI::printxy("PUEDE VER LAS PUNTUACIONES EN LA CONSOLA", -8, 1);
+        ETSIDI::printxy("VOLVER A INICIO  [ B ]", 0, -4);
+        system("cls");
+        cout << "PUNTUACIONES (TIEMPO MINIMO JUEGO COMPLETADO)\n" ;
+        archivo.cargarLista(cabecera);
+        archivo.mostrarElemento(cabecera);
+    }
 }
 
 void Coordinador::Tecla(unsigned char key)
@@ -83,7 +109,12 @@ void Coordinador::Tecla(unsigned char key)
         {
             estado = CONTROLES;
         }
-        else if(key != 'c' && key != 'C')// en inicio con cualquier tecla te lleva a "JUEGO"
+        else if (key == 'p' || key == 'P')
+        {
+            estado = PUNTUACIONES;
+            
+        }
+        else if(key != 'c' && key != 'C' && key != 'p' && key != 'P')// en inicio con cualquier tecla te lleva a "JUEGO"
         {
             mundo.Inicializa();
             estado = JUEGO;
@@ -103,6 +134,11 @@ void Coordinador::Tecla(unsigned char key)
     }
     else if (estado == CONTROLES && (key == 'b' || key == 'B'))
     {
+        estado = INICIO;
+    }
+    else if (estado == PUNTUACIONES && (key == 'b' || key == 'B'))
+    {
+        system("cls");
         estado = INICIO;
     }
     else if (estado == GAMEOVER)
@@ -134,8 +170,11 @@ void Coordinador::Mueve()
     bool terminado = mundo.GetFinal();
     if (estado == JUEGO)
     {
-        mundo.Mueve();  
-
+        if (terminado == false && gameover == false)
+        {
+            mundo.Mueve();
+        }
+          
         if (terminado)
         {
             estado = FIN;
