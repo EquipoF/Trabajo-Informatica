@@ -334,12 +334,17 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			lateral = (rand() % 10) - 10;
 			ancho = rand() % 4 + 1;
 			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
-			if (tipo <= 10)
+			if (tipo <= 10)// Plataforma movil
 			{
 				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 				plataformas.Agregar(recM1);
 			}
-			else
+			if (tipo <= 20 && tipo > 10)// Pinchos
+			{
+				Pinchos* recP = new Pinchos(*rec, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
+				pinchos.Agregar(recP);
+			}
+			else if (tipo > 20)// Plataforma normal
 			{
 				plataformas.Agregar(rec);
 			}
@@ -350,12 +355,12 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			lateral = rand() % 10;
 			ancho = rand() % 4 + 1;
 			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
-			if (tipo <= 10)
+			if (tipo <= 10)// Plataforma movil
 			{
 				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 				plataformas.Agregar(recM1);
 			}
-			else
+			else if(tipo >= 20)// Plataforma normal
 			{
 				plataformas.Agregar(rec);
 			}
