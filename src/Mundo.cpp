@@ -1,5 +1,6 @@
 #include "Mundo.h"
 #include "Interaccion.h"
+
 #include <stdlib.h> 
 #include "ETSIDI.h"
 #include "glut.h"
@@ -26,10 +27,7 @@ void Mundo::Dibuja()
 	plataformas.Dibuja();
 	pinchos.Dibuja();
 	powerUps.Dibuja();
-
-	sierra.Dibuja();
-	sierra2.Dibuja();
-	finalnivel.Dibuja();
+	sierras.Dibuja();
 
 	//dibujo del fondo
 	/*glPushMatrix();
@@ -83,24 +81,19 @@ void Mundo::Mueve()
 	//Movimiento del personaje
 	personaje.Mueve(DIFF_TIEMPO, plataformas);
 
-	//Movimiento de las trampas
-	sierra.Mueve(0.025);
-	sierra2.Mueve(0.025);
+	//Movimiento de las sierras
+	for (int sier = 0; sier < sierras.GetNum(); sier++) {
+		sierras.lista[sier]->Mueve(DIFF_TIEMPO);
+	}
 
 	//Movimiento de las plataformas
 	for (int plat = 0; plat < plataformas.GetNum(); plat++ ) {
-		if (plataformas.lista[plat]->GetMovil() == true) 
-		{
-			plataformas.lista[plat]->Mueve(DIFF_TIEMPO);
-		}
+		plataformas.lista[plat]->Mueve(DIFF_TIEMPO);
 	}
 
 	//Movimiento de los pinchos
 	for (int pin = 0; pin < pinchos.GetNum(); pin++) {
-		if (pinchos.lista[pin]->GetMovil() == true)
-		{
-			pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
-		}
+		pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
 	}
 
 	//Interacción powerUps & personaje
@@ -111,30 +104,26 @@ void Mundo::Mueve()
 		personaje.SetPowerUpDisponible(1);
 	}
 
-
-	//Comprobaciones de interacciones entre objetos contenidos en el mundo para cambiar ele satdo del mundo
+	//Comprobaciones de muete del personaje
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
 		//muerte = true;			//<-----------------------------------------Comentar esta línea para pruebas viendo todo el mapa
 	}
 
-	if (Interaccion::Choque(sierra, personaje)) //Hacer listas de sierras
-	{
-		muerte = true;
+	for (int sier = 0; sier < sierras.GetNum(); sier++) {
+		if (Interaccion::Choque(*sierras.lista[sier], personaje) == true)
+		{
+			muerte = true;
+		}
 	}
-	if (Interaccion::Choque(sierra2, personaje))
-	{
-		muerte = true;
-	}
+
 	int pinchoChocado = Interaccion::Choque(pinchos, personaje);
 	if (pinchoChocado != -1)
 	{
 		if(pinchos.lista[pinchoChocado]->GetAtravesar() == false)
 		muerte = true;
 	}
-
-
 
 	if (Interaccion::Choque(finalnivel, personaje) && nivel <= 2)// de momento cambia de nivel al llegar a una altura
 	{
@@ -216,96 +205,112 @@ void Mundo::CargarNivel()
 
 	if (nivel == 1)
 	{
+		//Sierras
+		{
+			Sierra* sierra1 = new Sierra(true, 4, 1, 8, -8, 1, 1, -2, 0);
+			sierras.Agregar(sierra1);
+
+			Sierra* sierra2 = new Sierra(true, -6, 10, -6, -6, 14, 6, 0, -2);
+			sierras.Agregar(sierra2);
+		}
+
+		muerte = false;
 		SetOjo();
 
 		personaje.Inicializa();
-		sierra.SetPos(4.0f, 1.0f);
-		sierra2.SetPos(-6.0f, 10.0f);	
 
-	//Plataformas
-	{
-		//Primer rectángulo
-		Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
-		//Lo hago móvil
-		RectanguloMovil* recM1 = new RectanguloMovil(rec1, 10, -10, rec1.GetCentro().y, rec1.GetCentro().y, 2.0, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
-		plataformas.Agregar(recM1);
+		//Caja
+		{
+			for (int lado = 0; lado < caja.ladosCaja.GetNum(); lado++) {
+				plataformas.Agregar(caja.ladosCaja.lista[lado]);
+			}
+		}
 
-		//Plataformas 100% normales
-		Rectangulo* rec2 = new Rectangulo(3.0f, 0.7f, Vector2D(4.0f, -1.0f));
-		plataformas.Agregar(rec2);
-		Rectangulo* rec3 = new Rectangulo(3.0f, 0.7f, Vector2D(7.0f, 2.0f));
-		plataformas.Agregar(rec3);
+		//Plataformas
+		{
+			//Hacer un rectángulo movil
+			Rectangulo* recM1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+			plataformas.Agregar(recM1);
 
-		//Poner pinchos en una platafomra
-		Rectangulo* rec4 = new Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 2.5f));
-		plataformas.Agregar(rec4);
-		Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
-		pinchos.Agregar(recP4);
+			//Plataformas 100% normales
+			Rectangulo* rec2 = new Rectangulo(3.0f, 0.7f, Vector2D(4.0f, -1.0f));
+			plataformas.Agregar(rec2);
+			Rectangulo* rec3 = new Rectangulo(3.0f, 0.7f, Vector2D(7.0f, 2.0f));
+			plataformas.Agregar(rec3);
 
-		//Plataforma 100% normale
-		Rectangulo* rec5 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 2.5f));
-		plataformas.Agregar(rec5);
+			//Poner pinchos en una platafomra
+			Rectangulo* rec4 = new Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 2.5f));
+			plataformas.Agregar(rec4);
+			Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rectángulo r4 y entran y salen, no es estático. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
+			pinchos.Agregar(recP4);
 
-		//COnvertir una plataforma en power up
-		Rectangulo rec6 = Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 2.5f));
-		PowerUp* recP6 = new PowerUp(rec6);
-		powerUps.Agregar(recP6);
+			//Plataforma 100% normales
+			Rectangulo* rec5 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 2.5f));
+			plataformas.Agregar(rec5);
 
-		//Plataformas 100% normales
-		Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
-		plataformas.Agregar(rec7);
-		Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));
-		plataformas.Agregar(rec8);
-		Rectangulo* rec9 = new Rectangulo(3.0f, 0.7f, Vector2D(-10.0f, 8.0f));
-		plataformas.Agregar(rec9);
-		Rectangulo* rec10 = new Rectangulo(3.0f, 0.7f, Vector2D(-5.0f, 9.0f));
-		plataformas.Agregar(rec10);
-		Rectangulo* rec11 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, 9.0f));
-		plataformas.Agregar(rec11);
-		Rectangulo* rec12 = new Rectangulo(1.5f, 0.7f, Vector2D(4.0f, 11.0f));
-		plataformas.Agregar(rec12);
-		Rectangulo* rec13 = new Rectangulo(1.5f, 0.7f, Vector2D(6.0f, 13.0f));
-		plataformas.Agregar(rec13);
-		Rectangulo* rec14 = new Rectangulo(1.5f, 0.7f, Vector2D(4.0f, 15.0f));
-		plataformas.Agregar(rec14);
-		Rectangulo* rec15 = new Rectangulo(7.0f, 0.7f, Vector2D(-3.0f, 13.0f));
-		plataformas.Agregar(rec15);
-		Rectangulo* rec16 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 15.0f));
-		plataformas.Agregar(rec16);
-		Rectangulo* rec17 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 17.0f));
-		plataformas.Agregar(rec17);
-		Rectangulo* rec18 = new Rectangulo(3.0f, 0.7f, Vector2D(-10.0f, 19.0f));
-		plataformas.Agregar(rec18);
-		Rectangulo* rec19 = new Rectangulo(1.0f, 1.0f, Vector2D(-6.0f, 20.0f));
-		plataformas.Agregar(rec19);
-		Rectangulo* rec20 = new Rectangulo(1.0f, 1.0f, Vector2D(-4.0f, 22.0f));
-		plataformas.Agregar(rec20);
-		Rectangulo* rec21 = new Rectangulo(1.0f, 1.0f, Vector2D(-2.0f, 24.0f));
-		plataformas.Agregar(rec21);
-		Rectangulo* rec22 = new Rectangulo(1.5f, 0.7f, Vector2D(1.0f, 24.0f));
-		plataformas.Agregar(rec22);
-		Rectangulo* rec23 = new Rectangulo(2.0f, 0.7f, Vector2D(-2.0f, 27.0f));
-		plataformas.Agregar(rec23);
-		Rectangulo* rec24 = new Rectangulo(2.0f, 0.7f, Vector2D(2.0f, 29.0f));
-		plataformas.Agregar(rec24);
-		Rectangulo* rec25 = new Rectangulo(2.0f, 0.7f, Vector2D(-1.0f, 31.0f));
-		plataformas.Agregar(rec25);
-		Rectangulo* rec26 = new Rectangulo(1.0f, 1.0f, Vector2D(2.0f, 32.5f));
-		plataformas.Agregar(rec26);
-		Rectangulo* rec27 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 34.5f));
-		plataformas.Agregar(rec27);
-		Rectangulo* rec28 = new Rectangulo(1.0f, 1.0f, Vector2D(4.0f, 34.5f));
-		plataformas.Agregar(rec28);
-		Rectangulo* rec29 = new Rectangulo(1.0f, 1.0f, Vector2D(2.0f, 36.5f));
-		plataformas.Agregar(rec29);
-		Rectangulo* rec30 = new Rectangulo(1.0f, 1.0f, Vector2D(-1.0f, 37.5f));
-		plataformas.Agregar(rec30);
-		Rectangulo* rec31 = new Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 37.5f));
-		plataformas.Agregar(rec31);
-		Rectangulo* rec32 = new Rectangulo(2.0f, 0.7f, Vector2D(-6.0f, 38.5f));
-		plataformas.Agregar(rec32);
-		Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
-		plataformas.Agregar(rec33);
+			//COnvertir una plataforma en power up
+			Rectangulo rec6 = Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 2.5f));
+			PowerUp* recP6 = new PowerUp(rec6);
+			powerUps.Agregar(recP6);
+
+			//Plataformas surtidas
+			Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
+			plataformas.Agregar(rec7);
+			Pinchos* recP7 = new Pinchos(*rec7, true, 3, 0.0f);
+			pinchos.Agregar(recP7);
+
+			Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));
+			plataformas.Agregar(rec8);
+			Rectangulo* rec9 = new Rectangulo(3.0f, 0.7f, Vector2D(-10.0f, 8.0f));
+			plataformas.Agregar(rec9);
+			Rectangulo* rec10 = new Rectangulo(3.0f, 0.7f, Vector2D(-5.0f, 9.0f));
+			plataformas.Agregar(rec10);
+			Rectangulo* rec11 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, 9.0f));
+			plataformas.Agregar(rec11);
+			Rectangulo* rec12 = new Rectangulo(1.5f, 0.7f, Vector2D(4.0f, 11.0f));
+			plataformas.Agregar(rec12);
+			Rectangulo* rec13 = new Rectangulo(1.5f, 0.7f, Vector2D(6.0f, 13.0f));
+			plataformas.Agregar(rec13);
+			Rectangulo* rec14 = new Rectangulo(1.5f, 0.7f, Vector2D(4.0f, 15.0f));
+			plataformas.Agregar(rec14);
+			Rectangulo* rec15 = new Rectangulo(7.0f, 0.7f, Vector2D(-3.0f, 13.0f));
+			plataformas.Agregar(rec15);
+			Rectangulo* rec16 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 15.0f));
+			plataformas.Agregar(rec16);
+			Rectangulo* rec17 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 17.0f));
+			plataformas.Agregar(rec17);
+			Rectangulo* rec18 = new Rectangulo(3.0f, 0.7f, Vector2D(-10.0f, 19.0f));
+			plataformas.Agregar(rec18);
+			Rectangulo* rec19 = new Rectangulo(1.0f, 1.0f, Vector2D(-6.0f, 20.0f));
+			plataformas.Agregar(rec19);
+			Rectangulo* rec20 = new Rectangulo(1.0f, 1.0f, Vector2D(-4.0f, 22.0f));
+			plataformas.Agregar(rec20);
+			Rectangulo* rec21 = new Rectangulo(1.0f, 1.0f, Vector2D(-2.0f, 24.0f));
+			plataformas.Agregar(rec21);
+			Rectangulo* rec22 = new Rectangulo(1.5f, 0.7f, Vector2D(1.0f, 24.0f));
+			plataformas.Agregar(rec22);
+			Rectangulo* rec23 = new Rectangulo(2.0f, 0.7f, Vector2D(-2.0f, 27.0f));
+			plataformas.Agregar(rec23);
+			Rectangulo* rec24 = new Rectangulo(2.0f, 0.7f, Vector2D(2.0f, 29.0f));
+			plataformas.Agregar(rec24);
+			Rectangulo* rec25 = new Rectangulo(2.0f, 0.7f, Vector2D(-1.0f, 31.0f));
+			plataformas.Agregar(rec25);
+			Rectangulo* rec26 = new Rectangulo(1.0f, 1.0f, Vector2D(2.0f, 32.5f));
+			plataformas.Agregar(rec26);
+			Rectangulo* rec27 = new Rectangulo(1.0f, 1.0f, Vector2D(0.0f, 34.5f));
+			plataformas.Agregar(rec27);
+			Rectangulo* rec28 = new Rectangulo(1.0f, 1.0f, Vector2D(4.0f, 34.5f));
+			plataformas.Agregar(rec28);
+			Rectangulo* rec29 = new Rectangulo(1.0f, 1.0f, Vector2D(2.0f, 36.5f));
+			plataformas.Agregar(rec29);
+			Rectangulo* rec30 = new Rectangulo(1.0f, 1.0f, Vector2D(-1.0f, 37.5f));
+			plataformas.Agregar(rec30);
+			Rectangulo* rec31 = new Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 37.5f));
+			plataformas.Agregar(rec31);
+			Rectangulo* rec32 = new Rectangulo(2.0f, 0.7f, Vector2D(-6.0f, 38.5f));
+			plataformas.Agregar(rec32);
+			Rectangulo* rec33 = new Rectangulo(15.0f, 0.7f, Vector2D(4.0f, 40.5f));
+			plataformas.Agregar(rec33);
 		}
 	}
 

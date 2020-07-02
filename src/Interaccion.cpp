@@ -12,11 +12,6 @@ Interaccion::~Interaccion()
 {
 }
 
-/*int Interaccion::Choque(Caja & caja, Personaje& personaje)
-{
-	return Interaccion::Choque(caja.ladosCaja, personaje);
-}*/
-
 bool Interaccion::Choque(Rectangulo& rectangulo, Personaje& personaje)
 {
 	//Cuerpo en el que se va a encontrar el pesonaje si se realiza el movimiento sin ninguna corrección

@@ -91,9 +91,11 @@
     <ClCompile Include="src\Archivo.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Coordinador.cpp" />
+    <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\FinalNivel.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
     <ClCompile Include="src\ListaRectangulos.cpp" />
+    <ClCompile Include="src\ListaSierras.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ObjetoMovil.cpp" />
@@ -109,9 +111,11 @@
     <ClInclude Include="src\Archivo.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\Coordinador.h" />
+    <ClInclude Include="src\Entidad.h" />
     <ClInclude Include="src\FinalNivel.h" />
     <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaRectangulos.h" />
+    <ClInclude Include="src\ListaSierras.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\ObjetoMovil.h" />
     <ClInclude Include="src\Personaje.h" />

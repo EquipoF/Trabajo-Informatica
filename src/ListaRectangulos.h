@@ -1,14 +1,14 @@
 #pragma once
 #include "Rectangulo.h"
 #include <vector>
-#include "ETSIDI.h"
-#include "glut.h"
 
 class ListaRectangulos
 {
 public:
 	friend Interaccion;
-	//friend Personaje;
+	friend class Mundo;
+	friend class Personaje;
+
 	ListaRectangulos();
 	virtual ~ListaRectangulos();
 
@@ -19,6 +19,6 @@ public:
 
 	int GetNum();
 
-//private:
+private:
 	std::vector<Rectangulo*> lista;
 };

@@ -1,39 +1,44 @@
 #pragma once
+
 #include "Rectangulo.h"
-#include "RectanguloMovil.h"
 #include "ListaRectangulos.h"
-#include "Caja.h"
-#include "Personaje.h"
-#include "Interaccion.h"
 #include "Sierra.h"
+#include "ListaSierras.h"
+
+#include "Personaje.h"
+#include "Caja.h"
 #include "pinchos.h"
 #include "PowerUp.h"
+
+#include "Interaccion.h"
 #include "FinalNivel.h"
 
 class Mundo
 {
 public: 
 	void Tecla(unsigned char key);
-	void SetVelMundo(float velocidad);
+
 	void Inicializa();
 	void Mueve();
 	void Dibuja();
+
+	void CargarNivel();
+	void RandPlatforms();
+
 	void SetOjo();
+	void SetVelMundo(float velocidad);
 	float GetOjo();
 	bool GetMuerte();
 	bool GetFinal();
-	void CargarNivel();
-	void RandPlatforms();
 
 private:
 	Caja caja;
 	Personaje personaje;
-	Rectangulo rectangulo1;
 	ListaRectangulos plataformas;
-	ListaRectangulos pinchos;
-	ListaRectangulos powerUps;
+	ListaRectangulos pinchos; //Gracias al polimorfismo y la herencia
+	ListaRectangulos powerUps; //Gracias al polimorfismo y la herencia
+	ListaSierras sierras; 
 
-	Sierra sierra,sierra2;
 	FinalNivel finalnivel;
 
 	float x_ojo;
