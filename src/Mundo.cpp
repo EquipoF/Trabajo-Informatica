@@ -1,5 +1,6 @@
 #include "Mundo.h"
 #include "Interaccion.h"
+
 #include <stdlib.h> 
 #include "ETSIDI.h"
 #include "glut.h"
@@ -206,9 +207,7 @@ void Mundo::CargarNivel()
 
 		//Plataformas
 		{
-			//Primer rectángulo
-			//Rectangulo rec1 = Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f));
-			//Lo hago móvil
+			//Hacer un rectángulo movil
 			Rectangulo* recM1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 			plataformas.Agregar(recM1);
 
@@ -233,9 +232,12 @@ void Mundo::CargarNivel()
 			PowerUp* recP6 = new PowerUp(rec6);
 			powerUps.Agregar(recP6);
 
-			//Plataformas 100% normales
+			//Plataformas surtidas
 			Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
 			plataformas.Agregar(rec7);
+			Pinchos* recP7 = new Pinchos(*rec7, true, 3, 0.0f);
+			pinchos.Agregar(recP7);
+
 			Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));
 			plataformas.Agregar(rec8);
 			Rectangulo* rec9 = new Rectangulo(3.0f, 0.7f, Vector2D(-10.0f, 8.0f));

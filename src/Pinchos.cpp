@@ -16,14 +16,14 @@ Pinchos::Pinchos(Rectangulo rectanguloIn, bool movilIn, unsigned int lado, float
 		centro = rectanguloIn.GetCentro() - Vector2D(0.0, rectanguloIn.GetAnchoAlto().y);
 		break;
 	case 3:
-		centro = rectanguloIn.GetCentro() + Vector2D(rectanguloIn.GetAnchoAlto().x, 0.0);
+		centro = rectanguloIn.GetCentro() + Vector2D(rectanguloIn.GetAnchoAlto().y, 0.0);
 		break;
 	case 4:
-		centro = rectanguloIn.GetCentro() - Vector2D(rectanguloIn.GetAnchoAlto().x, 0.0);
+		centro = rectanguloIn.GetCentro() - Vector2D(rectanguloIn.GetAnchoAlto().y, 0.0);
 		break;
 	}
-	ancho = rectanguloIn.GetAnchoAlto().x;
-	alto = rectanguloIn.GetAnchoAlto().y;
+	ancho = rectanguloIn.GetAnchoAlto().x-0.1; //-0.1 para evitar posibles problemas de flasa detección
+	alto = rectanguloIn.GetAnchoAlto().y-0.1;
 	CentroVertice();
 
 	movil = movilIn;

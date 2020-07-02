@@ -9,13 +9,14 @@ public:
 	virtual ~Pinchos();
 
 	void Mueve(float t);
-	void Salir( float t); //Devuelve si están metidos, saliendo o fuera del suelo
 	void Dibuja();
 
 	int GetEstado();
 
 private:
 	int estado; //guardados, saliendo, fuera
-	float tini; //tiempo iinicial para que bno vayan todos los pinchos a la vez
+	float tini; //tiempo inicial para que no vayan todos los pinchos a la vez
+
+	void Salir(float t); //Devuelve si están metidos, saliendo o fuera del suelo
 };
 

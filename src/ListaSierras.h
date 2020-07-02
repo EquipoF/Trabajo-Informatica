@@ -6,7 +6,8 @@ class ListaSierras
 {
 public:
 	friend Interaccion;
-	//friend Personaje;
+	friend class Mundo;
+
 	ListaSierras();
 	virtual ~ListaSierras();
 
@@ -16,7 +17,7 @@ public:
 
 	int GetNum();
 
-	//private:
+private:
 	std::vector<Sierra*> lista;
 };
 

@@ -23,7 +23,9 @@ public:
 protected:
 	void CentroVertice();
 	void VerticeCentro();
+
 	float alto, ancho;
+
 	Vector2D centro;//Centro del rectángulo
 	Vector2D arribaDcha, arribaIzq, abajoIzq, abajoDcha; //Esquinas del rectángulo (para dibujar con la glut)
 };

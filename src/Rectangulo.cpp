@@ -88,25 +88,7 @@ void Rectangulo::Mueve(float t)
 	{
 		//Movimiento normal y corriente
 		Entidad::Mueve(t);
-		SetCentro(posicion);//Actualiza el centro del rectángulo (parte visible) para que se dibuje en la nueva posicion (parte cinemática) <-----------------------PROBLEMA
-
-		//Comprobaciones de límites: horizontal
-		if (posicion.x > limDcha) //Si ha llegado al límite derecho
-		{
-			velocidad.x *= -1; //Cambia de dirección en x
-		}
-		else if (posicion.x < limIzq) //Si ha llegado al límite izq
-			velocidad.x *= -1;
-
-		//Comprobaciones de límites: vertical
-		if (posicion.y > limArriba) //Si ha llegado al límite superior
-		{
-			velocidad.y *= -1; //Cambia de dirección en y
-		}
-		else if (posicion.y < limAbajo) //Si ha llegado al límite inf
-		{
-			velocidad.y *= -1;
-		}
+		SetCentro(posicion);//Actualiza el centro del rectángulo (parte visible) para que se dibuje en la nueva posicion (parte cinemática)
 	}
 }
 

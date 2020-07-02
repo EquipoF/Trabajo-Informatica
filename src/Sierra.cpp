@@ -33,26 +33,6 @@ Sierra::~Sierra()
 
 }
 
-void Sierra::Mueve(float t)
-{
-	//Movimiento normal y corriente
-	Entidad::Mueve(t);
-
-	//Comprobaciones de límites: horizontal
-	if (posicion.x > limDcha) //Si ha llegado al límite derecho
-		velocidad.x *= -1; //Cambia de dirección en x
-
-	if (posicion.x < limIzq)
-		velocidad.x *= -1;
-
-	//Comprobaciones de límites: vertical
-	if (posicion.y > limArriba) //Si ha llegado al límite superior
-		velocidad.y *= -1; //Cambia de dirección en y
-
-	if (posicion.y < limAbajo) //Si ha llegado al límite inf
-		velocidad.y *= -1;
-}
-
 void Sierra::Dibuja()
 {
 	glPushMatrix();
@@ -61,10 +41,3 @@ void Sierra::Dibuja()
 	sprite.loop();
 	glPopMatrix();
 }
-
-/*
-bool Sierra::GetMovil()
-{
-	return movil;
-}
-*/

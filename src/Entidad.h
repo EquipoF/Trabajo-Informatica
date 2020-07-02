@@ -13,7 +13,7 @@ public:
 
 	//Métodos virtual por que se sobreescriben en las clases heredadas;
 	//ya que esta clase está para sobreescribirla.
-	virtual void Dibuja() {};
+	virtual void Dibuja();
 	virtual void Mueve(float t);
 
 	//Funciones Get y Set INLINE
@@ -30,4 +30,3 @@ protected:
 	float limDcha;		 float limIzq;
 	float limArriba;	 float limAbajo;
 };
-

@@ -22,7 +22,6 @@ public:
 	void Tecla(unsigned char key);
 
 	void Salta( unsigned int tipoSalto);
-	//void Dash(unsigned char direccion);
 
 	void SetSaltosRes(int saltosIn);
 	int GetSaltosRes(void);

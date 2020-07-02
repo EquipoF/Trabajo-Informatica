@@ -15,9 +15,6 @@ enum { DCHA = 'd', IZQ = 'a', ABAJO = 's', ESPACIO = ' ', ESPACIO_SOLTADO = 0, D
 
 //Tipos de salto
 enum { NORMAL = 0, PARED_DCHA = 1, PARED_IZQ = 2, SALTO_ABAJO = 4, CARGADO = 3 };
-
-//Tipos de dash
-//enum { DASH_DCHA = 1, DASH_IZQ = 2, DASH_ABAJO = 3 };
  
 Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/rana_salto.png"), sprite_caida("imagenes/caer.png"), sprite_camina("imagenes/Run.png", 12)
 {
@@ -45,7 +42,6 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 
 	sprite_camina.setCenter(centro.x, centro.y);
 	sprite_camina.setSize(size.x, size.y);
-	//altura = 1.8f;
 }
 Personaje::~Personaje()
 {
@@ -113,7 +109,7 @@ void Personaje::Dibuja()
 
 void Personaje::Mueve(float t, ListaRectangulos& plataformas) 
 {
-	Entidad::Mueve(t);
+	ObjetoMovil::Mueve(t);
 
 	//Establecer velocidad en funcion de las teclas presionadas y las plataformas en las que está
 	if (dchaPresionado) {
@@ -130,8 +126,8 @@ void Personaje::Mueve(float t, ListaRectangulos& plataformas)
 			velocidad.x = -vMov + plataformas.lista[plataformaEnContacto]->GetVel().x;
 		}
 	}
-	if (!dchaPresionado && !izqPresionado) { //si estás en una plataforma 
-		if (plataformaEnContacto != -1) //Si estás en contactyo con una plataforma
+	if (!dchaPresionado && !izqPresionado) { //Si no pulsas nada 
+		if (plataformaEnContacto != -1) //Si estás en contacto con una plataforma
 		{
 			velocidad.x = plataformas.lista[plataformaEnContacto]->GetVel().x;
 		}
@@ -249,11 +245,6 @@ void Personaje::Salta(unsigned int tipoSalto) {
 			break;	
 	}
 }
-/*void Personaje::Dash(unsigned char direccion) { //Añadir SHIFT + A, S, D
-	case (DASH_ABAJO):
-		velocidad.y = -vSalto;
-		break;
-}*/
 
 void Personaje::SetSaltosRes(int saltosIn)
 {
