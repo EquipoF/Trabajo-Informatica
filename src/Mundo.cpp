@@ -54,8 +54,8 @@ void Mundo::Dibuja()
 void Mundo::SetOjo()
 {
 	x_ojo = 0.0f;
-	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-	z_ojo = 80.0f; //20 para real, 80 para pruebas
+	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 20.0f; //20 para real, 80 para pruebas
 }
 
 float Mundo::GetOjo()
@@ -256,7 +256,7 @@ void Mundo::CargarNivel()
 			//Plataformas surtidas
 			Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
 			plataformas.Agregar(rec7);
-			Pinchos* recP7 = new Pinchos(*rec7, true, 3, 0.0f);
+			Pinchos* recP7 = new Pinchos(*rec7, true, 1, 0.0f);
 			pinchos.Agregar(recP7);
 
 			Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));
