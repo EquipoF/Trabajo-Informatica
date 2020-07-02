@@ -25,7 +25,6 @@ public:
 
 	void SetSaltosRes(int saltosIn);
 	int GetSaltosRes(void);
-
 	void SetPowerUpDisponible(int powerUpDisponibleIn);
 
 private:
