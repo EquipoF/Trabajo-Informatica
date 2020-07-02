@@ -60,30 +60,28 @@ int Interaccion::Choque(Rectangulo& r1, Rectangulo& r2)
 {
 	bool choque;
 	Vector2D distancia;
-	Vector2D distanciaMax;
+	Vector2D distanciaMin;
 
-	distanciaMax.x = (r1.ancho / 2) + (r2.ancho / 2);
-	distanciaMax.y = (r1.alto / 2) + (r2.alto / 2);
+	distanciaMin.x = (r1.ancho / 2) + (r2.ancho / 2);
+	distanciaMin.y = (r1.alto / 2) + (r2.alto / 2);
 
 	distancia.x = abs(r1.centro.x - r2.centro.x);
 	distancia.y = abs(r1.centro.y - r2.centro.y);
 
-	if (distancia.x < distanciaMax.x && distancia.y < distanciaMax.y)
+	if (distancia.x < distanciaMin.x && distancia.y < distanciaMin.y)
 		choque = true;
 	else
 		choque = false;
 
-	if (choque == false)	//si no hay choque
+	if (choque == false)    //si no hay choque
 		return 0;
-	else if (choque == true && r2.centro.y > r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x)) //bruh
+	else if (choque == true && r2.centro.y > r1.centro.y && (distanciaMin.y - distancia.y) < (distanciaMin.x - distancia.x)) //bruh
 		return ARRIBA;
-	else if (choque == true && r2.centro.x > r1.centro.x && (distanciaMax.y - distancia.y) > (distanciaMax.x - distancia.x))
+	else if (choque == true && r2.centro.x > r1.centro.x && (distanciaMin.y - distancia.y) > (distanciaMin.x - distancia.x))
 		return PARED_IZQ;
-	else if (choque == true && r2.centro.y < r1.centro.y && (distanciaMax.y - distancia.y) < (distanciaMax.x - distancia.x))
+	else if (choque == true && r2.centro.y < r1.centro.y && (distanciaMin.y - distancia.y) < (distanciaMin.x - distancia.x))
 		return ABAJO;
-	else if (choque == true && r2.centro.x < r1.centro.x && (distanciaMax.y - distancia.y) >(distanciaMax.x - distancia.x))
-		return PARED_DCHA;
-	else
+	else if (choque == true && r2.centro.x < r1.centro.x && (distanciaMin.y - distancia.y) >(distanciaMin.x - distancia.x))
 		return PARED_DCHA;
 }
 
