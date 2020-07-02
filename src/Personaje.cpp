@@ -28,7 +28,7 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 	Personaje::Inicializa();
 
 	//inicializacion posiciones y tamaños sprites
-	Vector2D centro = Vector2D(0.5, 0.5);d
+	Vector2D centro = Vector2D(0.5, 0.5);
 	Vector2D size = Vector2D(1, 1.3);
 
 	sprite.setCenter(centro.x, centro.y);

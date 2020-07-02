@@ -28,7 +28,7 @@ void Mundo::Dibuja()
 	pinchos.Dibuja();
 	powerUps.Dibuja();
 	sierras.Dibuja();
-
+	finalnivel.Dibuja();
 	//dibujo del fondo
 	/*glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
@@ -319,8 +319,8 @@ void Mundo::CargarNivel()
 		SetOjo();
 
 		personaje.Inicializa();
-		sierra.SetPos(4.0f, 14.0f);
-		sierra2.SetPos(-6.0f, 25.0f);
+		//sierra.SetPos(4.0f, 14.0f);
+		//sierra2.SetPos(-6.0f, 25.0f);
 
 		//Plataformas
 		RandPlatforms();
@@ -355,8 +355,8 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
 			if (tipo <= 10)// Plataforma movil
 			{
-				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
-				plataformas.Agregar(recM1);
+				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				//plataformas.Agregar(recM1);
 			}
 			if (tipo <= 20 && tipo > 10)// Pinchos
 			{
@@ -377,8 +377,8 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
 			if (tipo <= 10)// Plataforma movil
 			{
-				RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
-				plataformas.Agregar(recM1);
+				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				//plataformas.Agregar(recM1);
 			}
 			else if(tipo >= 20)// Plataforma normal
 			{
