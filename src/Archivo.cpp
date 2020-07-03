@@ -82,6 +82,8 @@ void Archivo::guardarLista(Nodo* cabecera)
 
         actual = actual->siguiente;
     }
+
+    datos.close();
 }
 
 void Archivo::cargarLista(Nodo*& cabecera) //MENOR A MAYOR
