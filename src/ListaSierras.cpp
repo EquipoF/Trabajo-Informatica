@@ -36,3 +36,8 @@ void ListaSierras::EliminarSierra(int ind)
 int ListaSierras::GetNum(void) {
 	return lista.size();
 }
+
+void ListaSierras::DestruirContenido()
+{
+	lista.clear();
+}
