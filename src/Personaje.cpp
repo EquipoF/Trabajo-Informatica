@@ -28,8 +28,8 @@ Personaje::Personaje(): sprite("imagenes/rana.png", 11), sprite_salto("imagenes/
 	Personaje::Inicializa();
 
 	//inicializacion posiciones y tamaños sprites
-	Vector2D centro = Vector2D(0.5, 0.5);
-	Vector2D size = Vector2D(1, 1.3);
+	Vector2D centro = Vector2D(0.5f, 0.45f);
+	Vector2D size = Vector2D(1.0f, 1.3f);
 
 	sprite.setCenter(centro.x, centro.y);
 	sprite.setSize(size.x, size.y);
@@ -67,7 +67,7 @@ void Personaje::Inicializa()
 void Personaje::Dibuja()
 {
 	glPushMatrix();
-	glTranslatef(posicion.x, posicion.y, 0);
+	glTranslatef(posicion.x, posicion.y-0.05f, 0);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
 	//gestion de direccion y animacion

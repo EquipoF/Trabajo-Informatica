@@ -3,8 +3,9 @@
 //Estados de los pinchos
 enum { GUARDADOS = 1, SALIENDO = 2, FUERA = 3 };
 
-Pinchos::Pinchos(Rectangulo rectanguloIn, bool movilIn, unsigned int lado, float tiniIn) //1-> arriba, 2->abajo, 3-> dcha, 4-> izq. por defecto arriba
+Pinchos::Pinchos(Rectangulo rectanguloIn, bool movilIn, unsigned int lado, float tiniIn): sprite("imagenes/pinchos2.png")//1-> arriba, 2->abajo, 3-> dcha, 4-> izq. por defecto arriba
 {
+	
 	//Generar el rectángulo que hace de plataforma
 	switch (lado)
 	{
@@ -30,9 +31,17 @@ Pinchos::Pinchos(Rectangulo rectanguloIn, bool movilIn, unsigned int lado, float
 	tini = tiniIn;
 
 	estado = FUERA;
+	
+	//Sprite y tamaño de la sierra
+
+	sprite.setCenter(0.5f, 0.45f);
+	sprite.setSize(1.0f, 1.0f);
 }
-Pinchos::Pinchos()
+Pinchos::Pinchos() : sprite("imagenes/pinchos2.png")
 {
+	//Sprite y tamaño de la sierra
+	sprite.setCenter(centro.x, centro.y + 1);
+	sprite.setSize(1.0f, 1.0f);
 	Rectangulo::Rectangulo();
 	movil = false;
 	estado = FUERA;
@@ -84,9 +93,19 @@ void Pinchos::Dibuja()
 		break;
 	case SALIENDO:
 		//Dibuja las puntas de los pinchos en el suelo
+		glPushMatrix();
+		glTranslatef(centro.x, centro.y-0.25f, 0);
+		glScalef(ancho, 1.0f, 1.0f);
+		sprite.draw();
+		glPopMatrix();
 		break;
 	case FUERA:
-		Rectangulo::Dibuja();//Dibuja los pinchos fuera
+		//Rectangulo::Dibuja();//Dibuja los pinchos fuera
+		glPushMatrix();
+		glTranslatef(centro.x, centro.y-0.05f, 0);
+		glScalef(ancho, 1.0f, 1.0f);
+		sprite.draw();
+		glPopMatrix();
 		break;
 	}
 }

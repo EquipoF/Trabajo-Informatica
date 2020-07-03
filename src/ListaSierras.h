@@ -14,6 +14,7 @@ public:
 	bool Agregar(Sierra* rec);
 	void Dibuja();
 	void EliminarSierra(int ind);
+	void DestruirContenido();
 
 	int GetNum();
 

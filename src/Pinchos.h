@@ -1,5 +1,8 @@
 #pragma once
 #include "Rectangulo.h"
+#include "ETSIDI.h"
+
+using ETSIDI::Sprite;
 
 class Pinchos: public Rectangulo
 {
@@ -18,5 +21,6 @@ private:
 	float tini; //tiempo inicial para que no vayan todos los pinchos a la vez
 
 	void Salir(float t); //Devuelve si están metidos, saliendo o fuera del suelo
+	Sprite sprite;
 };
 

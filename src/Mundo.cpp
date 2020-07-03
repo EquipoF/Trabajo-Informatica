@@ -195,6 +195,7 @@ void Mundo::CargarNivel()
 	plataformas.DestruirContenido();
 	pinchos.DestruirContenido();
 	powerUps.DestruirContenido();
+	sierras.DestruirContenido();
 	
 	//Caja
 	{
@@ -212,19 +213,15 @@ void Mundo::CargarNivel()
 
 			Sierra* sierra2 = new Sierra(true, -6, 10, -6, -6, 14, 6, 0, -2);
 			sierras.Agregar(sierra2);
+
+			Sierra* sierra3 = new Sierra(true, -4, 30, 8, -8, 1, 1, -2, 0);
+			sierras.Agregar(sierra3);
 		}
 
 		muerte = false;
 		SetOjo();
 
 		personaje.Inicializa();
-
-		//Caja
-		{
-			for (int lado = 0; lado < caja.ladosCaja.GetNum(); lado++) {
-				plataformas.Agregar(caja.ladosCaja.lista[lado]);
-			}
-		}
 
 		//Plataformas
 		{
@@ -256,7 +253,7 @@ void Mundo::CargarNivel()
 			//Plataformas surtidas
 			Rectangulo* rec7 = new Rectangulo(3.0f, 0.7f, Vector2D(-7.0f, 4.0f));
 			plataformas.Agregar(rec7);
-			Pinchos* recP7 = new Pinchos(*rec7, true, 3, 0.0f);
+			Pinchos* recP7 = new Pinchos(*rec7, true, 1, 0.0f);
 			pinchos.Agregar(recP7);
 
 			Rectangulo* rec8 = new Rectangulo(3.0f, 0.7f, Vector2D(-8.5f, 6.0f));
@@ -319,8 +316,22 @@ void Mundo::CargarNivel()
 		SetOjo();
 
 		personaje.Inicializa();
-		//sierra.SetPos(4.0f, 14.0f);
-		//sierra2.SetPos(-6.0f, 25.0f);
+		
+		//sierras
+		Sierra* sierra1 = new Sierra(true, -6, 20.5, 10, -10, 1, 1, 2, 0);
+		sierras.Agregar(sierra1);
+
+		Sierra* sierra2 = new Sierra(true, 4, 10, -6, -6, 14, 6, 0, -2);
+		sierras.Agregar(sierra2);
+
+		//power ups
+		Rectangulo rec6 = Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 15.5f));
+		PowerUp* recP6 = new PowerUp(rec6);
+		powerUps.Agregar(recP6);
+
+		Rectangulo rec7 = Rectangulo(1.0f, 1.0f, Vector2D(1.0f, 3.0f));
+		PowerUp* recP7 = new PowerUp(rec7);
+		powerUps.Agregar(recP7);
 
 		//Plataformas
 		RandPlatforms();
@@ -332,6 +343,25 @@ void Mundo::CargarNivel()
 		SetOjo();
 
 		personaje.Inicializa();
+
+		//sierras
+		Sierra* sierra1 = new Sierra(true, 6, 10, 10, -10, 1, 1, 2, 0);
+		sierras.Agregar(sierra1);
+
+		Sierra* sierra2 = new Sierra(true, 4, 20.5, -6, -6, 29, 15, 0, -2);
+		sierras.Agregar(sierra2);
+
+		Sierra* sierra3 = new Sierra(true, 6, 33, 10, -10, 1, 1, 2, 0);
+		sierras.Agregar(sierra3);
+
+		//power ups
+		Rectangulo rec6 = Rectangulo(1.0f, 1.0f, Vector2D(-3.0f, 8.5f));
+		PowerUp* recP6 = new PowerUp(rec6);
+		powerUps.Agregar(recP6);
+
+		Rectangulo rec7 = Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 4.0f));
+		PowerUp* recP7 = new PowerUp(rec7);
+		powerUps.Agregar(recP7);
 
 		//Plataformas
 		RandPlatforms();
@@ -357,6 +387,9 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			{
 				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 				//plataformas.Agregar(recM1);
+				//Hacer un rectángulo movil
+				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				plataformas.Agregar(recM);
 			}
 			if (tipo <= 20 && tipo > 10)// Pinchos
 			{
@@ -379,6 +412,8 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			{
 				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
 				//plataformas.Agregar(recM1);
+				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una dirección, poner como límites su coordenada en esa dimensión
+				plataformas.Agregar(recM);
 			}
 			else if(tipo >= 20)// Plataforma normal
 			{
