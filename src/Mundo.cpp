@@ -139,8 +139,10 @@ void Mundo::Mueve()
 	cout << tiempo << endl;
 	
 
-	if (final == true || muerte == true) //quitar variable de muerte, no tiene sentido, para pruebas ok
+	if (final == true /*|| muerte == true*/) //quitar variable de muerte, no tiene sentido, para pruebas ok
 	{
+		system("cls");
+		cout << "Esta es su puntuacion: " << tiempo << "\n";
 		archivo.cargarLista(cabecera);
 		archivo.insertarElemento(cabecera, tiempo); //En la segunda posicion meter la variable de puntuacion
 		archivo.guardarLista(cabecera); 
