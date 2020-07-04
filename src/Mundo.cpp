@@ -33,7 +33,7 @@ void Mundo::Dibuja()
 	/*glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/monta馻s.png").id);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/monta帽as.png").id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
@@ -68,7 +68,7 @@ void Mundo::Mueve()
 	Archivo archivo;
 	Nodo* cabecera = NULL;
 
-	//Avance de la c醡ara
+	//Avance de la c谩mara
 	if (y_ojo < 36)
 	{
 		SetVelMundo(0.02);//Aqui se cambia la velocidad de subida del mundo
@@ -96,9 +96,9 @@ void Mundo::Mueve()
 		pinchos.lista[pin]->Mueve(DIFF_TIEMPO);
 	}
 
-	//Interacci髇 powerUps & personaje
+	//Interacci贸n powerUps & personaje
 	int powerUpChocado = Interaccion::Choque(powerUps, personaje);
-	if (powerUpChocado != -1) //Si choca con alg鷑 bonus
+	if (powerUpChocado != -1) //Si choca con alg煤n bonus
 	{
 		powerUps.EliminarRectangulo(powerUpChocado);
 		personaje.SetPowerUpDisponible(1);
@@ -108,7 +108,7 @@ void Mundo::Mueve()
 	Vector2D perpos = personaje.GetPos();
 	if (perpos.y < y_ojo-9.0f)// muerte si la camara pasa al personaje
 	{
-		//muerte = true;			//<-----------------------------------------Comentar esta l韓ea para pruebas viendo todo el mapa
+		muerte = true;			//<-----------------------------------------Comentar esta l铆nea para pruebas viendo todo el mapa
 	}
 
 	for (int sier = 0; sier < sierras.GetNum(); sier++) {
@@ -227,8 +227,8 @@ void Mundo::CargarNivel()
 
 		//Plataformas
 		{
-			//Hacer un rect醤gulo movil
-			Rectangulo* recM1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci髇, poner como l韒ites su coordenada en esa dimensi髇
+			//Hacer un rect谩ngulo movil
+			Rectangulo* recM1 = new Rectangulo(3.0f, 0.7f, Vector2D(1.0f, -4.0f), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci贸n, poner como l铆mites su coordenada en esa dimensi贸n
 			plataformas.Agregar(recM1);
 
 			//Plataformas 100% normales
@@ -240,7 +240,7 @@ void Mundo::CargarNivel()
 			//Poner pinchos en una platafomra
 			Rectangulo* rec4 = new Rectangulo(1.0f, 1.0f, Vector2D(3.0f, 2.5f));
 			plataformas.Agregar(rec4);
-			Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rect醤gulo r4 y entran y salen, no es est醫ico. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
+			Pinchos* recP4 = new Pinchos(*rec4, true, 1, 0.0f); //rect谩ngulo r4 y entran y salen, no es est谩tico. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
 			pinchos.Agregar(recP4);
 
 			//Plataforma 100% normales
@@ -387,16 +387,16 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			Rectangulo* rec = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura));
 			if (tipo <= 10)// Plataforma movil
 			{
-				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una direcci髇, poner como l韒ites su coordenada en esa dimensi髇
+				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una direcci贸n, poner como l铆mites su coordenada en esa dimensi贸n
 				//plataformas.Agregar(recM1);
-				//Hacer un rect醤gulo movil
-				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci髇, poner como l韒ites su coordenada en esa dimensi髇
+				//Hacer un rect谩ngulo movil
+				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci贸n, poner como l铆mites su coordenada en esa dimensi贸n
 				plataformas.Agregar(recM);
 			}
 			if (tipo <= 20 && tipo > 10)// Pinchos
 			{
 				plataformas.Agregar(rec);
-				Pinchos* recP = new Pinchos(*rec, true, 1, 0.0f); //rect醤gulo r4 y entran y salen, no es est醫ico. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
+				Pinchos* recP = new Pinchos(*rec, true, 1, 0.0f); //rect谩ngulo r4 y entran y salen, no es est谩tico. //1-> arriba, 2->abajo, 3-> dcha, 4-> izq.
 				pinchos.Agregar(recP);
 			}
 			else if (tipo > 20)// Plataforma normal
@@ -412,9 +412,9 @@ void Mundo::RandPlatforms()//Crea plataformas de manera aleatoria
 			Rectangulo* rec = new Rectangulo(3.0f, 0.7f, Vector2D(lateral, altura));
 			if (tipo <= 10)// Plataforma movil
 			{
-				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una direcci髇, poner como l韒ites su coordenada en esa dimensi髇
+				//RectanguloMovil* recM1 = new RectanguloMovil(*rec, 10, -10, /*rec->GetCentro().y*/8, /*rec->GetCentro().y*/-8, 2.0f, 0.0f); //Si no se mueve en una direcci贸n, poner como l铆mites su coordenada en esa dimensi贸n
 				//plataformas.Agregar(recM1);
-				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci髇, poner como l韒ites su coordenada en esa dimensi髇
+				Rectangulo* recM = new Rectangulo(ancho, 0.7f, Vector2D(lateral, altura), true, 10, -10, -4, -4, -2, 0); //Si no se mueve en una direcci贸n, poner como l铆mites su coordenada en esa dimensi贸n
 				plataformas.Agregar(recM);
 			}
 			else if(tipo >= 20)// Plataforma normal
