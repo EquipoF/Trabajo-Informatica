@@ -3,6 +3,25 @@
 
 using namespace std;
 
+struct Nodo
+{
+	string nombre;
+	int puntuacion;
+	Nodo* siguiente;
+};
+
+class Archivo
+{
+public:
+	Archivo();
+	virtual ~Archivo();
+
+	void insertarElemento(Nodo*&, int);
+	void mostrarElemento(Nodo*);
+	void guardarLista(Nodo*);
+	void cargarLista(Nodo*&);
+};
+
 //IMPLEMENTACION (Hay que usar esta estructura para implementarlo)
 
 /*
@@ -25,23 +44,3 @@ int main()
 
 }
 */
-
-struct Nodo
-{
-	string nombre;
-	int puntuacion;
-	Nodo* siguiente;
-};
-
-class Archivo
-{
-public:
-	Archivo();
-	virtual ~Archivo();
-
-	void insertarElemento(Nodo*&, int);
-	void mostrarElemento(Nodo*);
-	void guardarLista(Nodo*);
-	void cargarLista(Nodo*&);
-};
-

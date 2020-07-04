@@ -23,13 +23,20 @@ void Coordinador::Dibuja()
 
     if (estado == INICIO)
     {
+        system("cls");
         gluLookAt(0, 0, 20, // posicion del ojo
             0.0, 0, 0.0, // hacia que punto mira (0,7.5,0)
             0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 
+        ETSIDI::setTextColor(1, 0, 0);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 100);
+        ETSIDI::printxy("NINJA FROG", -6, 4);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 25);
+        ETSIDI::printxy("by Equipo F", -6, 3);
+
         ETSIDI::setTextColor(1, 1, 1);
         ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 30);
-        ETSIDI::printxy("MENU INICIO", -2, 2);
+        ETSIDI::printxy("MENU INICIO", -2, 1);
       
         ETSIDI::printxy("CONTROLES  [C]", -6, -1);
 
@@ -91,8 +98,8 @@ void Coordinador::Dibuja()
         ETSIDI::setTextColor(1, 1, 1);
         ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 50);
         ETSIDI::printxy("PUNTUACIONES", -4, 5);
-        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 30);
-        ETSIDI::printxy("PUEDE VER LAS PUNTUACIONES EN LA CONSOLA", -8, 1);
+        ETSIDI::setFont("fuentes/IRON MAN OF WAR 002 NCV.ttf", 20);
+        ETSIDI::printxy("PUEDE VER LAS PUNTUACIONES EN LA PANTALLA DE LA CONSOLA", -7, 1);
         ETSIDI::printxy("VOLVER A INICIO  [ B ]", 0, -4);
         system("cls");
         cout << "PUNTUACIONES (TIEMPO MINIMO JUEGO COMPLETADO)\n" ;
@@ -127,7 +134,7 @@ void Coordinador::Tecla(unsigned char key)
         {
             estado = FIN;
         }
-        if (key == 'p' || key == 'P')
+        else if (key == 'p' || key == 'P')
         {
             estado = PAUSA;
         }
@@ -175,11 +182,11 @@ void Coordinador::Mueve()
             mundo.Mueve();
         }
           
-        if (terminado)
+        else if (terminado)
         {
             estado = FIN;
         }
-        if (gameover)
+        else if (gameover)
         {
             estado = GAMEOVER;
         }
