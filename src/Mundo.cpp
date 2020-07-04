@@ -54,8 +54,8 @@ void Mundo::Dibuja()
 void Mundo::SetOjo()
 {
 	x_ojo = 0.0f;
-	y_ojo = 0.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
-	z_ojo = 20.0f; //20 para real, 80 para pruebas
+	y_ojo = 20.0f;	//0 para real, 20 para pruebas. Para probar comentar la muerte del personaje debido a la camara
+	z_ojo = 80.0f; //20 para real, 80 para pruebas
 }
 
 float Mundo::GetOjo()
@@ -71,7 +71,7 @@ void Mundo::Mueve()
 	//Avance de la cámara
 	if (y_ojo < 36)
 	{
-		SetVelMundo(0.02);//Aqui se cambia la velocidad de subida del mundo
+		SetVelMundo(0.0);//Aqui se cambia la velocidad de subida del mundo
 	}
 	else if (y_ojo >= 36)
 	{
